@@ -1,7 +1,11 @@
 import { createStore } from 'vuex'
 
-export default createStore({
-  state: {
+const store=createStore({
+  state() {
+    return{
+  
+    }
+  
   },
   mutations: {
   },
@@ -10,3 +14,5 @@ export default createStore({
   modules: {
   }
 })
+
+export default store;
