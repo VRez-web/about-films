@@ -3,6 +3,11 @@ body {
   font-size: 16px;
   background-color: $bg-body;
 }
+img {
+  image-rendering: -o-crisp-edges;
+  image-rendering: auto;
+  image-rendering: -webkit-optimize-contrast;
+}
 a {
   text-decoration: none;
 }

@@ -10,7 +10,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/_vars.scss";
+@import "../assets/scss/_vars.scss";
 .card{
     max-width: 340px;
     width: 100%;
