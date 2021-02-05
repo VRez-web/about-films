@@ -27,21 +27,12 @@
             </p>
             <div class="movie__card-wrapper">
               <img
-                :src=" movie.poster_path
-                    ? state.moviesImgUrl +  movie.poster_path
+                :src="
+                  movie.poster_path
+                    ? state.moviesImgUrl + movie.poster_path
                     : require('@/assets/img/no-poster.jpg')
                 "
                 :alt="movie.title"
-                @mousemove="
-                  movie.backdrop_path
-                    ? movie.poster_path= movie.backdrop_path
-                    : ''
-                "
-                @mouseleave="
-                  state.moviesImg
-                    ? state.moviesImgUrl +  state.moviesImg
-                    : ''
-                "
               />
               <div class="movie__card-about">
                 <p class="movie__card-details">
@@ -50,7 +41,7 @@
               </div>
             </div>
             <div class="movie__card-name-and-date">
-              <p class="movie__card-name">{{ movie.title }}</p>
+              <p class="movie__card-name" >{{ movie.title }}</p>
               <p>
                 {{
                   (movie.release_date = movie.release_date
@@ -84,7 +75,7 @@ export default {
   setup() {
     const state = reactive({
       apiKey: "f74144cebf6695340f4726c27579484e",
-      apiUrl: "https://api.themoviedb.org/3",
+      // apiUrl: "",
       moviesToday: [],
       moviesTotalPages: "",
       moviesCurrentPage: "",
@@ -92,10 +83,10 @@ export default {
       moviesImg: "",
     });
 
-    onMounted(() => {
-      axios
+    onMounted(async () => {
+      await axios
         .get(
-          `${state.apiUrl}/movie/now_playing?api_key=${state.apiKey}&language=ru-RU&region=RU&page=1`
+          `/movie/now_playing?api_key=${state.apiKey}&language=ru-RU&region=RU&page=1`
         )
         .then((res) => {
           state.moviesToday = res.data;
@@ -104,10 +95,11 @@ export default {
         });
     });
 
+
     function nextPage() {
       axios
         .get(
-          `${state.apiUrl}/movie/now_playing?api_key=${
+          `/movie/now_playing?api_key=${
             state.apiKey
           }&language=ru-RU&region=RU&page=${state.moviesCurrentPage + 1}`
         )
