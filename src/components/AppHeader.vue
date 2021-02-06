@@ -44,7 +44,7 @@ export default {};
     color: $color-white;
 
     span {
-      color: #6495ed;
+      color: $color-tematic;
     }
   }
 

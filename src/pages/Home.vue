@@ -41,7 +41,7 @@
               </div>
             </div>
             <div class="movie__card-name-and-date">
-              <p class="movie__card-name" >{{ movie.title }}</p>
+              <p class="movie__card-name">{{ movie.title }}</p>
               <p>
                 {{
                   (movie.release_date = movie.release_date
@@ -55,11 +55,29 @@
         </div>
 
         <div class="movies__theatres-pagination">
-          <button><i class="icofont-arrow-left"></i></button>
-          <ul>
-            <li></li>
-          </ul>
-          <button><i class="icofont-arrow-right" @click="nextPage"></i></button>
+          <button
+            @click="prevPage"
+            :disabled="state.moviesCurrentPage === 1"
+            class="page-management"
+          >
+            <i class="icofont-arrow-left"></i>
+          </button>
+          <div class="movies__theatres-pagination-list">
+            <button
+              v-for="page in state.moviesTotalPages"
+              :key="page"
+              :class="page === state.moviesCurrentPage ? 'active' : ''"
+            >
+              {{ page }}
+            </button>
+          </div>
+          <button
+            @click="nextPage"
+            :disabled="state.moviesCurrentPage === state.moviesTotalPages"
+            class="page-management"
+          >
+            <i class="icofont-arrow-right"></i>
+          </button>
         </div>
       </div>
     </section>
@@ -95,7 +113,6 @@ export default {
         });
     });
 
-
     function nextPage() {
       axios
         .get(
@@ -108,7 +125,20 @@ export default {
           state.moviesCurrentPage = res.data.page;
         });
     }
-    return { state, nextPage };
+    function prevPage() {
+      axios
+        .get(
+          `/movie/now_playing?api_key=${
+            state.apiKey
+          }&language=ru-RU&region=RU&page=${state.moviesCurrentPage - 1}`
+        )
+        .then((res) => {
+          state.moviesToday = res.data;
+          state.moviesCurrentPage = res.data.page;
+          state.total_pages = res.data.total_pages;
+        });
+    }
+    return { state, nextPage, prevPage };
   },
 };
 </script>
@@ -145,6 +175,31 @@ export default {
     display: flex;
     flex-wrap: wrap;
   }
+  &-pagination {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1rem;
+
+    &.page-management {
+    }
+
+    button {
+      cursor: pointer;
+      font-size: 1.25rem;
+      outline: none;
+      border: none;
+      border-radius: 0.625rem;
+      background-color: $color-tematic;
+      color: $color-white;
+      padding: 0.625rem;
+    }
+  }
+  &-pagination-list {
+    button {
+       margin: 0 0.625rem 0 0;
+
+    }
+  }
 }
 
 .movie__card {
@@ -155,19 +210,19 @@ export default {
   cursor: pointer;
   font-size: 1rem;
 
-  // &:hover {
-  //   transform: scale(1.05);
+  &:hover {
+    transform: scale(1.05);
 
-  //   .movie__card-about {
-  //    width: 100%;
-  //    height: 100%;
-  //    opacity: 1;
-  //   }
+    .movie__card-about {
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+    }
 
-  //   img {
-  //     filter: blur(1px);
-  //   }
-  // }
+    img {
+      filter: blur(1px);
+    }
+  }
 
   img {
     width: 100%;
@@ -225,5 +280,9 @@ export default {
   &-name {
     margin: 0.625rem 0;
   }
+}
+
+.active {
+  background-color: $color-tematic;
 }
 </style>
