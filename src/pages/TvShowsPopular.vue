@@ -2,10 +2,14 @@
   <section class="tv__shows section">
     <div class="container">
       <h2 class="section__title">
-        Тв-шоу сегодня: <i class="icofont-long-arrow-right"></i>
+       Популярные Тв-шоу: <i class="icofont-long-arrow-right"></i>
       </h2>
       <div class="tv__shows__inner section__inner">
-        <div v-for="tvShow in tvShowsToday.results" :key="tvShow.id" class="card">
+        <div
+          v-for="tvShow in tvShowsPopular.results"
+          :key="tvShow.id"
+          class="card"
+        >
           <p
             class="card__vote"
             :class="
@@ -24,7 +28,7 @@
             <img
               :src="
                 tvShow.poster_path
-                  ? tvShowsTodayImgUrl + tvShow.poster_path
+                  ? tvShowsPopularImgUrl + tvShow.poster_path
                   : require('@/assets/img/no-poster.jpg')
               "
               :alt="tvShow.title"
@@ -49,20 +53,19 @@
         </div>
       </div>
 
-
-       <div class="section__pagination">
+      <div class="section__pagination">
         <button
           @click="prevPage"
-          :disabled="tvShowsTodayCurrentPage === 1"
+          :disabled="tvShowsPopularCurrentPage === 1"
           class="page-management"
         >
           <i class="icofont-arrow-left"></i>
         </button>
         <div class="section__pagination-list">
           <button
-            v-for="page in tvShowsTodayTotalPages"
+            v-for="page in tvShowsPopularTotalPages"
             :key="page"
-            :class="page === tvShowsTodayCurrentPage ? 'active' : ''"
+            :class="page === tvShowsPopularCurrentPage ? 'active' : ''"
             @click="currentPageTake(page)"
           >
             {{ page }}
@@ -70,7 +73,7 @@
         </div>
         <button
           @click="nextPage"
-          :disabled="tvShowsTodayCurrentPage === tvShowsTodayTotalPages"
+          :disabled="tvShowsPopularCurrentPage === tvShowsPopularTotalPages"
           class="page-management"
         >
           <i class="icofont-arrow-right"></i>
@@ -88,23 +91,23 @@ export default {
   data() {
     return {
       apiKey: this.$store.getters.API_KEY,
-      tvShowsToday: [],
-      tvShowsTodayImgUrl:this.$store.getters.IMG_URL,
-      tvShowsTodayCurrentPage:'',
-      tvShowsTodayTotalPages:''
+      tvShowsPopular: [],
+      tvShowsPopularImgUrl: this.$store.getters.IMG_URL,
+      tvShowsPopularCurrentPage: "",
+      tvShowsPopularTotalPages: "",
     };
   },
-    methods: {
+  methods: {
     currentPageTake(page) {
       axios
         .get(
-          `/tv/airing_today?api_key=${
+          `/tv/popular?api_key=${
             this.apiKey
-          }&language=ru-RU&page=${(this.tvShowsTodayCurrentPage = page)}`
+          }&language=ru-RU&page=${(this.tvShowsPopularCurrentPage = page)}`
         )
         .then((res) => {
-          this.tvShowsToday = res.data;
-          this.tvShowsTodayCurrentPage = res.data.page;
+          this.tvShowsPopular = res.data;
+          this.tvShowsPopularCurrentPage = res.data.page;
         });
     },
   },
@@ -112,42 +115,40 @@ export default {
     nextPage() {
       axios
         .get(
-          `/tv/airing_today?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${this.tvShowsTodayCurrentPage + 1}`
+          `/tv/popular?api_key=${this.apiKey}&language=ru-RU&page=${
+            this.tvShowsPopularCurrentPage + 1
+          }`
         )
         .then((res) => {
-          this.tvShowsToday = res.data;
-          this.tvShowsTodayCurrentPage = res.data.page;
+          this.tvShowsPopular = res.data;
+          this.tvShowsPopularCurrentPage = res.data.page;
         });
     },
     prevPage() {
       axios
         .get(
-          `/tv/airing_today?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${this.tvShowsTodayCurrentPage - 1}`
+          `/tv/popular?api_key=${this.apiKey}&language=ru-RU&page=${
+            this.tvShowsPopularCurrentPage - 1
+          }`
         )
         .then((res) => {
-          this.tvShowsToday = res.data;
-          this.tvShowsTodayCurrentPage = res.data.page;
-          this.tvShowsTodayTotalPages = res.data.total_pages;
+          this.tvShowsPopular = res.data;
+          this.tvShowsPopularCurrentPage = res.data.page;
+          this.tvShowsPopularTotalPages = res.data.total_pages;
         });
     },
   },
   mounted() {
     axios
-      .get(`/tv/airing_today?api_key=${this.apiKey}&language=ru-RU`)
+      .get(`/tv/popular?api_key=${this.apiKey}&language=ru-RU`)
       .then((res) => {
-        this.tvShowsToday = res.data;
-        this.tvShowsTodayCurrentPage=res.data.page
-        this.tvShowsTodayTotalPages=res.data.total_pages
+        this.tvShowsPopular = res.data;
+        this.tvShowsPopularCurrentPage = res.data.page;
+        this.tvShowsPopularTotalPages = res.data.total_pages;
       });
   },
 };
 </script>
 
-
-<style lang="scss" scoped>
-@import "../assets/scss/_vars.scss";
+<style>
 </style>
