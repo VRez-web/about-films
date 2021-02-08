@@ -4,6 +4,7 @@ import MoviesTheatres from '../pages/MoviesTheatres'
 import TvShowsToday from '../pages/TvShowsToday'
 import TvShowsWeek from '../pages/TvShowsWeek'
 import TvShowsPopular from '../pages/TvShowsPopular'
+import TvShowsTopRated from '../pages/TvShowsTopRated'
 const routes = [
   {
     path: "/",
@@ -24,6 +25,10 @@ const routes = [
   {
     path: "/tvShows-popular",
     component: TvShowsPopular,
+  },
+  {
+    path: "/tvShows-topRated",
+    component: TvShowsTopRated,
   },
 ];
 
