@@ -75,15 +75,11 @@ a {
     &-list {
       width: 25%;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       flex-wrap: wrap;
       button {
-        width: 16%;
+        width: 13%;
         margin-right: 0.625rem;
-
-        &:last-child {
-          margin-right: 0;
-        }
         &.active {
           background-color: $color-tematic;
         }

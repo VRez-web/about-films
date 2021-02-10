@@ -6,7 +6,7 @@
       </h2>
       <div class="tv__shows__inner section__inner">
         <div
-          v-for="tvShow in tvShowsTopRated.results"
+          v-for="tvShow in TV_SHOWS_TOP_RATED.results"
           :key="tvShow.id"
           class="card"
         >
@@ -41,45 +41,22 @@
           </div>
           <div class="card-name-and-date">
             <p class="card__name">{{ tvShow.name }}</p>
-            <p>
+            <!-- <p>
               {{
                 (tvShow.first_air_date = tvShow.first_air_date
                   .split("")
                   .slice(0, 4)
                   .join(""))
               }}
-            </p>
+            </p> -->
           </div>
         </div>
       </div>
-
-      <div class="section__pagination">
-        <button
-          @click="prevPage"
-          :disabled="tvShowsTopRatedCurrentPage === 1"
-          class="page-management"
-        >
-          <i class="icofont-arrow-left"></i>
-        </button>
-        <div class="section__pagination-list">
-          <button
-            v-for="page in pages"
-            :key="page"
-            :class="page === tvShowsTopRatedCurrentPage ? 'active' : ''"
-            @click="currentPageTake(page)"
-            
-          >
-            {{ page }}
-          </button>
-        </div>
-        <button
-          @click="nextPage"
-          :disabled="tvShowsTopRatedCurrentPage === tvShowsTopRatedTotalPages"
-          class="page-management"
-        >
-          <i class="icofont-arrow-right"></i>
-        </button>
-      </div>
+      <!-- <Pagination
+        :pages="pages"
+        :currentPage="tvShowsTopRatedCurrentPage"
+        :totalPages="tvShowsTopRatedTotalPages"
+      /> -->
     </div>
   </section>
 </template>
@@ -87,19 +64,25 @@
 <script>
 import axios from "../plugins/axios";
 import Card from "../components/Card";
+import Pagination from "../components/Pagination";
+import { mapActions, mapGetters } from "vuex";
 export default {
-  components: { Card },
+  components: { Card, Pagination },
   data() {
     return {
       apiKey: this.$store.getters.API_KEY,
       tvShowsTopRated: [],
       tvShowsTopRatedImgUrl: this.$store.getters.IMG_URL,
       tvShowsTopRatedCurrentPage: "",
-      tvShowsTopRatedTotalPages: [],
-      PageRange:2
+      tvShowsTopRatedTotalPages: "",
+      PageRange: 2,
     };
   },
   methods: {
+    ...mapActions(["GET_tV_SHOWS_TOP_RATED"]),
+  },
+  computed: {
+    ...mapGetters(['TV_SHOWS_TOP_RATED']),
     currentPageTake(page) {
       axios
         .get(
@@ -112,9 +95,7 @@ export default {
           this.tvShowsTopRatedCurrentPage = res.data.page;
         });
     },
-  },
-  computed: {
-    pages: function () {
+    pages() {
       let pages = [];
       for (let i = this.rangeStart; i <= this.rangeEnd; i++) {
         pages.push(i);
@@ -146,26 +127,28 @@ export default {
           this.tvShowsTopRatedTotalPages = res.data.total_pages;
         });
     },
-    rangeStart:function() {
+    rangeStart() {
       let start = this.tvShowsTopRatedCurrentPage - this.PageRange;
 
-      return  (start > 0) ? start : 1;
+      return start > 0 ? start : 1;
     },
-    rangeEnd:function() {
+    rangeEnd() {
       let end = this.tvShowsTopRatedCurrentPage + this.PageRange;
-      return (end < this.tvShowsTopRatedTotalPages)
+      return end < this.tvShowsTopRatedTotalPages
         ? end
         : this.tvShowsTopRatedTotalPages;
     },
   },
   mounted() {
-    axios
-      .get(`/tv/top_rated?api_key=${this.apiKey}&language=ru-RU`)
-      .then((res) => {
-        this.tvShowsTopRated = res.data;
-        this.tvShowsTopRatedCurrentPage = res.data.page;
-        this.tvShowsTopRatedTotalPages = res.data.total_pages;
-      });
+    // axios
+    //   .get(`/tv/top_rated?api_key=${this.apiKey}&language=ru-RU`)
+    //   .then((res) => {
+    //     this.tvShowsTopRated = res.data;
+    //     this.tvShowsTopRatedCurrentPage = res.data.page;
+    //     this.tvShowsTopRatedTotalPage = res.data.total_pages;
+    //   });
+    console.log(this.GET_tV_SHOWS_TOP_RATED());
+    
   },
 };
 </script>

@@ -34,9 +34,12 @@ export default {};
   img {
     width: 100%;
     height: auto;
+    min-height: 350px;
+    max-height: 350px;
     display: block;
     border-radius: 0.938rem;
     transition: all 0.3s linear;
+    
   }
   &__wrapper {
     position: relative;
