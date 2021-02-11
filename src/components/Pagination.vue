@@ -29,12 +29,44 @@
 
 <script>
 export default {
-    props:{
-        pages:Array,
-        currentPage:String,
-        totalPages:String,
-    }
+  props: {
+    data:Object,
+    totalPages: Number,
+    currentPage: Number,
+  },
+  data() {
+    return {
+      pageRange: 2,
+    };
+  },
+  computed: {
+    currentPageTake(page) {
+      console.log(page);
+    },
+    pages() {
+      let pages = [];
+      for (let i = this.rangeStart; i <= this.rangeEnd; i++) {
+        pages.push(i);
+      }
+      return pages;
+    },
+    nextPage() {
+      console.log(this.data);
+    },
+    prevPage() {},
+    rangeStart() {
+      let start = this.currentPage - this.pageRange;
 
+      return start > 0 ? start : 1;
+    },
+    rangeEnd() {
+      let end = this.currentPage + this.pageRange;
+      return end < this.totalPages ? end : this.totalPages;
+    },
+  },
+  mounted(){
+    
+  }
 };
 </script>
 

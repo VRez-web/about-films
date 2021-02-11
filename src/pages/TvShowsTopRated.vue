@@ -41,28 +41,27 @@
           </div>
           <div class="card-name-and-date">
             <p class="card__name">{{ tvShow.name }}</p>
-            <!-- <p>
+            <p>
               {{
                 (tvShow.first_air_date = tvShow.first_air_date
                   .split("")
                   .slice(0, 4)
                   .join(""))
               }}
-            </p> -->
+            </p>
           </div>
         </div>
       </div>
-      <!-- <Pagination
-        :pages="pages"
-        :currentPage="tvShowsTopRatedCurrentPage"
-        :totalPages="tvShowsTopRatedTotalPages"
-      /> -->
+      <Pagination
+        :data="TV_SHOWS_TOP_RATED"
+        :totalPages="pages"
+        :currentPage="currentPage"
+      />
     </div>
   </section>
 </template>
 
 <script>
-import axios from "../plugins/axios";
 import Card from "../components/Card";
 import Pagination from "../components/Pagination";
 import { mapActions, mapGetters } from "vuex";
@@ -70,85 +69,23 @@ export default {
   components: { Card, Pagination },
   data() {
     return {
-      apiKey: this.$store.getters.API_KEY,
-      tvShowsTopRated: [],
       tvShowsTopRatedImgUrl: this.$store.getters.IMG_URL,
-      tvShowsTopRatedCurrentPage: "",
-      tvShowsTopRatedTotalPages: "",
-      PageRange: 2,
+      pages:'',
+      currentPage:''
     };
   },
   methods: {
-    ...mapActions(["GET_tV_SHOWS_TOP_RATED"]),
+    ...mapActions(["GET_TV_SHOWS_TOP_RATED"]),
   },
   computed: {
-    ...mapGetters(['TV_SHOWS_TOP_RATED']),
-    currentPageTake(page) {
-      axios
-        .get(
-          `/tv/top_rated?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${(this.tvShowsTopRatedCurrentPage = page)}`
-        )
-        .then((res) => {
-          this.tvShowsTopRated = res.data;
-          this.tvShowsTopRatedCurrentPage = res.data.page;
-        });
-    },
-    pages() {
-      let pages = [];
-      for (let i = this.rangeStart; i <= this.rangeEnd; i++) {
-        pages.push(i);
-      }
-      return pages;
-    },
-    nextPage() {
-      axios
-        .get(
-          `/tv/top_rated?api_key=${this.apiKey}&language=ru-RU&page=${
-            this.tvShowsTopRatedCurrentPage + 1
-          }`
-        )
-        .then((res) => {
-          this.tvShowsTopRated = res.data;
-          this.tvShowsTopRatedCurrentPage = res.data.page;
-        });
-    },
-    prevPage() {
-      axios
-        .get(
-          `/tv/top_rated?api_key=${this.apiKey}&language=ru-RU&page=${
-            this.tvShowsTopRatedCurrentPage - 1
-          }`
-        )
-        .then((res) => {
-          this.tvShowsTopRated = res.data;
-          this.tvShowsTopRatedCurrentPage = res.data.page;
-          this.tvShowsTopRatedTotalPages = res.data.total_pages;
-        });
-    },
-    rangeStart() {
-      let start = this.tvShowsTopRatedCurrentPage - this.PageRange;
+    ...mapGetters(["TV_SHOWS_TOP_RATED"]),
 
-      return start > 0 ? start : 1;
-    },
-    rangeEnd() {
-      let end = this.tvShowsTopRatedCurrentPage + this.PageRange;
-      return end < this.tvShowsTopRatedTotalPages
-        ? end
-        : this.tvShowsTopRatedTotalPages;
-    },
   },
   mounted() {
-    // axios
-    //   .get(`/tv/top_rated?api_key=${this.apiKey}&language=ru-RU`)
-    //   .then((res) => {
-    //     this.tvShowsTopRated = res.data;
-    //     this.tvShowsTopRatedCurrentPage = res.data.page;
-    //     this.tvShowsTopRatedTotalPage = res.data.total_pages;
-    //   });
-    console.log(this.GET_tV_SHOWS_TOP_RATED());
-    
+     this.GET_TV_SHOWS_TOP_RATED().then((res)=>{
+       this.pages = res.total_pages
+       this.currentPage = res.page
+   })
   },
 };
 </script>

@@ -3,7 +3,6 @@ import axios from "../plugins/axios";
 const store = createStore({
   state() {
     return {
-      count: 0,
       apiKey: "f74144cebf6695340f4726c27579484e",
       imgUrl: "https://image.tmdb.org/t/p/w500",
       tvShowsTopRated: [],
@@ -15,7 +14,7 @@ const store = createStore({
     },
   },
   actions: {
-    GET_tV_SHOWS_TOP_RATED({ commit }) {
+    GET_TV_SHOWS_TOP_RATED({ commit }) {
       return axios
         .get(`/tv/top_rated?api_key=${this.state.apiKey}&language=ru-RU`)
         .then((res) => {
