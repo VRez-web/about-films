@@ -6,7 +6,7 @@
       </h2>
       <div class="tv__shows__inner section__inner">
         <div
-          v-for="tvShow in TV_SHOWS_TOP_RATED.results"
+          v-for="tvShow in tvShowsTopRated.results"
           :key="tvShow.id"
           class="card"
         >
@@ -53,9 +53,10 @@
         </div>
       </div>
       <Pagination
-        :data="TV_SHOWS_TOP_RATED"
-        :totalPages="pages"
+        :data="tvShowsTopRated"
+        :totalPages="tvShowsTopRated.total_pages"
         :currentPage="currentPage"
+        @pageChange="pageChange"
       />
     </div>
   </section>
@@ -64,28 +65,32 @@
 <script>
 import Card from "../components/Card";
 import Pagination from "../components/Pagination";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   components: { Card, Pagination },
   data() {
     return {
       tvShowsTopRatedImgUrl: this.$store.getters.IMG_URL,
-      pages:'',
-      currentPage:''
+      pages: "",
+      currentPage: this.$store.page,
+      tvShowsTopRated: [],
     };
   },
   methods: {
     ...mapActions(["GET_TV_SHOWS_TOP_RATED"]),
-  },
-  computed: {
-    ...mapGetters(["TV_SHOWS_TOP_RATED"]),
-
+    pageChange(page) {
+      this.currentPage = page;
+      this.GET_TV_SHOWS_TOP_RATED((page = this.currentPage)).then((res) => {
+        this.tvShowsTopRated = res;
+      });
+    },
   },
   mounted() {
-     this.GET_TV_SHOWS_TOP_RATED().then((res)=>{
-       this.pages = res.total_pages
-       this.currentPage = res.page
-   })
+    this.GET_TV_SHOWS_TOP_RATED().then((res) => {
+      this.tvShowsTopRated = res;
+      this.pages = res.total_pages;
+      this.currentPage = res.page;
+    });
   },
 };
 </script>

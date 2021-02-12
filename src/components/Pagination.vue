@@ -8,15 +8,18 @@
       <i class="icofont-arrow-left"></i>
     </button>
     <ul class="section__pagination-list">
-      <button
+      <li
         v-for="page in pages"
         :key="page"
         :class="page === currentPage ? 'active' : ''"
-        @click="currentPageTake(page)"
+        @click="pageChange(page)"
       >
         {{ page }}
-      </button>
+      </li>
+      <li>...</li>
+      <li @click="pageChange(totalPages)">{{totalPages}}</li>
     </ul>
+
     <button
       @click="nextPage"
       :disabled="currentPage === totalPages"
@@ -30,7 +33,7 @@
 <script>
 export default {
   props: {
-    data:Object,
+    data: Object,
     totalPages: Number,
     currentPage: Number,
   },
@@ -39,10 +42,18 @@ export default {
       pageRange: 2,
     };
   },
-  computed: {
-    currentPageTake(page) {
-      console.log(page);
+  methods: {
+    prevPage() {
+      this.$emit("pageChange", this.currentPage - 1);
     },
+    pageChange(page) {
+      this.$emit("pageChange", page);
+    },
+    nextPage() {
+      this.$emit("pageChange", this.currentPage + 1);
+    },
+  },
+  computed: {
     pages() {
       let pages = [];
       for (let i = this.rangeStart; i <= this.rangeEnd; i++) {
@@ -50,10 +61,6 @@ export default {
       }
       return pages;
     },
-    nextPage() {
-      console.log(this.data);
-    },
-    prevPage() {},
     rangeStart() {
       let start = this.currentPage - this.pageRange;
 
@@ -64,9 +71,7 @@ export default {
       return end < this.totalPages ? end : this.totalPages;
     },
   },
-  mounted(){
-    
-  }
+  mounted() {},
 };
 </script>
 

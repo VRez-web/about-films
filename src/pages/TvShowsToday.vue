@@ -5,7 +5,11 @@
         Тв-шоу сегодня: <i class="icofont-long-arrow-right"></i>
       </h2>
       <div class="tv__shows__inner section__inner">
-        <div v-for="tvShow in tvShowsToday.results" :key="tvShow.id" class="card">
+        <div
+          v-for="tvShow in tvShowsToday.results"
+          :key="tvShow.id"
+          class="card"
+        >
           <p
             class="card__vote"
             :class="
@@ -49,100 +53,46 @@
         </div>
       </div>
 
-
-       <div class="section__pagination">
-        <button
-          @click="prevPage"
-          :disabled="tvShowsTodayCurrentPage === 1"
-          class="page-management"
-        >
-          <i class="icofont-arrow-left"></i>
-        </button>
-        <div class="section__pagination-list">
-          <button
-            v-for="page in tvShowsTodayTotalPages"
-            :key="page"
-            :class="page === tvShowsTodayCurrentPage ? 'active' : ''"
-            @click="currentPageTake(page)"
-          >
-            {{ page }}
-          </button>
-        </div>
-        <button
-          @click="nextPage"
-          :disabled="tvShowsTodayCurrentPage === tvShowsTodayTotalPages"
-          class="page-management"
-        >
-          <i class="icofont-arrow-right"></i>
-        </button>
-      </div>
+      <Pagination
+        :data="tvShowsToday"
+        :totalPages="tvShowsToday.total_pages"
+        :currentPage="currentPage"
+        @pageChange="pageChange"
+      />
     </div>
   </section>
 </template>
 
 <script>
-import axios from "../plugins/axios";
+import Pagination from "../components/Pagination";
 import Card from "../components/Card";
+import { mapActions } from "vuex";
 export default {
-  components: { Card },
+  components: { Card, Pagination },
   data() {
     return {
-      apiKey: this.$store.getters.API_KEY,
       tvShowsToday: [],
-      tvShowsTodayImgUrl:this.$store.getters.IMG_URL,
-      tvShowsTodayCurrentPage:'',
-      tvShowsTodayTotalPages:''
+      tvShowsTodayImgUrl: this.$store.getters.IMG_URL,
+      pages: "",
+      currentPage: this.$store.page,
     };
   },
-    methods: {
-    currentPageTake(page) {
-      axios
-        .get(
-          `/tv/airing_today?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${(this.tvShowsTodayCurrentPage = page)}`
-        )
-        .then((res) => {
-          this.tvShowsToday = res.data;
-          this.tvShowsTodayCurrentPage = res.data.page;
-        });
-    },
-  },
-  computed: {
-    nextPage() {
-      axios
-        .get(
-          `/tv/airing_today?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${this.tvShowsTodayCurrentPage + 1}`
-        )
-        .then((res) => {
-          this.tvShowsToday = res.data;
-          this.tvShowsTodayCurrentPage = res.data.page;
-        });
-    },
-    prevPage() {
-      axios
-        .get(
-          `/tv/airing_today?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${this.tvShowsTodayCurrentPage - 1}`
-        )
-        .then((res) => {
-          this.tvShowsToday = res.data;
-          this.tvShowsTodayCurrentPage = res.data.page;
-          this.tvShowsTodayTotalPages = res.data.total_pages;
-        });
-    },
-  },
-  mounted() {
-    axios
-      .get(`/tv/airing_today?api_key=${this.apiKey}&language=ru-RU`)
-      .then((res) => {
-        this.tvShowsToday = res.data;
-        this.tvShowsTodayCurrentPage=res.data.page
-        this.tvShowsTodayTotalPages=res.data.total_pages
+  methods: {
+    ...mapActions(["GET_TV_SHOWS_TODAY"]),
+    pageChange(page) {
+      this.currentPage = page;
+      this.GET_TV_SHOWS_TODAY((page = this.currentPage)).then((res) => {
+        this.tvShowsToday = res;
       });
+    },
+  },
+  computed: {},
+  mounted() {
+    this.GET_TV_SHOWS_TODAY().then((res) => {
+      this.tvShowsToday = res;
+      this.pages = res.total_pages;
+      this.currentPage = res.page;
+    });
   },
 };
 </script>

@@ -18,6 +18,7 @@ export default {};
   transition: all 0.3s linear;
   cursor: pointer;
   font-size: 1rem;
+  min-height: 400px;
 
   &:hover {
     transform: scale(1.05);

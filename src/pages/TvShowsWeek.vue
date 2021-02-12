@@ -1,11 +1,15 @@
 <template>
-   <section class="tv__shows section">
+  <section class="tv__shows section">
     <div class="container">
       <h2 class="section__title">
         Тв-шоу на неделю: <i class="icofont-long-arrow-right"></i>
       </h2>
       <div class="tv__shows__inner section__inner">
-        <div v-for="tvShow in tvShowsWeek.results" :key="tvShow.id" class="card">
+        <div
+          v-for="tvShow in tvShowsWeek.results"
+          :key="tvShow.id"
+          class="card"
+        >
           <p
             class="card__vote"
             :class="
@@ -48,105 +52,49 @@
           </div>
         </div>
       </div>
-
-
-       <div class="section__pagination">
-        <button
-          @click="prevPage"
-          :disabled="tvShowsWeekCurrentPage === 1"
-          class="page-management"
-        >
-          <i class="icofont-arrow-left"></i>
-        </button>
-        <div class="section__pagination-list">
-          <button
-            v-for="page in tvShowsWeekTotalPages"
-            :key="page"
-            :class="page === tvShowsWeekCurrentPage ? 'active' : ''"
-            @click="currentPageTake(page)"
-          >
-            {{ page }}
-          </button>
-        </div>
-        <button
-          @click="nextPage"
-          :disabled="tvShowsWeekCurrentPage === tvShowsWeekTotalPages"
-          class="page-management"
-        >
-          <i class="icofont-arrow-right"></i>
-        </button>
-      </div>
+      <Pagination
+        :data="tvShowsWeek"
+        :totalPages="tvShowsWeek.total_pages"
+        :currentPage="currentPage"
+        @pageChange="pageChange"
+      />
     </div>
   </section>
 </template>
 
 <script>
-import axios from "../plugins/axios";
 import Card from "../components/Card";
+import { mapActions } from "vuex";
+import Pagination from "../components/Pagination.vue";
 export default {
-  components: { Card },
+  components: { Card, Pagination },
   data() {
     return {
-      apiKey: this.$store.getters.API_KEY,
       tvShowsWeek: [],
-      tvShowsWeekImgUrl:this.$store.getters.IMG_URL,
-      tvShowsWeekCurrentPage:'',
-      tvShowsWeekTotalPages:''
+      tvShowsWeekImgUrl: this.$store.getters.IMG_URL,
+      pages: "",
+      currentPage: this.$store.page,
     };
   },
-    methods: {
-    currentPageTake(page) {
-      axios
-        .get(
-          `/tv/on_the_air?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${(this.tvShowsWeekCurrentPage = page)}`
-        )
-        .then((res) => {
-          this.tvShowsWeek = res.data;
-          this.tvShowsWeekCurrentPage = res.data.page;
-        });
-    },
-  },
-  computed: {
-    nextPage() {
-      axios
-        .get(
-          `/tv/on_the_air?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${this.tvShowsWeekCurrentPage + 1}`
-        )
-        .then((res) => {
-          this.tvShowsWeek = res.data;
-          this.tvShowsWeekCurrentPage = res.data.page;
-        });
-    },
-    prevPage() {
-      axios
-        .get(
-          `/tv/on_the_air?api_key=${
-            this.apiKey
-          }&language=ru-RU&page=${this.tvShowsWeekCurrentPage - 1}`
-        )
-        .then((res) => {
-          this.tvShowsWeek = res.data;
-          this.tvShowsWeekCurrentPage = res.data.page;
-          this.tvShowsWeekTotalPages = res.data.total_pages;
-        });
-    },
-  },
-  mounted() {
-    axios
-      .get(`/tv/on_the_air?api_key=${this.apiKey}&language=ru-RU`)
-      .then((res) => {
-        this.tvShowsWeek = res.data;
-        this.tvShowsWeekCurrentPage=res.data.page
-        this.tvShowsWeekTotalPages=res.data.total_pages
+  methods: {
+    ...mapActions(["GET_TV_SHOWS_WEEK"]),
+        pageChange(page) {
+      this.currentPage = page;
+      this.GET_TV_SHOWS_WEEK((page = this.currentPage)).then((res) => {
+        this.tvShowsWeek = res;
       });
   },
-};
+  },
+  computed: {},
+  mounted() {
+    this.GET_TV_SHOWS_WEEK().then((res) => {
+      this.tvShowsWeek = res;
+      this.pages = res.total_pages;
+      this.currentPage = res.page;
+    });
+  },
+}
 </script>
 
 <style>
-
 </style>
