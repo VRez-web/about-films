@@ -2,11 +2,11 @@
   <section class="tv__shows section">
     <div class="container">
       <h2 class="section__title">
-        Лучшие Тв-шоу: <i class="icofont-long-arrow-right"></i>
+        Популярные Тв-шоу: <i class="icofont-long-arrow-right"></i>
       </h2>
       <div class="tv__shows__inner section__inner">
         <div
-          v-for="tvShow in tvShowsTopRated.results"
+          v-for="tvShow in tvShowsPopular.results"
           :key="tvShow.id"
           class="card"
         >
@@ -28,7 +28,7 @@
             <img
               :src="
                 tvShow.poster_path
-                  ? tvShowsTopRatedImgUrl + tvShow.poster_path
+                  ? tvShowsPopularImgUrl + tvShow.poster_path
                   : require('@/assets/img/no-poster.jpg')
               "
               :alt="tvShow.title"
@@ -52,9 +52,10 @@
           </div>
         </div>
       </div>
+
       <Pagination
-        :data="tvShowsTopRated"
-        :totalPages="tvShowsTopRated.total_pages"
+        :data="tvShowsPopular"
+        :totalPages="tvShowsPopular.total_pages"
         :currentPage="currentPage"
         @pageChange="pageChange"
       />
@@ -63,31 +64,32 @@
 </template>
 
 <script>
-import Card from "../components/Card";
-import Pagination from "../components/Pagination";
 import { mapActions } from "vuex";
+import Pagination from "../../components/Pagination.vue";
+import Card from "../../components/Card";
 export default {
   components: { Card, Pagination },
   data() {
     return {
-      tvShowsTopRatedImgUrl: this.$store.getters.IMG_URL,
+      tvShowsPopular: [],
+      tvShowsPopularImgUrl: this.$store.getters.IMG_URL,
       pages: "",
       currentPage: this.$store.page,
-      tvShowsTopRated: [],
     };
   },
   methods: {
-    ...mapActions(["GET_TV_SHOWS_TOP_RATED"]),
+    ...mapActions(["GET_TV_SHOWS_POPULAR"]),
     pageChange(page) {
       this.currentPage = page;
-      this.GET_TV_SHOWS_TOP_RATED((page = this.currentPage)).then((res) => {
-        this.tvShowsTopRated = res;
+      this.GET_TV_SHOWS_POPULAR((page = this.currentPage)).then((res) => {
+        this.tvShowsPopular = res;
       });
     },
   },
+  computed: {},
   mounted() {
-    this.GET_TV_SHOWS_TOP_RATED().then((res) => {
-      this.tvShowsTopRated = res;
+    this.GET_TV_SHOWS_POPULAR().then((res) => {
+      this.tvShowsPopular = res;
       this.pages = res.total_pages;
       this.currentPage = res.page;
     });

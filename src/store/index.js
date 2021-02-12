@@ -12,6 +12,7 @@ const store = createStore({
       tvShowsTopRated: [],
       tvShowsWeek: [],
       tvShowsToday:[],
+      tvShowsPopular:[],
       page: 1,
     };
   },
@@ -24,6 +25,9 @@ const store = createStore({
     },
     SET_TV_SHOWS_TODAY: (state, tvShowsToday) => {
       state.tvShowsToday = tvShowsToday;
+    },
+    SET_TV_SHOWS_POPULAR: (state, tvShowsPopular) => {
+      state.tvShowsPopular = tvShowsPopular;
     },
   },
   actions: {
@@ -62,6 +66,20 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_TV_SHOWS_TODAY", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+    GET_TV_SHOWS_POPULAR({ commit }, page = this.state.page) {
+      return axios
+        .get(
+          `/tv/airing_today?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
+        )
+        .then((res) => {
+          commit("SET_TV_SHOWS_POPULAR", res.data);
           return res.data;
         })
         .catch((e) => {

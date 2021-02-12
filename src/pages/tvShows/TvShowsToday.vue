@@ -2,11 +2,11 @@
   <section class="tv__shows section">
     <div class="container">
       <h2 class="section__title">
-        Тв-шоу на неделю: <i class="icofont-long-arrow-right"></i>
+        Тв-шоу сегодня: <i class="icofont-long-arrow-right"></i>
       </h2>
       <div class="tv__shows__inner section__inner">
         <div
-          v-for="tvShow in tvShowsWeek.results"
+          v-for="tvShow in tvShowsToday.results"
           :key="tvShow.id"
           class="card"
         >
@@ -28,7 +28,7 @@
             <img
               :src="
                 tvShow.poster_path
-                  ? tvShowsWeekImgUrl + tvShow.poster_path
+                  ? tvShowsTodayImgUrl + tvShow.poster_path
                   : require('@/assets/img/no-poster.jpg')
               "
               :alt="tvShow.title"
@@ -52,9 +52,10 @@
           </div>
         </div>
       </div>
+
       <Pagination
-        :data="tvShowsWeek"
-        :totalPages="tvShowsWeek.total_pages"
+        :data="tvShowsToday"
+        :totalPages="tvShowsToday.total_pages"
         :currentPage="currentPage"
         @pageChange="pageChange"
       />
@@ -63,38 +64,39 @@
 </template>
 
 <script>
-import Card from "../components/Card";
+import Pagination from "../../components/Pagination";
+import Card from "../../components/Card";
 import { mapActions } from "vuex";
-import Pagination from "../components/Pagination.vue";
 export default {
   components: { Card, Pagination },
   data() {
     return {
-      tvShowsWeek: [],
-      tvShowsWeekImgUrl: this.$store.getters.IMG_URL,
+      tvShowsToday: [],
+      tvShowsTodayImgUrl: this.$store.getters.IMG_URL,
       pages: "",
       currentPage: this.$store.page,
     };
   },
   methods: {
-    ...mapActions(["GET_TV_SHOWS_WEEK"]),
-        pageChange(page) {
+    ...mapActions(["GET_TV_SHOWS_TODAY"]),
+    pageChange(page) {
       this.currentPage = page;
-      this.GET_TV_SHOWS_WEEK((page = this.currentPage)).then((res) => {
-        this.tvShowsWeek = res;
+      this.GET_TV_SHOWS_TODAY((page = this.currentPage)).then((res) => {
+        this.tvShowsToday = res;
       });
-  },
+    },
   },
   computed: {},
   mounted() {
-    this.GET_TV_SHOWS_WEEK().then((res) => {
-      this.tvShowsWeek = res;
+    this.GET_TV_SHOWS_TODAY().then((res) => {
+      this.tvShowsToday = res;
       this.pages = res.total_pages;
       this.currentPage = res.page;
     });
   },
-}
+};
 </script>
 
-<style>
+
+<style lang="scss" scoped>
 </style>

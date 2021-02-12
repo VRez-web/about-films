@@ -2,11 +2,11 @@
   <section class="tv__shows section">
     <div class="container">
       <h2 class="section__title">
-        Тв-шоу сегодня: <i class="icofont-long-arrow-right"></i>
+        Лучшие Тв-шоу: <i class="icofont-long-arrow-right"></i>
       </h2>
       <div class="tv__shows__inner section__inner">
         <div
-          v-for="tvShow in tvShowsToday.results"
+          v-for="tvShow in tvShowsTopRated.results"
           :key="tvShow.id"
           class="card"
         >
@@ -28,7 +28,7 @@
             <img
               :src="
                 tvShow.poster_path
-                  ? tvShowsTodayImgUrl + tvShow.poster_path
+                  ? tvShowsTopRatedImgUrl + tvShow.poster_path
                   : require('@/assets/img/no-poster.jpg')
               "
               :alt="tvShow.title"
@@ -52,10 +52,9 @@
           </div>
         </div>
       </div>
-
       <Pagination
-        :data="tvShowsToday"
-        :totalPages="tvShowsToday.total_pages"
+        :data="tvShowsTopRated"
+        :totalPages="tvShowsTopRated.total_pages"
         :currentPage="currentPage"
         @pageChange="pageChange"
       />
@@ -64,32 +63,31 @@
 </template>
 
 <script>
-import Pagination from "../components/Pagination";
-import Card from "../components/Card";
+import Card from "../../components/Card";
+import Pagination from "../../components/Pagination";
 import { mapActions } from "vuex";
 export default {
   components: { Card, Pagination },
   data() {
     return {
-      tvShowsToday: [],
-      tvShowsTodayImgUrl: this.$store.getters.IMG_URL,
+      tvShowsTopRatedImgUrl: this.$store.getters.IMG_URL,
       pages: "",
       currentPage: this.$store.page,
+      tvShowsTopRated: [],
     };
   },
   methods: {
-    ...mapActions(["GET_TV_SHOWS_TODAY"]),
+    ...mapActions(["GET_TV_SHOWS_TOP_RATED"]),
     pageChange(page) {
       this.currentPage = page;
-      this.GET_TV_SHOWS_TODAY((page = this.currentPage)).then((res) => {
-        this.tvShowsToday = res;
+      this.GET_TV_SHOWS_TOP_RATED((page = this.currentPage)).then((res) => {
+        this.tvShowsTopRated = res;
       });
     },
   },
-  computed: {},
   mounted() {
-    this.GET_TV_SHOWS_TODAY().then((res) => {
-      this.tvShowsToday = res;
+    this.GET_TV_SHOWS_TOP_RATED().then((res) => {
+      this.tvShowsTopRated = res;
       this.pages = res.total_pages;
       this.currentPage = res.page;
     });
@@ -97,7 +95,5 @@ export default {
 };
 </script>
 
-
-<style lang="scss" scoped>
-@import "../assets/scss/_vars.scss";
+<style>
 </style>
