@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/Home";
-import MoviesTheatres from '../pages/MoviesTheatres'
+import MoviesTheatres from '../pages/movies/MoviesTheatres'
 import TvShowsToday from '../pages/tvShows/TvShowsToday'
 import TvShowsWeek from '../pages/tvShows/TvShowsWeek'
 import TvShowsPopular from '../pages/tvShows/TvShowsPopular'

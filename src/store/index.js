@@ -18,6 +18,7 @@ const store = createStore({
     };
   },
   mutations: {
+    // Tv Shows
     SET_TV_SHOWS_TOP_RATED: (state, tvShowsTopRated) => {
       state.tvShowsTopRated = tvShowsTopRated;
     },
@@ -30,8 +31,13 @@ const store = createStore({
     SET_TV_SHOWS_POPULAR: (state, tvShowsPopular) => {
       state.tvShowsPopular = tvShowsPopular;
     },
+    // Movies
+    SET_MOVIES_THEATRES: (state, moviesTheatres) => {
+      state.moviesTheatres = moviesTheatres;
+    },
   },
   actions: {
+    // Tv Shows
     GET_TV_SHOWS_TOP_RATED({ commit }, page = this.state.page) {
       return axios
         .get(
@@ -81,6 +87,22 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_TV_SHOWS_POPULAR", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+
+    // Movies
+    GET_MOVIES_THEATRES({ commit }, page = this.state.page) {
+      return axios
+        .get(
+          `/movie/now_playing?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
+        )
+        .then((res) => {
+          commit("SET_MOVIES_THEATRES", res.data);
           return res.data;
         })
         .catch((e) => {
