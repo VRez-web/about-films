@@ -13,6 +13,7 @@ const store = createStore({
       tvShowsWeek: [],
       tvShowsToday:[],
       tvShowsPopular:[],
+      moviesTheatres:[],
       page: 1,
     };
   },
