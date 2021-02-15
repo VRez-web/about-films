@@ -1,12 +1,12 @@
 <template>
-  <section class="movies__theatres section">
+   <section class="movies__popular section">
     <div class="container">
-      <h2 class="movies__theatres-title section__title">
+      <h2 class="movies__popular-title section__title">
         Сейчас в кинотеатрах: <i class="icofont-long-arrow-right"></i>
       </h2>
-      <div class="movies__theatres-inner section__inner">
+      <div class="movies__popular-inner section__inner">
         <div
-          v-for="movie in moviesTeatres.results"
+          v-for="movie in moviesPopular.results"
           :key="movie.id"
           class="card"
         >
@@ -54,8 +54,8 @@
       </div>
 
       <Pagination
-        :data="moviesTeatres"
-        :totalPages="moviesTeatres.total_pages"
+        :data="moviesPopular"
+        :totalPages="moviesPopular.total_pages"
         :currentPage="currentPage"
         @pageChange="pageChange"
       />
@@ -68,10 +68,10 @@ import { mapActions } from "vuex";
 import Pagination from "../../components/Pagination.vue";
 import Card from "../../components/Card";
 export default {
-  components: { Card,Pagination },
+ components: { Card,Pagination },
   data() {
     return {
-      moviesTeatres: [],
+      moviesPopular: [],
       moviesImgUrl: this.$store.getters.IMG_URL,
      pages: "",
       currentPage: this.$store.page,
@@ -79,25 +79,25 @@ export default {
     };
   },
   methods: {
-     ...mapActions(["GET_MOVIES_THEATRES"]),
+     ...mapActions(["GET_MOVIES_POPULAR"]),
         pageChange(page) {
       this.currentPage = page;
-      this.GET_MOVIES_THEATRES((page = this.currentPage)).then((res) => {
-        this.moviesTeatres = res;
+      this.GET_MOVIES_POPULAR((page = this.currentPage)).then((res) => {
+        this.moviesPopular = res;
       });
   },
   },
 
   mounted() {
-  this.GET_MOVIES_THEATRES().then((res) => {
-      this.moviesTeatres = res;
+  this.GET_MOVIES_POPULAR().then((res) => {
+      this.moviesPopular = res;
       this.pages = res.total_pages;
       this.currentPage = res.page;
     });
   },
-};
+}
 </script>
 
+<style>
 
-<style lang="scss" scoped>
 </style>

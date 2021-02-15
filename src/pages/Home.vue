@@ -1,6 +1,7 @@
 <template>
   <main>
     <router-link to="/movies-theatres">В кинотеатре сейчас</router-link>
+    <router-link to="/movies-popular">Популярные фильмы</router-link>
     <router-link to="/tvShows-today"> Тв-шоу сегодня:</router-link>
     <router-link to="/tvShows-week"> Тв-шоу на неделю:</router-link>
     <router-link to="/tvShows-popular"> Популярные Тв-шоу:</router-link>
@@ -9,9 +10,8 @@
 </template>
 
 <script>
-import MoviesTheatres from "./MoviesTheatres";
 export default {
-  components: { MoviesTheatres },
+  components: {},
   data() {
     return {};
   },
