@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/Home";
 import MoviesTheatres from '../pages/movies/MoviesTheatres'
 import MoviesPopular from '../pages/movies/MoviesPopular'
+import MoviesTopRated from '../pages/movies/MoviesTopRated'
 import TvShowsToday from '../pages/tvShows/TvShowsToday'
 import TvShowsWeek from '../pages/tvShows/TvShowsWeek'
 import TvShowsPopular from '../pages/tvShows/TvShowsPopular'
@@ -18,6 +19,10 @@ const routes = [
   {
     path: "/movies-popular",
     component: MoviesPopular,
+  },
+  {
+    path: "/movies-topRated",
+    component: MoviesTopRated,
   },
   {
     path: "/tvShows-today",
