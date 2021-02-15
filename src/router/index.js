@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import MoviesTheatres from '../pages/movies/MoviesTheatres'
 import MoviesPopular from '../pages/movies/MoviesPopular'
 import MoviesTopRated from '../pages/movies/MoviesTopRated'
+import MoviesUpcoming from '../pages/movies/MoviesUpcoming'
 import TvShowsToday from '../pages/tvShows/TvShowsToday'
 import TvShowsWeek from '../pages/tvShows/TvShowsWeek'
 import TvShowsPopular from '../pages/tvShows/TvShowsPopular'
@@ -23,6 +24,10 @@ const routes = [
   {
     path: "/movies-topRated",
     component: MoviesTopRated,
+  },
+  {
+    path: "/movies-upcoming",
+    component: MoviesUpcoming,
   },
   {
     path: "/tvShows-today",

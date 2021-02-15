@@ -3,6 +3,7 @@
     <router-link to="/movies-theatres">В кинотеатре сейчас</router-link>
     <router-link to="/movies-popular">Популярные фильмы</router-link>
     <router-link to="/movies-topRated">Лучшие фильмы</router-link>
+    <router-link to="/movies-upcoming">Ожидаемые фильмы</router-link>
     <router-link to="/tvShows-today"> Тв-шоу сегодня:</router-link>
     <router-link to="/tvShows-week"> Тв-шоу на неделю:</router-link>
     <router-link to="/tvShows-popular"> Популярные Тв-шоу:</router-link>
