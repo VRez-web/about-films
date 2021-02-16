@@ -2,7 +2,7 @@
   <section class="tv__shows section">
     <div class="container">
       <h2 class="section__title">
-        Популярные Тв-шоу: <i class="icofont-long-arrow-right"></i>
+        Популярные Тв-шоу:
       </h2>
       <div class="tv__shows__inner section__inner">
         <div

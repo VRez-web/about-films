@@ -2,7 +2,7 @@
    <section class="movies__popular section">
     <div class="container">
       <h2 class="movies__popular-title section__title">
-        Сейчас в кинотеатрах: <i class="icofont-long-arrow-right"></i>
+        Сейчас в кинотеатрах:
       </h2>
       <div class="movies__popular-inner section__inner">
         <div

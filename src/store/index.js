@@ -7,7 +7,7 @@ const store = createStore({
   // },
   state() {
     return {
-      apiKey: "f74144cebf6695340f4726c27579484e",
+      apiKey: process.env.VUE_APP_API_KEY,
       imgUrl: "https://image.tmdb.org/t/p/w500",
       tvShowsTopRated: [],
       tvShowsWeek: [],
@@ -169,9 +169,6 @@ const store = createStore({
   },
   modules: {},
   getters: {
-    API_KEY: (state) => {
-      return state.apiKey;
-    },
     IMG_URL: (state) => {
       return state.imgUrl;
     },

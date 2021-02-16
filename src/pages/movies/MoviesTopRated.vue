@@ -2,7 +2,7 @@
    <section class=" section">
     <div class="container">
       <h2 class="-title section__title">
-        Сейчас в кинотеатрах: <i class="icofont-long-arrow-right"></i>
+        Сейчас в кинотеатрах:
       </h2>
       <div class="section__inner">
         <div
