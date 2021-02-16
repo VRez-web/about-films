@@ -2,9 +2,11 @@
   <header class="header">
     <div class="container">
       <div class="header__inner">
-        <router-link to="/" class="header__logo">
-          about<span>Films</span>
-        </router-link>
+        <h1>
+          <router-link to="/" class="header__logo">
+            about<span>Films</span>
+          </router-link>
+        </h1>
         <div class="header__group">
           <div class="header__search">
             <i class="icofont-search-2"></i>
@@ -29,7 +31,7 @@ export default {};
 .header {
   background-color: $bg-header;
   width: 100%;
-
+    margin-bottom: 1.875rem;
   &__inner {
     display: flex;
     align-items: center;
@@ -78,7 +80,7 @@ export default {};
   &__login {
     margin: 0 0 0 0.625rem;
     cursor: pointer;
-    
+
     i {
       font-size: 1.5rem;
       transition: all 0.3s linear;
