@@ -1,14 +1,68 @@
 <template>
-  <div class="card">
-
+  <div class="card" v-for="item in data" :key="item.id">
+    <p
+      class="card__vote"
+      :class="
+        item.vote_average >= 7
+          ? 'high-rating'
+          : item.vote_average < 7 && item.vote_average > 3
+          ? 'mid-rating'
+          : item.vote_average <= 3
+          ? 'low-rating'
+          : ''
+      "
+    >
+      {{ item.vote_average }}
+    </p>
+    <div class="card__wrapper">
+      <img
+        :src="
+          item.poster_path
+            ? imgUrl + item.poster_path
+            : require('@/assets/img/no-poster.jpg')
+        "
+        :alt="item.title"
+      />
+      <div class="card__about">
+        <p class="card__details">Подробнее <i class="icofont-link"></i></p>
+      </div>
+    </div>
+    <div class="card-name-and-date">
+      <p
+        class="card__name"
+        v-if="item.title ? item.title : (item.title = item.name)"
+      >
+        {{ item.title }}
+      </p>
+      <p
+        v-if="
+          item.release_date
+            ? item.release_date
+            : (item.release_date = item.first_air_date)
+        "
+      >
+        {{
+          (item.release_date = item.release_date.split("").slice(0, 4).join(""))
+        }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    data: Array,
+  },
+  data() {
+    return {
+      imgUrl: this.$store.getters.IMG_URL,
+    };
+  },
+};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../assets/scss/_vars.scss";
 
 .card {
@@ -40,7 +94,6 @@ export default {};
     display: block;
     border-radius: 0.938rem;
     transition: all 0.3s linear;
-    
   }
   &__wrapper {
     position: relative;

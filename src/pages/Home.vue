@@ -1,11 +1,12 @@
 <template>
   <main>
-    <div class="container">
+    <div class="container-second">
       <section class="home__gallery">
         <h2 class="home__gallery-title">
           <router-link to="/movies-theatres">В кинотеатрах сейчас</router-link>
           <i class="icofont-arrow-right"></i>
         </h2>
+        <slider></slider>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -54,8 +55,9 @@
 </template>
 
 <script>
+import slider from '../components/Slider'
 export default {
-  components: {},
+  components: {slider},
   data() {
     return {};
   },
