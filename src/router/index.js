@@ -8,6 +8,7 @@ import TvShowsToday from '../pages/tvShows/TvShowsToday'
 import TvShowsWeek from '../pages/tvShows/TvShowsWeek'
 import TvShowsPopular from '../pages/tvShows/TvShowsPopular'
 import TvShowsTopRated from '../pages/tvShows/TvShowsTopRated'
+import CardDetails from '../components/details/CardDetails'
 const routes = [
   {
     path: "/",
@@ -44,6 +45,11 @@ const routes = [
   {
     path: "/tvShows-topRated",
     component: TvShowsTopRated,
+  },
+  {
+    path: "/title",
+    component: CardDetails,
+    props:true,
   },
 
 ];

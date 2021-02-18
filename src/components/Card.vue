@@ -1,63 +1,81 @@
 <template>
-  <div class="card" v-for="item in data" :key="item.id">
-    <p
-      class="card__vote"
-      :class="
-        item.vote_average >= 7
-          ? 'high-rating'
-          : item.vote_average < 7 && item.vote_average > 3
-          ? 'mid-rating'
-          : item.vote_average <= 3
-          ? 'low-rating'
-          : ''
-      "
-    >
-      {{ item.vote_average }}
-    </p>
-    <div class="card__wrapper">
-      <img
-        :src="
-          item.poster_path
-            ? imgUrl + item.poster_path
-            : require('@/assets/img/no-poster.jpg')
+  <div
+    class="card"
+    v-for="item in data"
+    :key="item.id"
+    @click="showId(item.id)"
+  >
+    <router-link to="/title" :data="dataDetails">
+      <p
+        class="card__vote"
+        :class="
+          item.vote_average >= 7
+            ? 'high-rating'
+            : item.vote_average < 7 && item.vote_average > 3
+            ? 'mid-rating'
+            : item.vote_average <= 3
+            ? 'low-rating'
+            : ''
         "
-        :alt="item.title"
-      />
-      <div class="card__about">
-        <p class="card__details">Подробнее <i class="icofont-link"></i></p>
+      >
+        {{ item.vote_average }}
+      </p>
+      <div class="card__wrapper">
+        <img
+          :src="
+            item.poster_path
+              ? imgUrl + item.poster_path
+              : require('@/assets/img/no-poster.jpg')
+          "
+          :alt="item.title"
+        />
+        <div class="card__about">
+          <p class="card__details">Подробнее <i class="icofont-link"></i></p>
+        </div>
       </div>
-    </div>
-    <div class="card-name-and-date">
-      <p
-        class="card__name"
-        v-if="item.title ? item.title : (item.title = item.name)"
-      >
-        {{ item.title }}
-      </p>
-      <p
-        v-if="
-          item.release_date
-            ? item.release_date
-            : (item.release_date = item.first_air_date)
-        "
-      >
-        {{
-          (item.release_date = item.release_date.split("").slice(0, 4).join(""))
-        }}
-      </p>
-    </div>
+      <div class="card-name-and-date">
+        <p
+          class="card__name"
+          v-if="item.title ? item.title : (item.title = item.name)"
+        >
+          {{ item.title }}
+        </p>
+        <p
+          v-if="
+            item.release_date
+              ? item.release_date
+              : (item.release_date = item.first_air_date)
+          "
+        >
+          {{
+            (item.release_date = item.release_date
+              .split("")
+              .slice(0, 4)
+              .join(""))
+          }}
+        </p>
+      </div>
+    </router-link>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     data: Array,
+    dataDetails: {},
   },
   data() {
     return {
       imgUrl: this.$store.getters.IMG_URL,
     };
+  },
+  methods: {
+    ...mapActions(["GET_MOVIES_DETAILS"]),
+    showId(item) {
+      this.dataDetails = this.GET_MOVIES_DETAILS(item);
+    },
   },
 };
 </script>

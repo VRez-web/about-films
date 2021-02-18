@@ -17,6 +17,7 @@ const store = createStore({
       moviesPopular:[],
       moviesTopRated:[],
       moviesUpcoming:[],
+      moviesDetails:{},
       page: 1,
     };
   },
@@ -49,6 +50,9 @@ const store = createStore({
     SET_MOVIES_UPCOMING: (state, moviesUpcoming) => {
       state.moviesUpcoming = moviesUpcoming;
     },
+    SET_MOVIES_DETAILS:(state,moviesDetails)=>{
+      state.moviesDetails=moviesDetails
+    }
   },
   actions: {
     // Tv Shows
@@ -166,6 +170,20 @@ const store = createStore({
           return e;
         });
     },
+    GET_MOVIES_DETAILS({commit},id){
+      return axios
+      .get(
+        `/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU`
+      )
+      .then((res) => {
+        commit("SET_MOVIES_DETAILS", res.data);
+        return res.data;
+      })
+      .catch((e) => {
+        console.log(e);
+        return e;
+      });
+    }
   },
   modules: {},
   getters: {
