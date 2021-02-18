@@ -6,7 +6,7 @@
           <router-link to="/movies-theatres">В кинотеатрах сейчас</router-link>
           <i class="icofont-arrow-right"></i>
         </h2>
-        <slider></slider>
+        <slider :slider_data="moviesTeathers"></slider>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -28,7 +28,7 @@
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-today"> Тв-шоу на   сегодня</router-link
+          <router-link to="/tvShows-today"> Тв-шоу на сегодня</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
       </section>
@@ -55,14 +55,24 @@
 </template>
 
 <script>
-import slider from '../components/Slider'
+import slider from "../components/Slider";
+import { mapActions } from "vuex";
 export default {
-  components: {slider},
+  components: { slider },
   data() {
-    return {};
+    return {
+      moviesTeathers: [],
+    };
   },
-  methods: {},
+  methods: {
+    ...mapActions(["GET_MOVIES_THEATRES"]),
+  },
   computed: {},
+  mounted() {
+    this.GET_MOVIES_THEATRES().then((res) => {
+      this.moviesTeathers = res.results.slice(0, 9);
+    });
+  },
 };
 </script>
 
@@ -75,20 +85,19 @@ export default {
     .home__gallery-title {
       i {
         opacity: 1;
-         margin-left: 0.625rem;
+        margin-left: 0.625rem;
       }
     }
   }
   &-title {
     @extend .section__title;
-
+    margin-bottom: 2.5rem;
     a {
       color: $color-white;
     }
     i {
       opacity: 0;
       transition: all 0.3s linear;
-     
     }
   }
 }

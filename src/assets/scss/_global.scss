@@ -6,6 +6,7 @@ body {
   font-family: "Roboto";
   font-size: 16px;
   background-color: $bg-body;
+  overflow-x: hidden;
 }
 img {
   image-rendering: -o-crisp-edges;
