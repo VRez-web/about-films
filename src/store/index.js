@@ -11,13 +11,13 @@ const store = createStore({
       imgUrl: "https://image.tmdb.org/t/p/w500",
       tvShowsTopRated: [],
       tvShowsWeek: [],
-      tvShowsToday:[],
-      tvShowsPopular:[],
-      moviesTheatres:[],
-      moviesPopular:[],
-      moviesTopRated:[],
-      moviesUpcoming:[],
-      moviesDetails:{},
+      tvShowsToday: [],
+      tvShowsPopular: [],
+      moviesTheatres: [],
+      moviesPopular: [],
+      moviesTopRated: [],
+      moviesUpcoming: [],
+      cardDetails: {},
       page: 1,
     };
   },
@@ -35,7 +35,6 @@ const store = createStore({
     SET_TV_SHOWS_POPULAR: (state, tvShowsPopular) => {
       state.tvShowsPopular = tvShowsPopular;
     },
- 
 
     // Movies
     SET_MOVIES_THEATRES: (state, moviesTheatres) => {
@@ -50,9 +49,9 @@ const store = createStore({
     SET_MOVIES_UPCOMING: (state, moviesUpcoming) => {
       state.moviesUpcoming = moviesUpcoming;
     },
-    SET_MOVIES_DETAILS:(state,moviesDetails)=>{
-      state.moviesDetails=moviesDetails
-    }
+    SET_MOVIES_DETAILS: (state, cardDetails) => {
+      state.cardDetails = cardDetails;
+    },
   },
   actions: {
     // Tv Shows
@@ -170,20 +169,18 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIES_DETAILS({commit},id){
+    GET_MOVIES_DETAILS({ commit }, id) {
       return axios
-      .get(
-        `/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU`
-      )
-      .then((res) => {
-        commit("SET_MOVIES_DETAILS", res.data);
-        return res.data;
-      })
-      .catch((e) => {
-        console.log(e);
-        return e;
-      });
-    }
+        .get(`/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU`)
+        .then((res) => {
+          commit("SET_MOVIES_DETAILS", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
   },
   modules: {},
   getters: {

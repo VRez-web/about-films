@@ -5,7 +5,15 @@
     :key="item.id"
     @click="showId(item.id)"
   >
-    <router-link to="/title" :data="dataDetails">
+    <router-link
+      :to="{
+        name: 'card-details',
+        params: {
+          id: `${item.id}`,
+          title: `${item.title.replace(/\s/g, '-')}`,
+        },
+      }"
+    >
       <p
         class="card__vote"
         :class="
@@ -64,17 +72,21 @@ import { mapActions } from "vuex";
 export default {
   props: {
     data: Array,
-    dataDetails: {},
   },
   data() {
     return {
       imgUrl: this.$store.getters.IMG_URL,
+      dataDetails: {},
     };
   },
   methods: {
     ...mapActions(["GET_MOVIES_DETAILS"]),
-    showId(item) {
-      this.dataDetails = this.GET_MOVIES_DETAILS(item);
+    showId(id) {
+      this.GET_MOVIES_DETAILS(id).then((res) => {
+        this.dataDetails = res;
+        this.$store.getters.CARD_DETAILS = this.datadataDetails;
+        console.log(this.$store.getters.CARD_DETAILS);
+      });
     },
   },
 };
@@ -103,7 +115,9 @@ export default {
       filter: blur(1px);
     }
   }
-
+  a {
+    color: inherit;
+  }
   img {
     width: 100%;
     height: auto;

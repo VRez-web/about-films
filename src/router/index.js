@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/Home";
-import MoviesTheatres from '../pages/movies/MoviesTheatres'
-import MoviesPopular from '../pages/movies/MoviesPopular'
-import MoviesTopRated from '../pages/movies/MoviesTopRated'
-import MoviesUpcoming from '../pages/movies/MoviesUpcoming'
-import TvShowsToday from '../pages/tvShows/TvShowsToday'
-import TvShowsWeek from '../pages/tvShows/TvShowsWeek'
-import TvShowsPopular from '../pages/tvShows/TvShowsPopular'
-import TvShowsTopRated from '../pages/tvShows/TvShowsTopRated'
-import CardDetails from '../components/details/CardDetails'
+import MoviesTheatres from "../pages/movies/MoviesTheatres";
+import MoviesPopular from "../pages/movies/MoviesPopular";
+import MoviesTopRated from "../pages/movies/MoviesTopRated";
+import MoviesUpcoming from "../pages/movies/MoviesUpcoming";
+import TvShowsToday from "../pages/tvShows/TvShowsToday";
+import TvShowsWeek from "../pages/tvShows/TvShowsWeek";
+import TvShowsPopular from "../pages/tvShows/TvShowsPopular";
+import TvShowsTopRated from "../pages/tvShows/TvShowsTopRated";
+import CardDetails from "../components/details/CardDetails";
 const routes = [
   {
     path: "/",
@@ -47,11 +47,11 @@ const routes = [
     component: TvShowsTopRated,
   },
   {
-    path: "/title",
+    path: "/:title/:id",
     component: CardDetails,
-    props:true,
+    name:'card-details',
+    props: true,
   },
-
 ];
 
 const router = createRouter({
