@@ -3,14 +3,13 @@
     class="card"
     v-for="item in data"
     :key="item.id"
-    @click="showId(item.id)"
   >
     <router-link
       :to="{
         name: 'card-details',
         params: {
           id: `${item.id}`,
-          title: `${item.title.replace(/\s/g, '-')}`,
+          title: `${(item.title)?item.title.replace(/\s/g, '-'):item.title=item.name}`,
         },
       }"
     >
@@ -68,7 +67,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 export default {
   props: {
     data: Array,
@@ -76,18 +74,9 @@ export default {
   data() {
     return {
       imgUrl: this.$store.getters.IMG_URL,
-      dataDetails: {},
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIES_DETAILS"]),
-    showId(id) {
-      this.GET_MOVIES_DETAILS(id).then((res) => {
-        this.dataDetails = res;
-        this.$store.getters.CARD_DETAILS = this.datadataDetails;
-        console.log(this.$store.getters.CARD_DETAILS);
-      });
-    },
   },
 };
 </script>

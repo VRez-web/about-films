@@ -9,6 +9,7 @@ const store = createStore({
     return {
       apiKey: process.env.VUE_APP_API_KEY,
       imgUrl: "https://image.tmdb.org/t/p/w500",
+      fullimgUrlSize: "https://image.tmdb.org/t/p/original",
       tvShowsTopRated: [],
       tvShowsWeek: [],
       tvShowsToday: [],
@@ -17,7 +18,8 @@ const store = createStore({
       moviesPopular: [],
       moviesTopRated: [],
       moviesUpcoming: [],
-      cardDetails: {},
+      cardDetails: [],
+      cardMovieImages: [],
       page: 1,
     };
   },
@@ -49,8 +51,11 @@ const store = createStore({
     SET_MOVIES_UPCOMING: (state, moviesUpcoming) => {
       state.moviesUpcoming = moviesUpcoming;
     },
-    SET_MOVIES_DETAILS: (state, cardDetails) => {
+    SET_CARD_DETAILS: (state, cardDetails) => {
       state.cardDetails = cardDetails;
+    },
+    SET_MOVIE_IMAGES: (state, cardMovieImages) => {
+      state.cardMovieImages = cardMovieImages;
     },
   },
   actions: {
@@ -169,11 +174,23 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIES_DETAILS({ commit }, id) {
+    GET_CARD_DETAILS({ commit }, id) {
       return axios
         .get(`/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU`)
         .then((res) => {
-          commit("SET_MOVIES_DETAILS", res.data);
+          commit("SET_CARD_DETAILS", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+    GET_MOVIE_IMAGES({ commit }, id) {
+      return axios
+        .get(`/movie/${id}/images?api_key=${this.state.apiKey}&language=ru,null`)
+        .then((res) => {
+          commit("SET_MOVIE_IMAGES", res.data);
           return res.data;
         })
         .catch((e) => {
