@@ -20,6 +20,7 @@ const store = createStore({
       moviesUpcoming: [],
       cardDetails: [],
       cardMovieImages: [],
+      movieDates:[],
       page: 1,
     };
   },
@@ -56,6 +57,9 @@ const store = createStore({
     },
     SET_MOVIE_IMAGES: (state, cardMovieImages) => {
       state.cardMovieImages = cardMovieImages;
+    },
+    SET_MOVIE_DATES: (state, movieDates) => {
+      state.movieDates = movieDates;
     },
   },
   actions: {
@@ -191,6 +195,18 @@ const store = createStore({
         .get(`/movie/${id}/images?api_key=${this.state.apiKey}&language=ru,null`)
         .then((res) => {
           commit("SET_MOVIE_IMAGES", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+    GET_MOVIE_DATES({ commit }, id) {
+      return axios
+        .get(`/movie/${id}/release_dates?api_key=${this.state.apiKey}&language=ru-RU`)
+        .then((res) => {
+          commit("SET_MOVIE_DATES", res.data);
           return res.data;
         })
         .catch((e) => {

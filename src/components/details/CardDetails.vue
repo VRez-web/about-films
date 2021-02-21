@@ -2,9 +2,20 @@
   <section class="card__details">
     <div class="container">
       <h2 class="card__details-title">
-        {{ cardDetails.title }} <span>({{ dataRelease }})</span>
+        {{ cardDetails.title }} <span>({{ dataAnnounce }})</span>
       </h2>
-      <p class="card__details-subtitle">1</p>
+      <p class="card__details-subtitle">
+        <span class="card__details-age">{{ cardDetailsAge }} </span>
+        <span class="card__details-realese">{{ dataRelease }}(RU)</span>
+        <span class="card__details-genres"
+          ><span v-for="genre in cardDetailsGenres" :key="genre.id">{{
+            genre.name
+          }}</span></span
+        >
+        <span class="card__details-time"
+          ><i class="icofont-clock-time"></i
+        ></span>
+      </p>
       <div class="card__details-inner">
         <img
           :src="imgUrl + cardDetails.poster_path"
@@ -13,7 +24,15 @@
         />
         <div class="card__details-description">
           <h2 class="card__details-description-title">Сюжет</h2>
-          <p class="card__details-about">{{cardDetailsAbout}}</p>
+          <p class="card__details-about">{{ cardDetailsAbout }}</p>
+          <div class="card__details-links">
+            <a
+              :href="cardDetails.homepage"
+              target="_blank"
+              class="card__details-homepage"
+              >Официальная страница</a
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -30,23 +49,41 @@ export default {
       cardId: this.$route.params.id,
       fullimgUrlSize: this.$store.state.fullimgUrlSize,
       images: {},
+      dataAnnounce: "",
       dataRelease: "",
-      cardDetailsAbout:''
+      cardDetailsAge: "",
+      cardDetailsAbout: "",
+      cardDetailsGenres: [],
     };
   },
   methods: {
-    ...mapActions(["GET_CARD_DETAILS", "GET_MOVIE_IMAGES"]),
+    ...mapActions(["GET_CARD_DETAILS", "GET_MOVIE_IMAGES", "GET_MOVIE_DATES"]),
   },
   computed: {},
   mounted() {
     this.GET_CARD_DETAILS(this.cardId).then((res) => {
       this.cardDetails = res;
-      this.dataRelease = res.release_date.slice(0, 4);
-      this.cardDetailsAbout=res.overview
+      this.dataAnnounce = res.release_date.slice(0, 4);
+      this.cardDetailsAbout = res.overview;
+      this.cardDetailsGenres = res.genres.slice(0, 3);
       console.log(res);
     });
     this.GET_MOVIE_IMAGES(this.cardId).then((res) => {
       this.images = res.backdrops;
+    });
+    this.GET_MOVIE_DATES(this.cardId).then((res) => {
+      res.results.forEach((item) => {
+        if (item.iso_3166_1 == "RU") {
+          this.dataRelease = item.release_dates[0].release_date
+            .slice(0, 10)
+            .replace(/-/g, "/");
+          this.dataRelease = `${this.dataRelease.slice(
+            8,
+            10
+          )}/${this.dataRelease.slice(5, 7)}/${this.dataRelease.slice(0, 4)}`;
+          this.cardDetailsAge = item.release_dates[0].certification;
+        }
+      });
     });
   },
 };
@@ -70,27 +107,115 @@ export default {
   }
   &-title {
     font-size: 2rem;
-    margin-bottom: 0.313rem;
+    margin-bottom: 0.625rem;
     font-weight: 700;
-    span{
+    span {
       font-weight: 300;
       font-size: 1.6rem;
     }
   }
-  &-subtitle{
-    margin-bottom: 2rem;
+  &-subtitle {
+    margin-bottom: 1.5rem;
   }
   &-description {
     width: 65%;
 
     &-title {
       font-size: 2rem;
-      margin: 1rem  0;
+      margin: 1rem 0;
     }
   }
-  &-about{
+  &-about {
     font-size: 1.1rem;
     line-height: 1.5rem;
+  }
+  &-age {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0 0.125rem 0.125rem 0.125rem;
+    margin-right: 0.625rem;
+  }
+  &-genres {
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background-color: $color-tematic;
+      border-radius: 50%;
+      margin: 0 0.625rem;
+      vertical-align: middle;
+    }
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background-color: $color-tematic;
+      border-radius: 50%;
+      margin: 0 0.625rem;
+      vertical-align: middle;
+    }
+    span {
+      &:nth-child(2) {
+        margin: 0 0.625rem;
+      }
+
+      &::after {
+        content: ",";
+        display: inline-block;
+      }
+      &:last-child::after {
+        content: "";
+      }
+    }
+  }
+  &-links{
+     margin-top: 1.5rem;
+  }
+  &-homepage {
+   
+    color: inherit;
+    position: relative;
+    padding: 0.625rem;
+    transition: all 0.3s 0.6s ease;
+    border-radius: 0.313rem;
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 20%;
+      height: 20%;
+      border: 3px solid;
+      transition: all 0.6s ease;
+      border-radius: 0.313rem;
+    }
+
+    &::after {
+      bottom: 0;
+      right: 0;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-bottom-color: $bg-links;
+      border-right-color: $bg-links;
+    }
+    &::before {
+      top: 0;
+      left: 0;
+      border-bottom-color: transparent;
+      border-right-color: transparent;
+      border-top-color: $bg-links;
+      border-left-color: $bg-links;
+    }
+    &:hover {
+      background-color: $bg-links;
+      &::after,
+      &::before {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 }
 </style>
