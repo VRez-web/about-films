@@ -21,6 +21,7 @@ const store = createStore({
       cardDetails: [],
       cardMovieImages: [],
       movieDates:[],
+      movieSocialLinks:[],
       page: 1,
     };
   },
@@ -60,6 +61,9 @@ const store = createStore({
     },
     SET_MOVIE_DATES: (state, movieDates) => {
       state.movieDates = movieDates;
+    },
+    SET_MOVIE_LINKS: (state, movieSocialLinks) => {
+      state.movieSocialLinks = movieSocialLinks;
     },
   },
   actions: {
@@ -207,6 +211,18 @@ const store = createStore({
         .get(`/movie/${id}/release_dates?api_key=${this.state.apiKey}&language=ru-RU`)
         .then((res) => {
           commit("SET_MOVIE_DATES", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+    GET_MOVIE_LINKS({ commit }, id) {
+      return axios
+        .get(`/movie/${id}/external_ids?api_key=${this.state.apiKey}&language=ru-RU`)
+        .then((res) => {
+          commit("SET_MOVIE_LINKS", res.data);
           return res.data;
         })
         .catch((e) => {

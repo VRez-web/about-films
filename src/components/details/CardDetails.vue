@@ -32,7 +32,28 @@
               class="card__details-homepage"
               >Официальная страница</a
             >
+            <button class="card__details-trailer">Трейлер</button>
+
+            <div class="card__details-links-social">
+              <a
+                :href="`https://www.facebook.com/${cardDetailsLinks.facebook_id}`"
+                target="_blank"
+                ><i class="icofont-facebook"></i
+              ></a>
+              <a
+                :href="`https://www.instagram.com/${cardDetailsLinks.instagram_id}`"
+                target="_blank"
+                ><i class="icofont-instagram"></i
+              ></a>
+              <a :href="`https://www.twitter.com/${cardDetailsLinks.twitter_id}`" target="_blank"><i class="icofont-twitter"></i></a>
+            </div>
           </div>
+          <p
+            class="card__details-phrase"
+            :class="cardDetails.tagline == '' ? 'hidden' : ''"
+          >
+            {{ cardDetailsPhrase }}
+          </p>
         </div>
       </div>
     </div>
@@ -54,10 +75,17 @@ export default {
       cardDetailsAge: "",
       cardDetailsAbout: "",
       cardDetailsGenres: [],
+      cardDetailsPhrase: "",
+      cardDetailsLinks: [],
     };
   },
   methods: {
-    ...mapActions(["GET_CARD_DETAILS", "GET_MOVIE_IMAGES", "GET_MOVIE_DATES"]),
+    ...mapActions([
+      "GET_CARD_DETAILS",
+      "GET_MOVIE_IMAGES",
+      "GET_MOVIE_DATES",
+      "GET_MOVIE_LINKS",
+    ]),
   },
   computed: {},
   mounted() {
@@ -66,6 +94,12 @@ export default {
       this.dataAnnounce = res.release_date.slice(0, 4);
       this.cardDetailsAbout = res.overview;
       this.cardDetailsGenres = res.genres.slice(0, 3);
+      this.cardDetailsPhrase = res.tagline;
+
+      this.cardDetailsPhrase.slice(0, 1) != "«" &&
+      this.cardDetailsPhrase.slice(-1) != "»"
+        ? (this.cardDetailsPhrase = `«${this.cardDetailsPhrase}»`)
+        : "";
       console.log(res);
     });
     this.GET_MOVIE_IMAGES(this.cardId).then((res) => {
@@ -81,9 +115,16 @@ export default {
             8,
             10
           )}/${this.dataRelease.slice(5, 7)}/${this.dataRelease.slice(0, 4)}`;
+
           this.cardDetailsAge = item.release_dates[0].certification;
+          this.cardDetailsAge == ""
+            ? (this.cardDetailsAge = "?__?")
+            : this.cardDetailsAge;
         }
       });
+    });
+    this.GET_MOVIE_LINKS(this.cardId).then((res) => {
+      this.cardDetailsLinks = res;
     });
   },
 };
@@ -111,7 +152,7 @@ export default {
     font-weight: 700;
     span {
       font-weight: 300;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
     }
   }
   &-subtitle {
@@ -134,6 +175,8 @@ export default {
     color: rgba(255, 255, 255, 0.6);
     padding: 0 0.125rem 0.125rem 0.125rem;
     margin-right: 0.625rem;
+    min-width: 35px;
+    text-align: center;
   }
   &-genres {
     &::after {
@@ -170,11 +213,10 @@ export default {
       }
     }
   }
-  &-links{
-     margin-top: 1.5rem;
+  &-links {
+    margin-top: 1.5rem;
   }
   &-homepage {
-   
     color: inherit;
     position: relative;
     padding: 0.625rem;
@@ -216,6 +258,10 @@ export default {
         height: 100%;
       }
     }
+  }
+  &-phrase {
+    margin-top: 1rem;
+    color: rgba($color-white, 0.5);
   }
 }
 </style>
