@@ -12,9 +12,9 @@
             <i class="icofont-search-2"></i>
             <span>Поиск</span>
           </div>
-          <div class="header__login">
+          <!-- <div class="header__login">
             <i class="icofont-user"></i>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

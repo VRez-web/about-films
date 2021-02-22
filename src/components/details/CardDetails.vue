@@ -25,6 +25,34 @@
         <div class="card__details-description">
           <h2 class="card__details-description-title">Сюжет</h2>
           <p class="card__details-about">{{ cardDetailsAbout }}</p>
+          <div class="card__details-rating-wrapper">
+            <div class="card__details-rating">
+              <h2>Рейтинг</h2>
+              <p
+                :class="
+                  cardDetailsRating >= 7
+                    ? 'high-rating'
+                    : cardDetailsRating < 7 && cardDetailsRating > 3
+                    ? 'mid-rating'
+                    : cardDetailsRating <= 3
+                    ? 'low-rating'
+                    : ''
+                "
+              >
+                {{ cardDetailsRating }}
+              </p>
+            </div>
+            <div class="card__details-votes">
+              <h2>Голосов</h2>
+              <p>{{ cardDetailsVotes }}</p>
+            </div>
+          </div>
+          <p
+            class="card__details-phrase"
+            :class="cardDetails.tagline == '' ? 'hidden' : ''"
+          >
+            {{ cardDetailsPhrase }}
+          </p>
           <div class="card__details-links">
             <a
               :href="cardDetails.homepage"
@@ -45,15 +73,13 @@
                 target="_blank"
                 ><i class="icofont-instagram"></i
               ></a>
-              <a :href="`https://www.twitter.com/${cardDetailsLinks.twitter_id}`" target="_blank"><i class="icofont-twitter"></i></a>
+              <a
+                :href="`https://www.twitter.com/${cardDetailsLinks.twitter_id}`"
+                target="_blank"
+                ><i class="icofont-twitter"></i
+              ></a>
             </div>
           </div>
-          <p
-            class="card__details-phrase"
-            :class="cardDetails.tagline == '' ? 'hidden' : ''"
-          >
-            {{ cardDetailsPhrase }}
-          </p>
         </div>
       </div>
     </div>
@@ -77,6 +103,8 @@ export default {
       cardDetailsGenres: [],
       cardDetailsPhrase: "",
       cardDetailsLinks: [],
+      cardDetailsRating: "",
+      cardDetailsVotes: "",
     };
   },
   methods: {
@@ -100,6 +128,9 @@ export default {
       this.cardDetailsPhrase.slice(-1) != "»"
         ? (this.cardDetailsPhrase = `«${this.cardDetailsPhrase}»`)
         : "";
+
+      this.cardDetailsRating = res.vote_average;
+      this.cardDetailsVotes = res.vote_count;
       console.log(res);
     });
     this.GET_MOVIE_IMAGES(this.cardId).then((res) => {
@@ -215,6 +246,23 @@ export default {
   }
   &-links {
     margin-top: 1.5rem;
+    display: flex;
+    align-items: flex-end;
+
+    &-social {
+      a {
+        color: inherit;
+        font-size: 1.5rem;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        padding: 0 3px 0 3px;
+        transition: all 0.4s linear;
+        &:hover {
+          color: $color-tematic;
+          border-color: $color-tematic;
+        }
+      }
+    }
   }
   &-homepage {
     color: inherit;
@@ -262,6 +310,40 @@ export default {
   &-phrase {
     margin-top: 1rem;
     color: rgba($color-white, 0.5);
+  }
+  &-rating-wrapper {
+    margin-top: 1rem;
+    display: flex;
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.625rem;
+    }
+  }
+  &-rating {
+    p {
+      text-align: center;
+      font-size: 1.3rem;
+      padding: 0.313rem 0;
+      &.high-rating {
+        background-color: $bg-highRating;
+      }
+      &.mid-rating {
+        background-color: $bg-midRating;
+      }
+      &.low-rating {
+        background-color: $bg-lowRating;
+      }
+    }
+  }
+  &-votes {
+    margin-left: 1rem;
+
+    p {
+      font-size: 1.3rem;
+      text-align: center;
+      padding: 0.313rem 0;
+      color: rgba($color-white, 0.5);
+    }
   }
 }
 </style>
