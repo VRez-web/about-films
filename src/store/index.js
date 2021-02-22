@@ -22,6 +22,7 @@ const store = createStore({
       cardMovieImages: [],
       movieDates:[],
       movieSocialLinks:[],
+      movieDetailsVideo:[],
       page: 1,
     };
   },
@@ -64,6 +65,9 @@ const store = createStore({
     },
     SET_MOVIE_LINKS: (state, movieSocialLinks) => {
       state.movieSocialLinks = movieSocialLinks;
+    },
+    SET_MOVIE_VIDEO: (state, movieDetailsVideo) => {
+      state.movieDetailsVideo = movieDetailsVideo;
     },
   },
   actions: {
@@ -223,6 +227,18 @@ const store = createStore({
         .get(`/movie/${id}/external_ids?api_key=${this.state.apiKey}&language=ru-RU`)
         .then((res) => {
           commit("SET_MOVIE_LINKS", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+    GET_MOVIE_VIDEO({ commit }, id) {
+      return axios
+        .get(`/movie/${id}/videos?api_key=${this.state.apiKey}&language=ru-RU`)
+        .then((res) => {
+          commit("SET_MOVIE_VIDEO", res.data);
           return res.data;
         })
         .catch((e) => {

@@ -2,7 +2,13 @@
   <section class="card__details">
     <div class="container">
       <h2 class="card__details-title">
-        {{ cardDetails.title }} <span>({{ dataAnnounce }})</span>
+        <p>
+          {{ cardDetails.title }} <span>({{ dataAnnounce }})</span>
+        </p>
+
+        <p class="card__details-status">
+          Статус: <span>{{ cardDetailsStatus }}</span>
+        </p>
       </h2>
       <p class="card__details-subtitle">
         <span class="card__details-age">{{ cardDetailsAge }} </span>
@@ -57,10 +63,10 @@
             <a
               :href="cardDetails.homepage"
               target="_blank"
-              class="card__details-homepage"
+              class="card__details-homepage link-hover"
               >Официальная страница</a
             >
-            <button class="card__details-trailer">Трейлер</button>
+            <button class="card__details-trailer-btn link-hover"><i class="icofont-ui-play"></i> Трейлер</button>
 
             <div class="card__details-links-social">
               <a
@@ -105,6 +111,7 @@ export default {
       cardDetailsLinks: [],
       cardDetailsRating: "",
       cardDetailsVotes: "",
+      cardDetailsStatus: "",
     };
   },
   methods: {
@@ -113,10 +120,12 @@ export default {
       "GET_MOVIE_IMAGES",
       "GET_MOVIE_DATES",
       "GET_MOVIE_LINKS",
+      "GET_MOVIE_VIDEO"
     ]),
   },
   computed: {},
   mounted() {
+    // Получение общий информации о фильме
     this.GET_CARD_DETAILS(this.cardId).then((res) => {
       this.cardDetails = res;
       this.dataAnnounce = res.release_date.slice(0, 4);
@@ -124,6 +133,7 @@ export default {
       this.cardDetailsGenres = res.genres.slice(0, 3);
       this.cardDetailsPhrase = res.tagline;
 
+      // Обработка ключевой фразы фильма
       this.cardDetailsPhrase.slice(0, 1) != "«" &&
       this.cardDetailsPhrase.slice(-1) != "»"
         ? (this.cardDetailsPhrase = `«${this.cardDetailsPhrase}»`)
@@ -131,11 +141,22 @@ export default {
 
       this.cardDetailsRating = res.vote_average;
       this.cardDetailsVotes = res.vote_count;
+
+      // Обработка статуса фильма
+      res.status == "Released"
+        ? (this.cardDetailsStatus = "вышел")
+        : res.status == "Post Production"
+        ? (this.cardDetailsStatus = "постпроизводство")
+        : res.status == "In Production"
+        ? (this.cardDetailsStatus = " в производстве")
+        : "";
       console.log(res);
     });
+    // Получение все картинок связанных с фильмом
     this.GET_MOVIE_IMAGES(this.cardId).then((res) => {
       this.images = res.backdrops;
     });
+    // Получение даты выхода, с какого возраста фильм
     this.GET_MOVIE_DATES(this.cardId).then((res) => {
       res.results.forEach((item) => {
         if (item.iso_3166_1 == "RU") {
@@ -154,9 +175,14 @@ export default {
         }
       });
     });
+    // Получение ссылок на соц сети
     this.GET_MOVIE_LINKS(this.cardId).then((res) => {
       this.cardDetailsLinks = res;
     });
+
+    this.GET_MOVIE_VIDEO(this.cardId).then((res)=>{
+      console.log(res);
+    })
   },
 };
 </script>
@@ -181,9 +207,20 @@ export default {
     font-size: 2rem;
     margin-bottom: 0.625rem;
     font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     span {
       font-weight: 300;
       font-size: 1.4rem;
+    }
+  }
+  &-status {
+    font-size: 1.5rem;
+
+    span {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.3rem;
     }
   }
   &-subtitle {
@@ -247,8 +284,9 @@ export default {
   &-links {
     margin-top: 1.5rem;
     display: flex;
-    align-items: flex-end;
-
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
     &-social {
       a {
         color: inherit;
@@ -257,6 +295,10 @@ export default {
         border-radius: 50%;
         padding: 0 3px 0 3px;
         transition: all 0.4s linear;
+
+        &:nth-child(2){
+          margin: 0 0.625rem;
+        }
         &:hover {
           color: $color-tematic;
           border-color: $color-tematic;
@@ -264,46 +306,24 @@ export default {
       }
     }
   }
-  &-homepage {
-    color: inherit;
-    position: relative;
-    padding: 0.625rem;
-    transition: all 0.3s 0.6s ease;
-    border-radius: 0.313rem;
-    &::before,
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      width: 20%;
-      height: 20%;
-      border: 3px solid;
-      transition: all 0.6s ease;
-      border-radius: 0.313rem;
+  &-trailer-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 1rem;
+    text-align: center;
+    i{
+      opacity: 0;
+      margin-left: -0.875rem;
+      transition: all .3s linear;
     }
 
-    &::after {
-      bottom: 0;
-      right: 0;
-      border-top-color: transparent;
-      border-left-color: transparent;
-      border-bottom-color: $bg-links;
-      border-right-color: $bg-links;
-    }
-    &::before {
-      top: 0;
-      left: 0;
-      border-bottom-color: transparent;
-      border-right-color: transparent;
-      border-top-color: $bg-links;
-      border-left-color: $bg-links;
-    }
-    &:hover {
-      background-color: $bg-links;
-      &::after,
-      &::before {
-        width: 100%;
-        height: 100%;
+    &:hover{
+
+      i{
+        opacity: 1;
+        margin-left: 0;
       }
     }
   }
