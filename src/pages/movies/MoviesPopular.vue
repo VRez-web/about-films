@@ -1,11 +1,9 @@
 <template>
   <section class="movies__popular section">
     <div class="container">
-      <h2 class="movies__popular-title section__title">
-       Популярное кино
-      </h2>
+      <h2 class="movies__popular-title section__title">Популярное кино</h2>
       <div class="movies__popular-inner section__inner">
-          <card :data="moviesPopular.results"/>
+        <card :data="moviesPopular.results" />
       </div>
 
       <pagination
@@ -32,7 +30,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIES_POPULAR"]),
+    ...mapActions(["GET_MOVIES_POPULAR", "GET_MOVIE_DATES"]),
     pageChange(page) {
       this.currentPage = page;
       this.GET_MOVIES_POPULAR((page = this.currentPage)).then((res) => {
@@ -44,6 +42,19 @@ export default {
   mounted() {
     this.GET_MOVIES_POPULAR().then((res) => {
       this.moviesPopular = res;
+      this.moviesPopular.results.forEach((item) => {
+        this.GET_MOVIE_DATES(item.id).then((resolve) => {
+          resolve.results.forEach((date) => {
+            if (date.iso_3166_1 == "RU") {
+              item.release_date = date.release_dates[0].release_date.slice(
+                0,
+                4
+              );
+            }
+          });
+        });
+      });
+
       this.pages = res.total_pages;
       this.currentPage = res.page;
     });

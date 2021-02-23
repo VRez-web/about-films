@@ -1,15 +1,15 @@
 <template>
-  <div
-    class="card"
-    v-for="item in data"
-    :key="item.id"
-  >
+  <div class="card" v-for="item in data" :key="item.id">
     <router-link
       :to="{
         name: 'card-details',
         params: {
           id: `${item.id}`,
-          title: `${(item.title)?item.title.replace(/\s/g, '-'):item.title=item.name}`,
+          title: `${
+            item.title
+              ? item.title.replace(/\s/g, '-')
+              : (item.title = item.name)
+          }`,
         },
       }"
     >
@@ -76,14 +76,17 @@ export default {
       imgUrl: this.$store.getters.IMG_URL,
     };
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../assets/scss/_vars.scss";
-
+.swiper-slide{ 
+  .card{
+    width: 100%;
+  }
+}
 .card {
   width: 18%;
   color: $color-white;

@@ -211,6 +211,7 @@ export default {
       "GET_MOVIES_UPCOMING",
       "GET_MOVIES_POPULAR",
       "GET_MOVIES_TOP_RATED",
+      "GET_MOVIE_DATES",
 
       "GET_TV_SHOWS_TODAY",
       "GET_TV_SHOWS_WEEK",
@@ -225,12 +226,48 @@ export default {
     // Получение фильмов
     this.GET_MOVIES_THEATRES().then((res) => {
       this.moviesTeathers = res.results.slice(0, 12);
+      this.moviesTeathers.forEach((item) => {
+        this.GET_MOVIE_DATES(item.id).then((resolve) => {
+          resolve.results.forEach((date) => {
+            if (date.iso_3166_1 == "RU") {
+              item.release_date = date.release_dates[0].release_date.slice(
+                0,
+                4
+              );
+            }
+          });
+        });
+      });
     });
     this.GET_MOVIES_UPCOMING().then((res) => {
       this.moviesUpcoming = res.results.slice(2, 14);
+      this.moviesUpcoming.forEach((item) => {
+        this.GET_MOVIE_DATES(item.id).then((resolve) => {
+          resolve.results.forEach((date) => {
+            if (date.iso_3166_1 == "RU") {
+              item.release_date = date.release_dates[0].release_date.slice(
+                0,
+                4
+              );
+            }
+          });
+        });
+      });
     });
     this.GET_MOVIES_POPULAR().then((res) => {
       this.moviesPopular = res.results.slice(0, 12);
+      this.moviesPopular.forEach((item) => {
+        this.GET_MOVIE_DATES(item.id).then((resolve) => {
+          resolve.results.forEach((date) => {
+            if (date.iso_3166_1 == "RU") {
+              item.release_date = date.release_dates[0].release_date.slice(
+                0,
+                4
+              );
+            }
+          });
+        });
+      });
     });
     this.GET_MOVIES_TOP_RATED().then((res) => {
       this.moviesTopRated = res.results.slice(0, 12);
@@ -280,9 +317,6 @@ export default {
       transition: all 0.3s linear;
     }
   }
-}
-.card {
-  width: 100%;
 }
 .swiper-slide {
   padding-top: 3rem;
