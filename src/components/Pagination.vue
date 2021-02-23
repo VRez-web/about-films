@@ -17,7 +17,7 @@
         {{ page }}
       </li>
       <li>...</li>
-      <li @click="pageChange(totalPages)">{{totalPages}}</li>
+      <li @click="pageChange(totalPages)">{{ totalPages }}</li>
     </ul>
 
     <button
@@ -75,5 +75,53 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../assets/scss/_vars.scss";
+.section__pagination {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+
+  button {
+    cursor: pointer;
+    font-size: 1.25rem;
+    outline: none;
+    border: none;
+    border-radius: 0.313rem;
+    background-color: $color-darkBlue;
+    color: $color-white;
+    padding: 0.5rem;
+    width: 5%;
+
+    &:first-child {
+      margin-right: 0.625rem;
+    }
+    &:disabled {
+      background-color: rgba(31, 33, 54, 0.3);
+      color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  &-list {
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    li {
+      width: 12%;
+      margin-right: 0.625rem;
+      cursor: pointer;
+      font-size: 1.25rem;
+      border-radius: 0.313rem;
+      background-color: $color-darkBlue;
+      color: $color-white;
+      padding: 0.5rem;
+      text-align: center;
+
+      &.active {
+        background-color: $color-tematic;
+      }
+    }
+  }
+}
 </style>
