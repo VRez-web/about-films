@@ -1,7 +1,7 @@
 # aboutFilms
 
 ## Краткое описание
-aboutFilms- приложение для просмотра информации о фильмах/сериалах.Созданный на основе данного [API] (https://www.themoviedb.org/documentation/api?language=ru)
+aboutFilms- приложение для просмотра информации о фильмах/сериалах.Созданный на основе данного ![API](https://www.themoviedb.org/documentation/api?language=ru)
 ## Project setup
 ```
 npm install
@@ -43,7 +43,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Что планируется добавить
 
-#### Для пользователей
 * Регистрацию/Логин
 * Возможность ставить оценки
 * Возможность писать комментарии
