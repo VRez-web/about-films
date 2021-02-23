@@ -1,95 +1,123 @@
 <template>
-  <section class="card__details">
-    <div class="container">
-      <h2 class="card__details-title">
-        <p>
-          {{ cardDetails.title }} <span>({{ dataAnnounce }})</span>
-        </p>
-
-        <p class="card__details-status">
-          Статус: <span>{{ cardDetailsStatus }}</span>
-        </p>
-      </h2>
-      <p class="card__details-subtitle">
-        <span class="card__details-age">{{ cardDetailsAge }} </span>
-        <span class="card__details-realese">{{ dataRelease }}(RU)</span>
-        <span class="card__details-genres"
-          ><span v-for="genre in cardDetailsGenres" :key="genre.id">{{
-            genre.name
-          }}</span></span
-        >
-        <span class="card__details-time"
-          ><i class="icofont-clock-time"></i
-        ></span>
-      </p>
-      <div class="card__details-inner">
-        <img
-          :src="imgUrl + cardDetails.poster_path"
-          alt=""
-          class="card__details-img"
-        />
-        <div class="card__details-description">
-          <h2 class="card__details-description-title">Сюжет</h2>
-          <p class="card__details-about">{{ cardDetailsAbout }}</p>
-          <div class="card__details-rating-wrapper">
-            <div class="card__details-rating">
-              <h2>Рейтинг</h2>
-              <p
-                :class="
-                  cardDetailsRating >= 7
-                    ? 'high-rating'
-                    : cardDetailsRating < 7 && cardDetailsRating > 3
-                    ? 'mid-rating'
-                    : cardDetailsRating <= 3
-                    ? 'low-rating'
-                    : ''
-                "
-              >
-                {{ cardDetailsRating }}
-              </p>
-            </div>
-            <div class="card__details-votes">
-              <h2>Голосов</h2>
-              <p>{{ cardDetailsVotes }}</p>
-            </div>
-          </div>
-          <p
-            class="card__details-phrase"
-            :class="cardDetails.tagline == '' ? 'hidden' : ''"
-          >
-            {{ cardDetailsPhrase }}
+  <main>
+    <section class="card__details">
+      <div class="container">
+        <h2 class="card__details-title">
+          <p>
+            {{ cardDetails.title }} <span>({{ dataAnnounce }})</span>
           </p>
-          <div class="card__details-links">
-            <a
-              :href="cardDetails.homepage"
-              target="_blank"
-              class="card__details-homepage link-hover"
-              >Официальная страница</a
-            >
-            <button class="card__details-trailer-btn link-hover"><i class="icofont-ui-play"></i> Трейлер</button>
 
-            <div class="card__details-links-social">
-              <a
-                :href="`https://www.facebook.com/${cardDetailsLinks.facebook_id}`"
-                target="_blank"
-                ><i class="icofont-facebook"></i
-              ></a>
-              <a
-                :href="`https://www.instagram.com/${cardDetailsLinks.instagram_id}`"
-                target="_blank"
-                ><i class="icofont-instagram"></i
-              ></a>
-              <a
-                :href="`https://www.twitter.com/${cardDetailsLinks.twitter_id}`"
-                target="_blank"
-                ><i class="icofont-twitter"></i
-              ></a>
+          <p class="card__details-status">
+            Статус: <span>{{ cardDetailsStatus }}</span>
+          </p>
+        </h2>
+        <p class="card__details-subtitle">
+          <span class="card__details-age">{{ cardDetailsAge }} </span>
+          <span class="card__details-realese">{{ dataRelease }}(RU)</span>
+          <span class="card__details-genres"
+            ><span v-for="genre in cardDetailsGenres" :key="genre.id">{{
+              genre.name
+            }}</span></span
+          >
+          <span class="card__details-time"
+            ><i class="icofont-clock-time"></i
+          ></span>
+        </p>
+        <div class="card__details-inner">
+          <img
+            :src="imgUrl + cardDetails.poster_path"
+            alt=""
+            class="card__details-img"
+          />
+          <div class="card__details-description">
+            <h2 class="card__details-description-title">Сюжет</h2>
+            <p class="card__details-about">{{ cardDetailsAbout }}</p>
+            <div class="card__details-rating-wrapper">
+              <div class="card__details-rating">
+                <h2>Рейтинг</h2>
+                <p
+                  :class="
+                    cardDetailsRating >= 7
+                      ? 'high-rating'
+                      : cardDetailsRating < 7 && cardDetailsRating > 3
+                      ? 'mid-rating'
+                      : cardDetailsRating <= 3
+                      ? 'low-rating'
+                      : ''
+                  "
+                >
+                  {{ cardDetailsRating }}
+                </p>
+              </div>
+              <div class="card__details-votes">
+                <h2>Голосов</h2>
+                <p>{{ cardDetailsVotes }}</p>
+              </div>
             </div>
+            <p
+              class="card__details-phrase"
+              :class="cardDetails.tagline == '' ? 'hidden' : ''"
+            >
+              {{ cardDetailsPhrase }}
+            </p>
+            <div class="card__details-links">
+              <a
+                :href="cardDetails.homepage"
+                target="_blank"
+                class="card__details-homepage link-hover"
+                >Официальная страница</a
+              >
+              <button
+                class="card__details-trailer-btn link-hover"
+                @click="cardDetailsVideo = true"
+              >
+                <i class="icofont-ui-play"></i> Трейлер
+              </button>
+
+              <div class="card__details-links-social">
+                <a
+                  :href="`https://www.facebook.com/${cardDetailsLinks.facebook_id}`"
+                  target="_blank"
+                  ><i class="icofont-facebook"></i
+                ></a>
+                <a
+                  :href="`https://www.instagram.com/${cardDetailsLinks.instagram_id}`"
+                  target="_blank"
+                  ><i class="icofont-instagram"></i
+                ></a>
+                <a
+                  :href="`https://www.twitter.com/${cardDetailsLinks.twitter_id}`"
+                  target="_blank"
+                  ><i class="icofont-twitter"></i
+                ></a>
+              </div>
+            </div>
+            <a href="#cardDetailsAbout" class="card__details-scroll link">Подробнее</a>
           </div>
         </div>
       </div>
+    </section>
+    <section id="cardDetailsAbout" style="height:100vh;">
+      лваьплдваьплв
+
+    </section>
+  </main>
+  <div
+    class="card__details-trailer"
+    v-if="cardDetailsVideo"
+    @click="cardDetailsVideo = !cardDetailsVideo"
+  >
+    <span class="card__details-trailer-close">Назад</span>
+    <div class="card__details-trailer-wrapper">
+      <iframe
+        :src="`https://www.youtube.com/embed/${cardDetailsVideoKey}`"
+        width="750px"
+        height="500px"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -112,6 +140,8 @@ export default {
       cardDetailsRating: "",
       cardDetailsVotes: "",
       cardDetailsStatus: "",
+      cardDetailsVideo: false,
+      cardDetailsVideoKey: "",
     };
   },
   methods: {
@@ -120,7 +150,7 @@ export default {
       "GET_MOVIE_IMAGES",
       "GET_MOVIE_DATES",
       "GET_MOVIE_LINKS",
-      "GET_MOVIE_VIDEO"
+      "GET_MOVIE_VIDEO",
     ]),
   },
   computed: {},
@@ -180,9 +210,12 @@ export default {
       this.cardDetailsLinks = res;
     });
 
-    this.GET_MOVIE_VIDEO(this.cardId).then((res)=>{
-      console.log(res);
-    })
+    // Получение трейлера к фильму
+    this.GET_MOVIE_VIDEO(this.cardId).then((res) => {
+      res.results.forEach((item) => {
+        item.name == "Трейлер №1" ? (this.cardDetailsVideoKey = item.key) : "";
+      });
+    });
   },
 };
 </script>
@@ -296,7 +329,7 @@ export default {
         padding: 0 3px 0 3px;
         transition: all 0.4s linear;
 
-        &:nth-child(2){
+        &:nth-child(2) {
           margin: 0 0.625rem;
         }
         &:hover {
@@ -306,27 +339,46 @@ export default {
       }
     }
   }
-  &-trailer-btn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    font-size: 1rem;
-    text-align: center;
-    i{
-      opacity: 0;
-      margin-left: -0.875rem;
-      transition: all .3s linear;
-    }
+  &-trailer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    &-btn {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      font-size: 1rem;
+      text-align: center;
+      i {
+        opacity: 0;
+        margin-left: -0.875rem;
+        transition: all 0.3s linear;
+      }
 
-    &:hover{
-
-      i{
-        opacity: 1;
-        margin-left: 0;
+      &:hover {
+        i {
+          opacity: 1;
+          margin-left: 0;
+        }
       }
     }
+
+    &-close {
+      color: $color-white;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      cursor: pointer;
+    }
   }
+
   &-phrase {
     margin-top: 1rem;
     color: rgba($color-white, 0.5);
@@ -364,6 +416,9 @@ export default {
       padding: 0.313rem 0;
       color: rgba($color-white, 0.5);
     }
+  }
+  &-scroll{
+    margin-top: 2rem;
   }
 }
 </style>
