@@ -20,3 +20,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 # Реализованный функционал
 
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
