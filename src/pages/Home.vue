@@ -3,51 +3,180 @@
     <div class="container-second">
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/movies-theatres">В кинотеатрах сейчас</router-link>
+          <router-link to="/movies-theatres" class="link"
+            >В кинотеатрах сейчас</router-link
+          >
           <i class="icofont-arrow-right"></i>
         </h2>
+        <swiper
+          :slides-per-view="6"
+          :space-between="20"
+          navigation
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style="padding-left: 1.25rem"
+        >
+          <swiper-slide v-for="item in moviesTeathers" :key="item.id"
+            ><card :data="[item]" />
+          </swiper-slide>
+
+          <div class="prev"></div>
+          <div class="next"></div>
+        </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/movies-upcoming">Ожидаемые фильмы</router-link
+          <router-link to="/movies-upcoming" class="link"
+            >Ожидаемые фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
+        <swiper
+          :slides-per-view="6"
+          :space-between="20"
+          navigation
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style="padding-left: 1.25rem"
+        >
+          <swiper-slide v-for="item in moviesUpcoming" :key="item.id"
+            ><card :data="[item]" />
+          </swiper-slide>
+
+          <div class="prev"></div>
+          <div class="next"></div>
+        </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/movies-popular">Популярные фильмы</router-link
+          <router-link to="/movies-popular" class="link"
+            >Популярные фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
+        <swiper
+          :slides-per-view="6"
+          :space-between="20"
+          navigation
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style="padding-left: 1.25rem"
+        >
+          <swiper-slide v-for="item in moviesPopular" :key="item.id"
+            ><card :data="[item]" />
+          </swiper-slide>
+
+          <div class="prev"></div>
+          <div class="next"></div>
+        </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/movies-topRated">Лучшие фильмы</router-link
+          <router-link to="/movies-topRated" class="link"
+            >Лучшие фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
+        <swiper
+          :slides-per-view="6"
+          :space-between="20"
+          navigation
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style="padding-left: 1.25rem"
+        >
+          <swiper-slide v-for="item in moviesTopRated" :key="item.id"
+            ><card :data="[item]" />
+          </swiper-slide>
+
+          <div class="prev"></div>
+          <div class="next"></div>
+        </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-today"> Тв-шоу на сегодня</router-link
+          <router-link to="/tvShows-today" class="link">
+            Тв-шоу на сегодня</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
+        <swiper
+          :slides-per-view="6"
+          :space-between="20"
+          navigation
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style="padding-left: 1.25rem"
+        >
+          <swiper-slide v-for="item in tvShowsToday" :key="item.id"
+            ><card :data="[item]" />
+          </swiper-slide>
+
+          <div class="prev"></div>
+          <div class="next"></div>
+        </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-week"> Тв-шоу на неделю</router-link
+          <router-link to="/tvShows-week" class="link">
+            Тв-шоу на неделю</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
+        <swiper
+          :slides-per-view="6"
+          :space-between="20"
+          navigation
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style="padding-left: 1.25rem"
+        >
+          <swiper-slide v-for="item in tvShowsWeek" :key="item.id"
+            ><card :data="[item]" />
+          </swiper-slide>
+
+          <div class="prev"></div>
+          <div class="next"></div>
+        </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-popular"> Популярные Тв-шоу</router-link
+          <router-link to="/tvShows-popular" class="link">
+            Популярные Тв-шоу</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
+        <swiper
+          :slides-per-view="6"
+          :space-between="20"
+          navigation
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style="padding-left: 1.25rem"
+        >
+          <swiper-slide v-for="item in tvShowsPopular" :key="item.id"
+            ><card :data="[item]" />
+          </swiper-slide>
+
+          <div class="prev"></div>
+          <div class="next"></div>
+        </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-topRated"> Лучшие Тв-шоу</router-link
+          <router-link to="/tvShows-topRated" class="link">
+            Лучшие Тв-шоу</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
+        <swiper
+          :slides-per-view="6"
+          :space-between="20"
+          navigation
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style="padding-left: 1.25rem"
+        >
+          <swiper-slide v-for="item in tvShowsTopRated" :key="item.id"
+            ><card :data="[item]" />
+          </swiper-slide>
+
+          <div class="prev"></div>
+          <div class="next"></div>
+        </swiper>
       </section>
     </div>
   </main>
@@ -55,20 +184,70 @@
 
 <script>
 import { mapActions } from "vuex";
+import SwiperCore, { Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import card from "../components/Card";
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+SwiperCore.use([Navigation]);
 export default {
-  components: {  },
+  components: { Swiper, SwiperSlide, card },
   data() {
     return {
       moviesTeathers: [],
+      moviesUpcoming: [],
+      moviesPopular: [],
+      moviesTopRated: [],
+
+      tvShowsToday: [],
+      tvShowsWeek: [],
+      tvShowsPopular: [],
+      tvShowsTopRated: [],
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIES_THEATRES"]),
+    ...mapActions([
+      "GET_MOVIES_THEATRES",
+      "GET_MOVIES_UPCOMING",
+      "GET_MOVIES_POPULAR",
+      "GET_MOVIES_TOP_RATED",
+
+      "GET_TV_SHOWS_TODAY",
+      "GET_TV_SHOWS_WEEK",
+      "GET_TV_SHOWS_POPULAR",
+      "GET_TV_SHOWS_TOP_RATED",
+    ]),
+    onSwiper(swiper) {},
+    onSlideChange() {},
   },
   computed: {},
   mounted() {
+    // Получение фильмов
     this.GET_MOVIES_THEATRES().then((res) => {
-      this.moviesTeathers = res.results.slice(0, 9);
+      this.moviesTeathers = res.results.slice(0, 12);
+    });
+    this.GET_MOVIES_UPCOMING().then((res) => {
+      this.moviesUpcoming = res.results.slice(2, 14);
+    });
+    this.GET_MOVIES_POPULAR().then((res) => {
+      this.moviesPopular = res.results.slice(0, 12);
+    });
+    this.GET_MOVIES_TOP_RATED().then((res) => {
+      this.moviesTopRated = res.results.slice(0, 12);
+    });
+
+    // Получение сериалов
+    this.GET_TV_SHOWS_TODAY().then((res) => {
+      this.tvShowsToday = res.results.slice(0, 12);
+    });
+    this.GET_TV_SHOWS_WEEK().then((res) => {
+      this.tvShowsWeek = res.results.slice(0, 12);
+    });
+    this.GET_TV_SHOWS_POPULAR().then((res) => {
+      this.tvShowsPopular = res.results.slice(0, 12);
+    });
+    this.GET_TV_SHOWS_TOP_RATED().then((res) => {
+      this.tvShowsTopRated = res.results.slice(0, 12);
     });
   },
 };
@@ -78,6 +257,7 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_vars.scss";
 @import "../assets/scss/_global.scss";
+
 .home__gallery {
   &:hover {
     .home__gallery-title {
@@ -89,7 +269,9 @@ export default {
   }
   &-title {
     @extend .section__title;
-    margin-bottom: 2.5rem;
+    margin-bottom: 0;
+    display: flex;
+    align-items: flex-end;
     a {
       color: $color-white;
     }
@@ -98,5 +280,11 @@ export default {
       transition: all 0.3s linear;
     }
   }
+}
+.card {
+  width: 100%;
+}
+.swiper-slide {
+  padding-top: 3rem;
 }
 </style>
