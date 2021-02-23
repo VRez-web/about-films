@@ -1,5 +1,7 @@
-# about-films
+# aboutFilms
 
+## Краткое описание
+aboutFilms- приложение для просмотра информации о фильмах/сериалах.
 ## Project setup
 ```
 npm install
@@ -18,6 +20,9 @@ npm run build
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+
 # Реализованный функционал
 
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+* Возможность посмореть на главной страницы фильмы/сериалы которые, скоро выйдут, показывают на сегодняшний день/неделю в кинотеатрах и по ТВ, также посмотреть  популярные и лучшие фильмы/сериалы.
+
+![Alt Text](https://gifyu.com/image/ZTXd)
