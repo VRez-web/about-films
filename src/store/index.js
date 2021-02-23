@@ -117,7 +117,7 @@ const store = createStore({
     GET_TV_SHOWS_POPULAR({ commit }, page = this.state.page) {
       return axios
         .get(
-          `/tv/airing_today?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
+          `/tv/popular?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
         .then((res) => {
           commit("SET_TV_SHOWS_POPULAR", res.data);
