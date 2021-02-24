@@ -31,7 +31,7 @@
           />
           <div class="card__details-description">
             <h2 class="card__details-description-title">Сюжет</h2>
-            <p class="card__details-about">{{ cardDetailsAbout }}</p>
+            <p class="card__details-plot">{{ cardDetailsPlot }}</p>
             <div class="card__details-rating-wrapper">
               <div class="card__details-rating">
                 <h2>Рейтинг</h2>
@@ -92,22 +92,21 @@
                 ></a>
               </div>
             </div>
-            <a href="#cardDetailsAbout" class="card__details-scroll link">Подробнее</a>
+            <a href="#cardDetailsAbout" class="card__details-scroll link"
+              >Подробнее</a
+            >
           </div>
         </div>
       </div>
     </section>
-    <section id="cardDetailsAbout" style="height:100vh;">
-      лваьплдваьплв
-
-    </section>
+    <cardDetailsAbout :cardId="cardId" :cast="cardDetailsCredit"/>
   </main>
   <div
     class="card__details-trailer"
     v-if="cardDetailsVideo"
     @click="cardDetailsVideo = !cardDetailsVideo"
   >
-    <span class="card__details-trailer-close">Назад</span>
+    <span class="card__details-trailer-close link">Назад</span>
     <div class="card__details-trailer-wrapper">
       <iframe
         :src="`https://www.youtube.com/embed/${cardDetailsVideoKey}`"
@@ -122,18 +121,18 @@
 
 <script>
 import { mapActions } from "vuex";
+import cardDetailsAbout from './CardDetailsAbout'
 export default {
+  components:{cardDetailsAbout},
   data() {
     return {
       cardDetails: [],
       imgUrl: this.$store.getters.IMG_URL,
       cardId: this.$route.params.id,
-      fullimgUrlSize: this.$store.state.fullimgUrlSize,
-      images: {},
       dataAnnounce: "",
       dataRelease: "",
       cardDetailsAge: "",
-      cardDetailsAbout: "",
+      cardDetailsPlot: "",
       cardDetailsGenres: [],
       cardDetailsPhrase: "",
       cardDetailsLinks: [],
@@ -142,6 +141,7 @@ export default {
       cardDetailsStatus: "",
       cardDetailsVideo: false,
       cardDetailsVideoKey: "",
+      cardDetailsCredit:[]
     };
   },
   methods: {
@@ -155,13 +155,14 @@ export default {
   },
   computed: {},
   mounted() {
-    // Получение общий информации о фильме
+    // Получение общей информации о фильме
     this.GET_CARD_DETAILS(this.cardId).then((res) => {
       this.cardDetails = res;
       this.dataAnnounce = res.release_date.slice(0, 4);
-      this.cardDetailsAbout = res.overview;
+      this.cardDetailsPlot = res.overview;
       this.cardDetailsGenres = res.genres.slice(0, 3);
       this.cardDetailsPhrase = res.tagline;
+      this.cardDetailsCredit=res.credits.cast.slice(0,9)
 
       // Обработка ключевой фразы фильма
       this.cardDetailsPhrase.slice(0, 1) != "«" &&
@@ -181,10 +182,6 @@ export default {
         ? (this.cardDetailsStatus = " в производстве")
         : "";
       console.log(res);
-    });
-    // Получение все картинок связанных с фильмом
-    this.GET_MOVIE_IMAGES(this.cardId).then((res) => {
-      this.images = res.backdrops;
     });
     // Получение даты выхода, с какого возраста фильм
     this.GET_MOVIE_DATES(this.cardId).then((res) => {
@@ -267,7 +264,7 @@ export default {
       margin: 1rem 0;
     }
   }
-  &-about {
+  &-plot {
     font-size: 1.1rem;
     line-height: 1.5rem;
   }
@@ -376,6 +373,7 @@ export default {
       right: 20px;
       top: 20px;
       cursor: pointer;
+      font-size: 1.3rem;
     }
   }
 
@@ -417,7 +415,7 @@ export default {
       color: rgba($color-white, 0.5);
     }
   }
-  &-scroll{
+  &-scroll {
     margin-top: 2rem;
   }
 }
