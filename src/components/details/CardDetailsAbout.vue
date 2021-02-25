@@ -1,7 +1,7 @@
 <template>
   <section class="card__details-about">
     <div class="container">
-      <h2 class="card__details-about-title">В главных ролях</h2>
+      <h2 class="card__details-title">В главных ролях</h2>
       <div class="card__details-cast">
         <swiper
           :slides-per-view="6"
@@ -9,12 +9,11 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
         >
           <swiper-slide
             v-for="item in cast"
             :key="item.id"
-            class="card__details-cast-item"
+            class="card__details-cast-item swiper-slide-cast"
           >
             <img :src="imgProfile + item.profile_path" :alt="item.name" />
             <p class="card__details-cast-title">{{ item.name }}</p>
@@ -33,14 +32,13 @@
   </section>
   <section class="card__details-similar">
     <div class="container">
-      <h2 class="card__details-similar-title">Похожие фильмы</h2>
+      <h2 class="card__details-title">Похожие фильмы</h2>
       <swiper
         :slides-per-view="6"
         :space-between="20"
         navigation
         @swiper="onSwiper"
         @slideChange="onSlideChange"
-        style="padding-left: 1.25rem"
       >
         <swiper-slide v-for="item in similarMovies" :key="item.id">
           <card :data="[item]" />
@@ -72,22 +70,34 @@ export default {
   methods: {
     ...mapActions(["GET_MOVIE_SIMILAR"]),
   },
+  computed: {
+    getSimilarMovies() {
+      this.GET_MOVIE_SIMILAR(this.cardId).then((res) => {
+        this.similarMovies = res.results.slice(0, 9);
+      });
+    },
+  },
   mounted() {
     // Получение всех картинок связанных с фильмом
     // this.GET_MOVIE_IMAGES(this.cardId).then((res) => {
     //   this.images = res.backdrops;
     // });
-
-    this.GET_MOVIE_SIMILAR(this.cardId).then((res) => {
-      this.similarMovies = res.results.slice(0, 9);
-    });
+    this.getSimilarMovies
   },
+  updated(){
+    this.getSimilarMovies
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/_vars.scss";
 .card__details {
+  &-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-white;
+  }
   &-cast {
     &-item {
       width: 20%;
@@ -96,9 +106,7 @@ export default {
         border-radius: 0.625rem;
       }
     }
-    &-title {
-      margin: 0.625rem 0;
-    }
+
     &-character {
       padding: 0 1.5rem;
       line-height: 20px;
@@ -112,6 +120,8 @@ export default {
   }
   &-similar {
     background-color: #1f1f1f;
+    margin-top: 2rem;
+    padding-top: 1rem;
   }
 }
 .all-cast {
@@ -122,8 +132,6 @@ export default {
   color: $color-white;
 
   &-title {
-    font-size: 1.5rem;
-    font-weight: 700;
     margin: 1rem 0;
   }
 }
