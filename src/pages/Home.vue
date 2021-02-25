@@ -14,7 +14,6 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
         >
           <swiper-slide v-for="item in moviesTeathers" :key="item.id"
             ><card :data="[item]" />
@@ -36,7 +35,7 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
+          
         >
           <swiper-slide v-for="item in moviesUpcoming" :key="item.id"
             ><card :data="[item]" />
@@ -58,7 +57,7 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
+          
         >
           <swiper-slide v-for="item in moviesPopular" :key="item.id"
             ><card :data="[item]" />
@@ -80,7 +79,7 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
+          
         >
           <swiper-slide v-for="item in moviesTopRated" :key="item.id"
             ><card :data="[item]" />
@@ -102,7 +101,7 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
+          
         >
           <swiper-slide v-for="item in tvShowsToday" :key="item.id"
             ><card :data="[item]" />
@@ -124,7 +123,7 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
+          
         >
           <swiper-slide v-for="item in tvShowsWeek" :key="item.id"
             ><card :data="[item]" />
@@ -146,7 +145,7 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
+          
         >
           <swiper-slide v-for="item in tvShowsPopular" :key="item.id"
             ><card :data="[item]" />
@@ -168,7 +167,7 @@
           navigation
           @swiper="onSwiper"
           @slideChange="onSlideChange"
-          style="padding-left: 1.25rem"
+          
         >
           <swiper-slide v-for="item in tvShowsTopRated" :key="item.id"
             ><card :data="[item]" />
@@ -318,7 +317,5 @@ export default {
     }
   }
 }
-.swiper-slide {
-  padding-top: 3rem;
-}
+
 </style>
