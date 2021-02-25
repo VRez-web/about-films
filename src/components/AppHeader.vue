@@ -7,7 +7,7 @@
             about<span>Films</span>
           </router-link>
         </h1>
-        <div class="header__group">
+        <div class="header__group" @click="searchShow = !searchShow">
           <div class="header__search">
             <i class="icofont-search-2"></i>
             <span>Поиск</span>
@@ -19,10 +19,23 @@
       </div>
     </div>
   </header>
+  <search v-if="searchShow" :searchShow="searchShow"/>
 </template>
 
 <script>
-export default {};
+import search from "./Search";
+export default {
+  components: {
+    search,
+  },
+  data() {
+    return {
+      searchShow: false,
+    };
+  },
+  methods: {
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -31,7 +44,7 @@ export default {};
 .header {
   background-color: $bg-header;
   width: 100%;
-    margin-bottom: 1.875rem;
+  margin-bottom: 1.875rem;
   &__inner {
     display: flex;
     align-items: center;
