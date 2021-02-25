@@ -99,7 +99,7 @@
         </div>
       </div>
     </section>
-    <cardDetailsAbout :cardId="cardId" :cast="cardDetailsCredit"/>
+    <cardDetailsAbout :cardId="cardId" :cast="cardDetailsCredit" />
   </main>
   <div
     class="card__details-trailer"
@@ -121,14 +121,14 @@
 
 <script>
 import { mapActions } from "vuex";
-import cardDetailsAbout from './CardDetailsAbout'
+import cardDetailsAbout from "./CardDetailsAbout";
 export default {
-  components:{cardDetailsAbout},
+  components: { cardDetailsAbout },
   data() {
     return {
       cardDetails: [],
       imgUrl: this.$store.getters.IMG_URL,
-      cardId: this.$route.params.id,
+      cardId: "",
       dataAnnounce: "",
       dataRelease: "",
       cardDetailsAge: "",
@@ -141,7 +141,7 @@ export default {
       cardDetailsStatus: "",
       cardDetailsVideo: false,
       cardDetailsVideoKey: "",
-      cardDetailsCredit:[]
+      cardDetailsCredit: [],
     };
   },
   methods: {
@@ -153,67 +153,79 @@ export default {
       "GET_MOVIE_VIDEO",
     ]),
   },
-  computed: {},
-  mounted() {
-    // Получение общей информации о фильме
-    this.GET_CARD_DETAILS(this.cardId).then((res) => {
-      this.cardDetails = res;
-      this.dataAnnounce = res.release_date.slice(0, 4);
-      this.cardDetailsPlot = res.overview;
-      this.cardDetailsGenres = res.genres.slice(0, 3);
-      this.cardDetailsPhrase = res.tagline;
-      this.cardDetailsCredit=res.credits.cast.slice(0,9)
+  computed: {
+    cardId() {
+      return (this.cardId = this.$route.params.id);
+    },
+    getData() {
+      // Получение общей информации о фильме
+      this.GET_CARD_DETAILS(this.cardId).then((res) => {
+        this.cardDetails = res;
+        this.dataAnnounce = res.release_date.slice(0, 4);
+        this.cardDetailsPlot = res.overview;
+        this.cardDetailsGenres = res.genres.slice(0, 3);
+        this.cardDetailsPhrase = res.tagline;
+        this.cardDetailsCredit = res.credits.cast.slice(0, 9);
 
-      // Обработка ключевой фразы фильма
-      this.cardDetailsPhrase.slice(0, 1) != "«" &&
-      this.cardDetailsPhrase.slice(-1) != "»"
-        ? (this.cardDetailsPhrase = `«${this.cardDetailsPhrase}»`)
-        : "";
+        // Обработка ключевой фразы фильма
+        this.cardDetailsPhrase.slice(0, 1) != "«" &&
+        this.cardDetailsPhrase.slice(-1) != "»"
+          ? (this.cardDetailsPhrase = `«${this.cardDetailsPhrase}»`)
+          : "";
 
-      this.cardDetailsRating = res.vote_average;
-      this.cardDetailsVotes = res.vote_count;
+        this.cardDetailsRating = res.vote_average;
+        this.cardDetailsVotes = res.vote_count;
 
-      // Обработка статуса фильма
-      res.status == "Released"
-        ? (this.cardDetailsStatus = "вышел")
-        : res.status == "Post Production"
-        ? (this.cardDetailsStatus = "постпроизводство")
-        : res.status == "In Production"
-        ? (this.cardDetailsStatus = " в производстве")
-        : "";
-      console.log(res);
-    });
-    // Получение даты выхода, с какого возраста фильм
-    this.GET_MOVIE_DATES(this.cardId).then((res) => {
-      res.results.forEach((item) => {
-        if (item.iso_3166_1 == "RU") {
-          this.dataRelease = item.release_dates[0].release_date
-            .slice(0, 10)
-            .replace(/-/g, "/");
-          this.dataRelease = `${this.dataRelease.slice(
-            8,
-            10
-          )}/${this.dataRelease.slice(5, 7)}/${this.dataRelease.slice(0, 4)}`;
-
-          this.cardDetailsAge = item.release_dates[0].certification;
-          this.cardDetailsAge == ""
-            ? (this.cardDetailsAge = "?__?")
-            : this.cardDetailsAge;
-        }
+        // Обработка статуса фильма
+        res.status == "Released"
+          ? (this.cardDetailsStatus = "вышел")
+          : res.status == "Post Production"
+          ? (this.cardDetailsStatus = "постпроизводство")
+          : res.status == "In Production"
+          ? (this.cardDetailsStatus = " в производстве")
+          : "";
+        console.log(res);
       });
-    });
-    // Получение ссылок на соц сети
-    this.GET_MOVIE_LINKS(this.cardId).then((res) => {
-      this.cardDetailsLinks = res;
-    });
+      // Получение даты выхода, с какого возраста фильм
+      this.GET_MOVIE_DATES(this.cardId).then((res) => {
+        res.results.forEach((item) => {
+          if (item.iso_3166_1 == "RU") {
+            this.dataRelease = item.release_dates[0].release_date
+              .slice(0, 10)
+              .replace(/-/g, "/");
+            this.dataRelease = `${this.dataRelease.slice(
+              8,
+              10
+            )}/${this.dataRelease.slice(5, 7)}/${this.dataRelease.slice(0, 4)}`;
 
-    // Получение трейлера к фильму
-    this.GET_MOVIE_VIDEO(this.cardId).then((res) => {
-      res.results.forEach((item) => {
-        item.name == "Трейлер №1" ? (this.cardDetailsVideoKey = item.key) : "";
+            this.cardDetailsAge = item.release_dates[0].certification;
+            this.cardDetailsAge == ""
+              ? (this.cardDetailsAge = "?__?")
+              : this.cardDetailsAge;
+          }
+        });
       });
-    });
+      // Получение ссылок на соц сети
+      this.GET_MOVIE_LINKS(this.cardId).then((res) => {
+        this.cardDetailsLinks = res;
+      });
+
+      // Получение трейлера к фильму
+      this.GET_MOVIE_VIDEO(this.cardId).then((res) => {
+        res.results.forEach((item) => {
+          item.name == "Трейлер №1"
+            ? (this.cardDetailsVideoKey = item.key)
+            : "";
+        });
+      });
+    },
   },
+  mounted() {
+    this.getData;
+  },
+  updated(){
+    this.getData
+  }
 };
 </script>
 <style lang="scss" scoped>
