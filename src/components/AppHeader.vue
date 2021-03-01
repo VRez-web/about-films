@@ -19,7 +19,7 @@
       </div>
     </div>
   </header>
-  <search v-if="searchShow" :searchShow="searchShow"/>
+  <search v-if="searchShow" :data="searchShow" @close="close"/>
 </template>
 
 <script>
@@ -30,10 +30,13 @@ export default {
   },
   data() {
     return {
-      searchShow: false,
+      searchShow:false
     };
   },
   methods: {
+    close(searchShow){
+      this.searchShow = searchShow
+    }
   },
 };
 </script>
