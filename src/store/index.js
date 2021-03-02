@@ -10,7 +10,7 @@ const store = createStore({
       apiKey: process.env.VUE_APP_API_KEY,
       imgUrl: "https://image.tmdb.org/t/p/w500",
       fullimgUrlSize: "https://image.tmdb.org/t/p/original",
-      imgProfileSize:'http://image.tmdb.org/t/p/w185',
+      imgProfileSize: "http://image.tmdb.org/t/p/w185",
       tvShowsTopRated: [],
       tvShowsWeek: [],
       tvShowsToday: [],
@@ -21,10 +21,11 @@ const store = createStore({
       moviesUpcoming: [],
       cardDetails: [],
       cardMovieImages: [],
-      movieDates:[],
-      movieSocialLinks:[],
-      movieDetailsVideo:[],
-      movieDetailsSimilar:[],
+      movieDates: [],
+      movieSocialLinks: [],
+      movieDetailsVideo: [],
+      movieDetailsSimilar: [],
+      searchQueary: "",
       page: 1,
     };
   },
@@ -73,6 +74,9 @@ const store = createStore({
     },
     SET_MOVIE_SIMILAR: (state, movieDetailsSimilar) => {
       state.movieDetailsSimilar = movieDetailsSimilar;
+    },
+    SET_SEARCH: (state, searchQueary) => {
+      state.searchQueary = searchQueary;
     },
   },
   actions: {
@@ -193,7 +197,9 @@ const store = createStore({
     },
     GET_CARD_DETAILS({ commit }, id) {
       return axios
-        .get(`/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=credits`)
+        .get(
+          `/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=credits`
+        )
         .then((res) => {
           commit("SET_CARD_DETAILS", res.data);
           return res.data;
@@ -205,7 +211,9 @@ const store = createStore({
     },
     GET_MOVIE_IMAGES({ commit }, id) {
       return axios
-        .get(`/movie/${id}/images?api_key=${this.state.apiKey}&language=ru,null`)
+        .get(
+          `/movie/${id}/images?api_key=${this.state.apiKey}&language=ru,null`
+        )
         .then((res) => {
           commit("SET_MOVIE_IMAGES", res.data);
           return res.data;
@@ -217,7 +225,9 @@ const store = createStore({
     },
     GET_MOVIE_DATES({ commit }, id) {
       return axios
-        .get(`/movie/${id}/release_dates?api_key=${this.state.apiKey}&language=ru-RU`)
+        .get(
+          `/movie/${id}/release_dates?api_key=${this.state.apiKey}&language=ru-RU`
+        )
         .then((res) => {
           commit("SET_MOVIE_DATES", res.data);
           return res.data;
@@ -229,7 +239,9 @@ const store = createStore({
     },
     GET_MOVIE_LINKS({ commit }, id) {
       return axios
-        .get(`/movie/${id}/external_ids?api_key=${this.state.apiKey}&language=ru-RU`)
+        .get(
+          `/movie/${id}/external_ids?api_key=${this.state.apiKey}&language=ru-RU`
+        )
         .then((res) => {
           commit("SET_MOVIE_LINKS", res.data);
           return res.data;
@@ -256,6 +268,20 @@ const store = createStore({
         .get(`/movie/${id}/similar?api_key=${this.state.apiKey}&language=ru-RU`)
         .then((res) => {
           commit("SET_MOVIE_SIMILAR", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+    GET_SEARCH({ commit }, query) {
+      return axios
+        .get(
+          `/search/multi?api_key=${this.state.apiKey}&language=ru-RU&query=${query}`
+        )
+        .then((res) => {
+          commit("SET_SEARCH", res.data);
           return res.data;
         })
         .catch((e) => {
