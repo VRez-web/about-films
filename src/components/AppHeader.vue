@@ -7,7 +7,10 @@
             about<span>Films</span>
           </router-link>
         </h1>
-        <div class="header__group" @click="searchShow = !searchShow">
+        <div
+          class="header__group"
+          @click="searchShow = !searchShow;removeOverflow()"
+        >
           <div class="header__search">
             <i class="icofont-search-2"></i>
             <span>Поиск</span>
@@ -19,7 +22,7 @@
       </div>
     </div>
   </header>
-  <search v-if="searchShow" :data="searchShow" @close="close"/>
+  <search v-if="searchShow" :data="searchShow" @close="close()" />
 </template>
 
 <script>
@@ -30,13 +33,16 @@ export default {
   },
   data() {
     return {
-      searchShow:false
+      searchShow: false,
     };
   },
   methods: {
-    close(searchShow){
-      this.searchShow = searchShow
-    }
+    close(searchShow) {
+      this.searchShow = searchShow;
+    },
+    removeOverflow() {
+      document.body.classList.add("search-open");
+    },
   },
 };
 </script>
@@ -116,4 +122,5 @@ export default {
     }
   }
 }
+
 </style>
