@@ -14,7 +14,9 @@
         <form @submit.prevent>
           <fieldset>
             <input type="text" v-model="query" id="search" />
-            <label for="search" class="placeholder"
+            <label
+              for="search"
+              :class="query !== '' ? 'placeholder-show' : 'placeholder'"
               >Фильмы, сериалы, персоны</label
             >
           </fieldset>
@@ -33,8 +35,26 @@
             >Лучшие сериалы</router-link
           >
         </div>
-        <div class="search__result">
-          <card :data="result.results"/>
+        <div class="search__result" @click="close()">
+          <div class="search__result-movies search__result-wrapper">
+            <h2 class="search__result-title">Фильмы:</h2>
+            <div class="search__result-inner">
+              <card :data="resultMovie" />
+            </div>
+          </div>
+          <div class="search__result-tv search__result-wrapper">
+            <h2 class="search__result-title">Сериалы:</h2>
+            <div class="search__result-inner">
+               <card :data="resultTv" />
+            </div>
+          </div>
+          <div class="search__result-person search__result-wrapper">
+            <h2 class="search__result-title">Люди:</h2>
+            <div class="search__result-inner">
+               <card :data="resultPerson" />
+            </div>
+          </div>
+          
         </div>
         <p class="search__undefind" v-if="result.total_results == 0">
           По вашему запросу ничего не найдено
@@ -45,14 +65,17 @@
 </template>
 
 <script>
-import card from './Card'
+import card from "./Card";
 import { mapActions } from "vuex";
 export default {
-  components:{card},
+  components: { card },
   data() {
     return {
       query: "",
       result: [],
+      resultMovie: [],
+      resultTv: [],
+      resultPerson: [],
     };
   },
   methods: {
@@ -65,16 +88,27 @@ export default {
       document.body.classList.remove("search-open");
     },
   },
-  computed:{
+  computed: {
     getData() {
       this.GET_SEARCH(this.query).then((res) => {
         this.result = res;
-        console.log(res);
+        res.results.forEach((item) => {
+          if (item.media_type == "tv") {
+            this.resultTv.push(item);
+            this.resultTv = this.resultTv.slice(0, 9);
+          } else if (item.media_type == "movie") {
+            this.resultMovie.push(item);
+            this.resultMovie = this.resultMovie.slice(0, 9);
+          } else {
+            this.resultPerson.push(item);
+            this.resultPerson = this.resultPerson.slice(0, 9);
+          }
+        });
       });
     },
   },
   updated() {
-   this.getData
+    this.getData;
   },
 };
 </script>
@@ -147,6 +181,16 @@ body {
     left: 2%;
     transform: translate(0%, -50%);
     transition: all 0.5s linear;
+
+    &-show {
+      font-size: 0.875rem;
+      left: 2%;
+      top: 20%;
+      color: $color-tematic;
+      position: absolute;
+      transform: translate(0%, -50%);
+      transition: all 0.5s linear;
+    }
   }
   &__close {
     position: absolute;
@@ -167,6 +211,18 @@ body {
   &__undefind {
     font-size: 1.5rem;
     margin-top: 1rem;
+  }
+  &__result {
+    padding-top: 3rem;
+
+    &-inner{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
   }
 }
 </style>
