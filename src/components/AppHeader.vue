@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import search from "./Search";
+import search from "./search/Search";
 export default {
   components: {
     search,
