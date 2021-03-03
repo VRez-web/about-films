@@ -82,11 +82,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/scss/_vars.scss";
-.swiper-slide{ 
-  .card{
-    width: 100%;
-  }
-}
 .card {
   width: 18%;
   color: $color-white;
@@ -167,6 +162,16 @@ export default {
   }
   &__name {
     margin: 0.625rem 0;
+  }
+}
+.swiper-slide{ 
+  .card{
+    width: 100%;
+  }
+}
+.search{
+  .card{
+    width: 22%;
   }
 }
 </style>
