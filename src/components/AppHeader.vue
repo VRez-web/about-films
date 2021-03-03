@@ -66,7 +66,6 @@ export default {
     font-size: 2rem;
     font-weight: 900;
     color: $color-white;
-
     span {
       color: $color-tematic;
     }
