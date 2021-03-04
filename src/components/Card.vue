@@ -171,7 +171,7 @@ export default {
 }
 .search{
   .card{
-    width: 22%;
+    width: 100%;
   }
 }
 </style>
