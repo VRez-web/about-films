@@ -22,42 +22,103 @@
           </fieldset>
         </form>
         <div class="search__defolt-links" v-if="query == 0 && query == ''">
-          <router-link to="/movies-popular" class="link" @click="close"
-            >Популярные фильмы</router-link
-          >
-          <router-link to="/tvShows-popular" class="link" @click="close"
-            >Популярные сериалы</router-link
-          >
-          <router-link to="/movies-topRated" class="link" @click="close"
-            >Лучшие фильмы</router-link
-          >
-          <router-link to="/tvShows-topRated" class="link" @click="close"
-            >Лучшие сериалы</router-link
-          >
+          <div class="search__defolt-item" @click="close(), backOverflow()">
+            <router-link to="/movies-popular" class="link"
+              >Популярные фильмы</router-link
+            >
+          </div>
+          <div class="search__defolt-item" @click="close(), backOverflow()">
+            <router-link to="/tvShows-popular" class="link"
+              >Популярные сериалы</router-link
+            >
+          </div>
+
+          <div class="search__defolt-item" @click="close(), backOverflow()">
+            <router-link to="/movies-topRated" class="link"
+              >Лучшие фильмы</router-link
+            >
+          </div>
+
+          <div class="search__defolt-item" @click="close(), backOverflow()">
+            <router-link to="/tvShows-topRated" class="link"
+              >Лучшие сериалы</router-link
+            >
+          </div>
         </div>
-        <div class="search__result" v-if="result.total_results >= 1">
-          <h2 class="search__result-total-result">
-            Найдено {{ result.total_results }}
+        <div class="search__result" v-if="query != ''">
+          <h2 class="search__result-total">
+            Найдено
+            {{ result.total_results }}
           </h2>
-          <div class="search__result-movies search__result-wrapper">
+          <div
+            class="search__result-movies search__result-wrapper"
+            v-if="resultMovie != 0 && query != ''"
+          >
             <h2 class="search__result-title">Фильмы:</h2>
-            <div class="search__result-inner" @click="close()">
-              <card :data="resultMovie" />
+            <div class="search__result-inner">
+              <div
+                class="search__result-item"
+                v-for="item in resultMovie"
+                :key="item.id"
+                @click="close(), backOverflow()"
+              >
+                <card :data="[item]" />
+              </div>
+            </div>
+            <div class="link-wrapper" @click="close(), backOverflow()">
+              <router-link
+                :to="{ name: 'search-total', params: { title: 'movie' } }"
+                class="link"
+                >Посмотреть все результаты</router-link
+              >
             </div>
           </div>
-          <div class="search__result-tv search__result-wrapper">
+
+          <div
+            class="search__result-tv search__result-wrapper"
+            v-if="resultTv != 0 && query != ''"
+          >
             <h2 class="search__result-title">Сериалы:</h2>
-            <div class="search__result-inner" @click="close()">
-              <card :data="resultTv" />
+            <div class="search__result-inner">
+              <div
+                class="search__result-item"
+                v-for="item in resultTv"
+                :key="item.id"
+                @click="close(), backOverflow()"
+              >
+                <card :data="[item]" />
+              </div>
+            </div>
+            <div class="link-wrapper" @click="close(), backOverflow()">
+              <router-link
+                :to="{ name: 'search-total', params: { title: 'tv-shows' } }"
+                class="link"
+                >Посмотреть все результаты</router-link
+              >
             </div>
           </div>
+
           <div
             class="search__result-person search__result-wrapper"
-            v-if="resultPerson != 0"
+            v-if="resultPerson != 0 && query != ''"
           >
             <h2 class="search__result-title">Люди:</h2>
-            <div class="search__result-inner" @click="close()">
-              <card :data="resultPerson" />
+            <div class="search__result-inner">
+              <div
+                class="search__result-item"
+                v-for="item in resultPerson"
+                :key="item.id"
+                @click="close(), backOverflow()"
+              >
+                <card :data="[item]" />
+              </div>
+            </div>
+            <div class="link-wrapper" @click="close(), backOverflow()">
+              <router-link
+                :to="{ name: 'search-total', params: { title: 'person' } }"
+                class="link"
+                >Посмотреть все результаты</router-link
+              >
             </div>
           </div>
         </div>
@@ -79,8 +140,11 @@ export default {
       query: "",
       result: [],
       resultMovie: [],
+      resultMovieTotal: "",
       resultTv: [],
+      resultTvTotal: "",
       resultPerson: [],
+      resultPersonTotal: "",
     };
   },
   methods: {
@@ -94,13 +158,36 @@ export default {
     },
   },
   computed: {
+    // Получение данных по запросу
     getData() {
+      // делаем только если строка не пуста
       if (this.query !== "") {
         this.GET_SEARCH(this.query).then((res) => {
           this.result = res;
+
+          // преобразуем число в строку, чтобы правильно склонять слово "совпадение" в зависимости
+          //  от результата и прибовлять его к нашему результату
+          this.result.total_results = this.result.total_results.toString();
+
+          // if (this.result.total_results.slice(-1) == 1) {
+          //   this.result.total_results =
+          //     this.result.total_results + ` совпадение`;
+          // }else{}
+
+          // : result.total_results.slice(-1) == 0 ||
+          //   (result.total_results.slice(-1) == 5 ||
+          //     result.total_results.slice(-1) == 6 ||
+          //     result.total_results.slice(-1) == 7 ||
+          //     result.total_results.slice(-1) == 8 ||
+          //     result.total_results.slice(-1) == 9)
+          // ? result.total_results + " совпадений"
+          // : result.total_results + " совпадения"
+
           this.resultTv = [];
           this.resultMovie = [];
           this.resultPerson = [];
+
+          // пробегаем по данным, чтобы их распределить по нужным переменным
           this.result.results.forEach((item) => {
             if (item.media_type == "tv") {
               this.resultTv.push(item);
@@ -151,7 +238,7 @@ body {
     height: 100%;
   }
   &__inner {
-    width: 60%;
+    width: 65%;
     margin: 0 auto;
     z-index: 2;
     fieldset {
@@ -209,13 +296,18 @@ body {
     cursor: pointer;
     font-size: 1.3rem;
   }
-  &__defolt-links {
-    margin-top: 1rem;
+  &__defolt {
+    &-item {
+      width: fit-content;
 
-    a {
-      font-size: 1rem;
-      display: block;
-      margin-bottom: 1rem;
+      a {
+        font-size: 1rem;
+        display: block;
+        margin-bottom: 1rem;
+      }
+    }
+    &-links {
+      margin-top: 1rem;
     }
   }
   &__undefind {
@@ -223,16 +315,32 @@ body {
     margin-top: 1rem;
   }
   &__result {
-    padding-top: 3rem;
+    padding-top: 2rem;
 
     &-inner {
       display: flex;
       flex-wrap: wrap;
     }
+
+    &-item {
+      width: 22%;
+      margin-right: 1.25rem;
+    }
+
+    &-wrapper {
+      padding-bottom: 1rem;
+    }
     &-title {
       font-size: 1.5rem;
       margin-bottom: 2.5rem;
     }
+    &-total {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
   }
+}
+.link-wrapper {
+  margin-top: -2rem;
 }
 </style>
