@@ -9,6 +9,8 @@ import TvShowsWeek from "../pages/tvShows/TvShowsWeek";
 import TvShowsPopular from "../pages/tvShows/TvShowsPopular";
 import TvShowsTopRated from "../pages/tvShows/TvShowsTopRated";
 import CardDetails from "../components/details/CardDetails";
+import SearchTotal from '../components/search/SearchTotal'
+
 const routes = [
   {
     path: "/",
@@ -50,6 +52,12 @@ const routes = [
     path: "/:title/:id",
     component: CardDetails,
     name:'card-details',
+    props: true,
+  },
+  {
+    path: "/:title/total",
+    component: SearchTotal,
+    name:'search-total',
     props: true,
   },
 ];
