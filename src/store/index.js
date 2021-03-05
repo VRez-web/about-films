@@ -25,7 +25,9 @@ const store = createStore({
       movieSocialLinks: [],
       movieDetailsVideo: [],
       movieDetailsSimilar: [],
-      searchQueary: "",
+      searchQuery: "",
+      searchTotalMovies: [],
+
       page: 1,
     };
   },
@@ -75,14 +77,19 @@ const store = createStore({
     SET_MOVIE_SIMILAR: (state, movieDetailsSimilar) => {
       state.movieDetailsSimilar = movieDetailsSimilar;
     },
-    SET_SEARCH: (state, searchQueary) => {
-      state.searchQueary = searchQueary;
+
+    // SEARCH
+    SET_SEARCH: (state, searchQuery) => {
+      state.searchQuery = searchQuery;
+    },
+    SET_SEARCH_TOTAL_MOVIES: (state, searchTotalMovies) => {
+      state.searchTotalMovies = searchTotalMovies;
     },
   },
   actions: {
     // Tv Shows
-    GET_TV_SHOWS_TOP_RATED({ commit }, page = this.state.page) {
-      return axios
+    async GET_TV_SHOWS_TOP_RATED({ commit }, page = this.state.page) {
+      return await axios
         .get(
           `/tv/top_rated?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
@@ -95,8 +102,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_TV_SHOWS_WEEK({ commit }, page = this.state.page) {
-      return axios
+    async GET_TV_SHOWS_WEEK({ commit }, page = this.state.page) {
+      return await axios
         .get(
           `/tv/on_the_air?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
@@ -109,8 +116,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_TV_SHOWS_TODAY({ commit }, page = this.state.page) {
-      return axios
+    async GET_TV_SHOWS_TODAY({ commit }, page = this.state.page) {
+      return await axios
         .get(
           `/tv/airing_today?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
@@ -123,8 +130,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_TV_SHOWS_POPULAR({ commit }, page = this.state.page) {
-      return axios
+    async GET_TV_SHOWS_POPULAR({ commit }, page = this.state.page) {
+      return await axios
         .get(
           `/tv/popular?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
@@ -139,8 +146,8 @@ const store = createStore({
     },
 
     // Movies
-    GET_MOVIES_THEATRES({ commit }, page = this.state.page) {
-      return axios
+    async GET_MOVIES_THEATRES({ commit }, page = this.state.page) {
+      return await axios
         .get(
           `/movie/now_playing?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
@@ -153,8 +160,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIES_POPULAR({ commit }, page = this.state.page) {
-      return axios
+    async GET_MOVIES_POPULAR({ commit }, page = this.state.page) {
+      return await axios
         .get(
           `/movie/popular?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
@@ -167,8 +174,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIES_TOP_RATED({ commit }, page = this.state.page) {
-      return axios
+    async GET_MOVIES_TOP_RATED({ commit }, page = this.state.page) {
+      return await axios
         .get(
           `/movie/top_rated?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
@@ -181,8 +188,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIES_UPCOMING({ commit }, page = this.state.page) {
-      return axios
+    async GET_MOVIES_UPCOMING({ commit }, page = this.state.page) {
+      return await axios
         .get(
           `/movie/upcoming?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
         )
@@ -195,8 +202,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_CARD_DETAILS({ commit }, id) {
-      return axios
+    async GET_CARD_DETAILS({ commit }, id) {
+      return await axios
         .get(
           `/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=credits`
         )
@@ -209,8 +216,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIE_IMAGES({ commit }, id) {
-      return axios
+    async GET_MOVIE_IMAGES({ commit }, id) {
+      return await axios
         .get(
           `/movie/${id}/images?api_key=${this.state.apiKey}&language=ru,null`
         )
@@ -223,8 +230,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIE_DATES({ commit }, id) {
-      return axios
+    async GET_MOVIE_DATES({ commit }, id) {
+      return await axios
         .get(
           `/movie/${id}/release_dates?api_key=${this.state.apiKey}&language=ru-RU`
         )
@@ -237,8 +244,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIE_LINKS({ commit }, id) {
-      return axios
+    async GET_MOVIE_LINKS({ commit }, id) {
+      return await axios
         .get(
           `/movie/${id}/external_ids?api_key=${this.state.apiKey}&language=ru-RU`
         )
@@ -251,8 +258,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIE_VIDEO({ commit }, id) {
-      return axios
+    async GET_MOVIE_VIDEO({ commit }, id) {
+      return await axios
         .get(`/movie/${id}/videos?api_key=${this.state.apiKey}&language=ru-RU`)
         .then((res) => {
           commit("SET_MOVIE_VIDEO", res.data);
@@ -263,8 +270,8 @@ const store = createStore({
           return e;
         });
     },
-    GET_MOVIE_SIMILAR({ commit }, id) {
-      return axios
+    async GET_MOVIE_SIMILAR({ commit }, id) {
+      return await axios
         .get(`/movie/${id}/similar?api_key=${this.state.apiKey}&language=ru-RU`)
         .then((res) => {
           commit("SET_MOVIE_SIMILAR", res.data);
@@ -275,13 +282,28 @@ const store = createStore({
           return e;
         });
     },
-    GET_SEARCH({ commit }, query) {
-      return axios
+    async GET_SEARCH({ commit }, query) {
+      return await axios
         .get(
           `/search/multi?api_key=${this.state.apiKey}&language=ru-RU&query=${query}`
         )
         .then((res) => {
           commit("SET_SEARCH", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+
+    async GET_SEARCH_TOTAL_MOVIES({ commit }, query) {
+      return await axios
+        .get(
+          `/search/movie?api_key=${this.state.apiKey}&language=ru-RU&query=${query}`
+        )
+        .then((res) => {
+          commit("SET_SEARCH_TOTAL_MOVIES", res.data);
           return res.data;
         })
         .catch((e) => {

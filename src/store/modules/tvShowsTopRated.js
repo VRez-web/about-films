@@ -1,5 +1,5 @@
 import axios from 'axios';
-export default{
+export default {
   namespaced: true,
   state: {
     tvShowsTopRated: [],
@@ -12,9 +12,9 @@ export default{
     },
   },
   actions: {
-    GET_TV_SHOWS_TOP_RATED({ commit },page=this.state.page) {
-      return axios
-        .get(`/tv/top_rated?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`)
+   async GET_TV_SHOWS_TOP_RATED({ commit },page=this.state.page) {
+      return  await axios
+       .get(`/tv/top_rated?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`)
         .then((res) => {
           commit("SET_TV_SHOWS_TOP_RATED_TO_STATE", res.data);
           return res.data;
