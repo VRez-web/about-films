@@ -67,7 +67,7 @@
             </div>
             <div class="link-wrapper" @click="close(), backOverflow()">
               <router-link
-                :to="{ name: 'search-total', params: { title: 'movie' } }"
+                :to="{ name: 'search-total', params: { title: 'movie',query:query }, }"
                 class="link"
                 >Посмотреть все результаты</router-link
               >
@@ -91,7 +91,7 @@
             </div>
             <div class="link-wrapper" @click="close(), backOverflow()">
               <router-link
-                :to="{ name: 'search-total', params: { title: 'tv-shows' } }"
+                :to="{ name: 'search-total', params: { title: 'tv-shows',query:query } }"
                 class="link"
                 >Посмотреть все результаты</router-link
               >
@@ -115,7 +115,7 @@
             </div>
             <div class="link-wrapper" @click="close(), backOverflow()">
               <router-link
-                :to="{ name: 'search-total', params: { title: 'person' } }"
+                :to="{ name: 'search-total', params: { title: 'person',query:query } }"
                 class="link"
                 >Посмотреть все результаты</router-link
               >
@@ -191,13 +191,13 @@ export default {
           this.result.results.forEach((item) => {
             if (item.media_type == "tv") {
               this.resultTv.push(item);
-              this.resultTv = this.resultTv.slice(0, 9);
+              this.resultTv = this.resultTv.slice(0, 8);
             } else if (item.media_type == "movie") {
               this.resultMovie.push(item);
-              this.resultMovie = this.resultMovie.slice(0, 9);
+              this.resultMovie = this.resultMovie.slice(0, 8);
             } else {
               this.resultPerson.push(item);
-              this.resultPerson = this.resultPerson.slice(0, 9);
+              this.resultPerson = this.resultPerson.slice(0, 8);
             }
           });
         });
