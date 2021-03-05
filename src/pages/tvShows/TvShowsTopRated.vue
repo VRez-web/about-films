@@ -1,11 +1,9 @@
 <template>
   <section class="tv__shows section">
     <div class="container">
-      <h2 class="section__title">
-        Лучшие Тв-шоу:
-      </h2>
+      <h2 class="section__title">Лучшие Тв-шоу:</h2>
       <div class="tv__shows__inner section__inner">
-           <card :data="tvShowsTopRated.results" />
+        <card :data="tvShowsTopRated.results" />
       </div>
       <pagination
         :data="tvShowsTopRated"
