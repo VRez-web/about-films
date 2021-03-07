@@ -145,6 +145,7 @@ export default {
       resultTvTotal: "",
       resultPerson: [],
       resultPersonTotal: "",
+      currentPage:1
     };
   },
   methods: {
@@ -200,6 +201,14 @@ export default {
               this.resultPerson = this.resultPerson.slice(0, 8);
             }
           });
+          if(this.resultTv.length !== 8){
+            this.GET_SEARCH(this.query,this.currentPage++).then((res)=>{
+              console.log(res);
+            })
+          }
+          // else if(this.resultMovie.length !== 8){}else{
+          //    this.resultPerson !== 8
+          // }
         });
       }
     },
