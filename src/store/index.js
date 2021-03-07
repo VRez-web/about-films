@@ -282,10 +282,10 @@ const store = createStore({
           return e;
         });
     },
-    async GET_SEARCH({ commit }, query) {
+    async GET_SEARCH({ commit }, query, page = this.state.page) {
       return await axios
         .get(
-          `/search/multi?api_key=${this.state.apiKey}&language=ru-RU&query=${query}`
+          `/search/multi?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
         )
         .then((res) => {
           commit("SET_SEARCH", res.data);
@@ -297,10 +297,10 @@ const store = createStore({
         });
     },
 
-    async GET_SEARCH_TOTAL_MOVIES({ commit }, query) {
+    async GET_SEARCH_TOTAL_MOVIES({ commit }, query, page = this.state.page) {
       return await axios
         .get(
-          `/search/movie?api_key=${this.state.apiKey}&language=ru-RU&query=${query}`
+          `/search/movie?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
         )
         .then((res) => {
           commit("SET_SEARCH_TOTAL_MOVIES", res.data);
