@@ -104,6 +104,7 @@ export default {
       text-align: center;
       img {
         border-radius: 0.625rem;
+        margin-bottom: 1rem;
       }
     }
 
