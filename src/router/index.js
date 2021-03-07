@@ -19,6 +19,14 @@ const routes = [
   {
     path: "/movies-theatres",
     component: MoviesTheatres,
+    // children:[
+    //   {
+    //     path: "/movies-theatres/:title/:id",
+    //     component: CardDetails,
+    //     name:'card-details',
+    //     props: true,
+    //   },
+    // ]
   },
   {
     path: "/movies-popular",
@@ -65,6 +73,9 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior() {
+    document.getElementById('app').scrollIntoView({behavior: 'smooth'});
+}
 });
 
 export default router;
