@@ -33,19 +33,19 @@ const routes = [
     component: MoviesUpcoming,
   },
   {
-    path: "/tvShows-today",
+    path: "/serials-today",
     component: TvShowsToday,
   },
   {
-    path: "/tvShows-week",
+    path: "/serials-week",
     component: TvShowsWeek,
   },
   {
-    path: "/tvShows-popular",
+    path: "/serials-popular",
     component: TvShowsPopular,
   },
   {
-    path: "/tvShows-topRated",
+    path: "/serials-topRated",
     component: TvShowsTopRated,
   },
   {
