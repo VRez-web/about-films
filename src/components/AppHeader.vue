@@ -66,8 +66,17 @@ export default {
     font-size: 2rem;
     font-weight: 900;
     color: $color-white;
+    transition: all .4s linear;
     span {
       color: $color-tematic;
+       transition: all .4s linear;
+    }
+
+    &:hover{
+      color: $color-tematic;
+      span{
+         color: $color-white;
+      }
     }
   }
 
