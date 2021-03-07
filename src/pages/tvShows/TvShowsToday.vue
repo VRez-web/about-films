@@ -2,7 +2,7 @@
   <section class="tv__shows section">
     <div class="container">
       <h2 class="section__title">
-        Тв-шоу сегодня:
+        Сериалы на сегодня:
       </h2>
       <div class="tv__shows__inner section__inner">
            <card :data="tvShowsToday.results" />

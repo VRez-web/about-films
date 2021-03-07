@@ -18,9 +18,6 @@
           <swiper-slide v-for="item in moviesTeathers" :key="item.id"
             ><card :data="[item]" />
           </swiper-slide>
-
-          <div class="prev"></div>
-          <div class="next"></div>
         </swiper>
       </section>
       <section class="home__gallery">
@@ -39,9 +36,6 @@
           <swiper-slide v-for="item in moviesUpcoming" :key="item.id"
             ><card :data="[item]" />
           </swiper-slide>
-
-          <div class="prev"></div>
-          <div class="next"></div>
         </swiper>
       </section>
       <section class="home__gallery">
@@ -60,9 +54,6 @@
           <swiper-slide v-for="item in moviesPopular" :key="item.id"
             ><card :data="[item]" />
           </swiper-slide>
-
-          <div class="prev"></div>
-          <div class="next"></div>
         </swiper>
       </section>
       <section class="home__gallery">
@@ -81,15 +72,12 @@
           <swiper-slide v-for="item in moviesTopRated" :key="item.id"
             ><card :data="[item]" />
           </swiper-slide>
-
-          <div class="prev"></div>
-          <div class="next"></div>
         </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-today" class="link">
-            Тв-шоу на сегодня</router-link
+          <router-link to="/serials-today" class="link">
+            Сериалы на сегодня</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
         <swiper
@@ -102,15 +90,12 @@
           <swiper-slide v-for="item in tvShowsToday" :key="item.id"
             ><card :data="[item]" />
           </swiper-slide>
-
-          <div class="prev"></div>
-          <div class="next"></div>
         </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-week" class="link">
-            Тв-шоу на неделю</router-link
+          <router-link to="/serials-week" class="link">
+            Сериалы на неделю</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
         <swiper
@@ -123,15 +108,12 @@
           <swiper-slide v-for="item in tvShowsWeek" :key="item.id"
             ><card :data="[item]" />
           </swiper-slide>
-
-          <div class="prev"></div>
-          <div class="next"></div>
         </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-popular" class="link">
-            Популярные Тв-шоу</router-link
+          <router-link to="/serials-popular" class="link">
+            Популярные сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
         <swiper
@@ -144,15 +126,12 @@
           <swiper-slide v-for="item in tvShowsPopular" :key="item.id"
             ><card :data="[item]" />
           </swiper-slide>
-
-          <div class="prev"></div>
-          <div class="next"></div>
         </swiper>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/tvShows-topRated" class="link">
-            Лучшие Тв-шоу</router-link
+          <router-link to="/serials-topRated" class="link">
+            Лучшие сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
         <swiper
@@ -165,9 +144,6 @@
           <swiper-slide v-for="item in tvShowsTopRated" :key="item.id"
             ><card :data="[item]" />
           </swiper-slide>
-
-          <div class="prev"></div>
-          <div class="next"></div>
         </swiper>
       </section>
     </div>

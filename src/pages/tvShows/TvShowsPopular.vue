@@ -1,7 +1,7 @@
 <template>
   <section class="tv__shows section">
     <div class="container">
-      <h2 class="section__title">Популярные Тв-шоу</h2>
+      <h2 class="section__title">Популярные сериалы</h2>
       <div class="tv__shows__inner section__inner">
         <card :data="tvShowsPopular.results" />
       </div>
