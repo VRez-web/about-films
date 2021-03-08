@@ -10,7 +10,7 @@ import TvShowsPopular from "../pages/tvShows/TvShowsPopular";
 import TvShowsTopRated from "../pages/tvShows/TvShowsTopRated";
 import CardDetails from "../components/details/CardDetails";
 import SearchTotal from '../components/search/SearchTotal'
-
+import cardDetailsCast from '../components/details/CardDetailsCast'
 const routes = [
   {
     path: "/",
@@ -21,9 +21,9 @@ const routes = [
     component: MoviesTheatres,
     // children:[
     //   {
-    //     path: "/movies-theatres/:title/:id",
-    //     component: CardDetails,
-    //     name:'card-details',
+    //     path: "/cast",
+    //     component: cardDetailsCast,
+    //     name:'card-details-cast',
     //     props: true,
     //   },
     // ]
@@ -66,6 +66,12 @@ const routes = [
     path: "/:title/total",
     component: SearchTotal,
     name:'search-total',
+    props: true,
+  },
+  {
+    path: "/:title/:id/cast",
+    component: cardDetailsCast,
+    name:'card-details-cast',
     props: true,
   },
 ];
