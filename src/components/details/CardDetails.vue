@@ -25,7 +25,11 @@
         </p>
         <div class="card__details-inner">
           <img
-            :src="imgUrl + cardDetails.poster_path"
+            :src="
+              cardDetails.poster_path
+                ? imgUrl + cardDetails.poster_path
+                : require('@/assets/img/no-poster.jpg')
+            "
             alt=""
             class="card__details-img"
           />
@@ -92,14 +96,16 @@
                 ></a>
               </div>
             </div>
-            <a href="#cardDetailsAbout" class="card__details-scroll link"
-              >Подробнее</a
-            >
+            <a href="#" class="card__details-scroll link">Подробнее</a>
           </div>
         </div>
       </div>
     </section>
-    <cardDetailsAbout :cardId="cardId" :cast="cardDetailsCredit" />
+    <cardDetailsAbout
+      :cardId="cardId"
+      :cast="cardDetailsCredit"
+      :title="cardDetails.title"
+    />
   </main>
   <div
     class="card__details-trailer"
@@ -165,8 +171,8 @@ export default {
         this.cardDetailsPlot = res.overview;
         this.cardDetailsGenres = res.genres.slice(0, 3);
         this.cardDetailsPhrase = res.tagline;
+        console.log(res.credits.cast);
         this.cardDetailsCredit = res.credits.cast.slice(0, 9);
-
         // Обработка ключевой фразы фильма
         this.cardDetailsPhrase.slice(0, 1) != "«" &&
         this.cardDetailsPhrase.slice(-1) != "»"
@@ -223,9 +229,9 @@ export default {
   mounted() {
     this.getData;
   },
-  updated(){
-    this.getData
-  }
+  updated() {
+    this.getData;
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -244,6 +250,7 @@ export default {
     height: auto;
     display: block;
     border-radius: 0.938rem;
+    box-shadow: 0px 0px 15px 0px rgba(0, 255, 255, 0.75);
   }
   &-title {
     font-size: 2rem;
@@ -358,6 +365,7 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
     &-btn {
       background-color: transparent;
       border: none;
