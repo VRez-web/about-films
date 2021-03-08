@@ -15,9 +15,7 @@
             :key="item.id"
             class="card__details-cast-item swiper-slide-cast"
           >
-            <img :src="imgProfile + item.profile_path" :alt="item.name" />
-            <p class="card__details-cast-title">{{ item.name }}</p>
-            <p class="card__details-cast-character">{{ item.character }}</p>
+          <CardOfPeople :data="item" />
           </swiper-slide>
           <swiper-slide class="card__details-cast-more"
             ><p>Смотреть еще</p>
@@ -26,7 +24,7 @@
           <div class="prev"></div>
           <div class="next"></div>
         </swiper>
-        <a href="" class="all-cast link">Полный актёрский и съёмочный состав</a>
+        <router-link :to="{name:'card-details-cast',params:{id:cardId,title:title}}" class="all-cast link">Полный актёрский и съёмочный состав</router-link>
       </div>
     </div>
   </section>
@@ -52,18 +50,17 @@
 
 <script>
 import { mapActions } from "vuex";
-// import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import card from "../Card";
+import CardOfPeople from '../CardOfPeople'
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 export default {
-  props: { cardId: String, cast: Array },
-  components: { Swiper, SwiperSlide, card },
+  props: { cardId: String, cast: Array, title:String },
+  components: { Swiper, SwiperSlide, card,CardOfPeople },
   data() {
     return {
       imgUrl: this.$store.getters.IMG_URL,
-      imgProfile: this.$store.state.imgProfileSize,
       similarMovies: [],
     };
   },
@@ -78,10 +75,6 @@ export default {
     },
   },
   mounted() {
-    // Получение всех картинок связанных с фильмом
-    // this.GET_MOVIE_IMAGES(this.cardId).then((res) => {
-    //   this.images = res.backdrops;
-    // });
     this.getSimilarMovies
   },
   updated(){
@@ -99,19 +92,6 @@ export default {
     color: $color-white;
   }
   &-cast {
-    &-item {
-      width: 20%;
-      text-align: center;
-      img {
-        border-radius: 0.625rem;
-        margin-bottom: 1rem;
-      }
-    }
-
-    &-character {
-      padding: 0 1.5rem;
-      line-height: 20px;
-    }
     &-more {
       display: flex;
       height: 100%;
