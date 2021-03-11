@@ -60,7 +60,7 @@
             </div>
             <p
               class="card__details-phrase"
-              :class="cardDetails.tagline == '' ? 'hidden' : ''"
+              v-if="cardDetails.tagline != ''"
             >
               {{ cardDetailsPhrase }}
             </p>
@@ -74,6 +74,7 @@
               <button
                 class="card__details-trailer-btn link-hover"
                 @click="cardDetailsVideo = true"
+                :disabled="cardDetailsVideoKey == ''"
               >
                 <i class="icofont-ui-play"></i> Трейлер
               </button>
@@ -134,7 +135,6 @@ export default {
     return {
       cardDetails: [],
       imgUrl: this.$store.getters.IMG_URL,
-      cardId: "",
       dataAnnounce: "",
       dataRelease: "",
       cardDetailsAge: "",
@@ -153,10 +153,6 @@ export default {
   methods: {
     ...mapActions([
       "GET_CARD_DETAILS",
-      "GET_MOVIE_IMAGES",
-      "GET_MOVIE_DATES",
-      "GET_MOVIE_LINKS",
-      "GET_MOVIE_VIDEO",
     ]),
   },
   computed: {
@@ -171,8 +167,12 @@ export default {
         this.cardDetailsPlot = res.overview;
         this.cardDetailsGenres = res.genres.slice(0, 3);
         this.cardDetailsPhrase = res.tagline;
-        console.log(res.credits.cast);
+        this.cardDetailsVideoKey=res.videos.results[0].key
         this.cardDetailsCredit = res.credits.cast.slice(0, 9);
+        this.cardDetailsLinks = res.external_ids
+
+
+
         // Обработка ключевой фразы фильма
         this.cardDetailsPhrase.slice(0, 1) != "«" &&
         this.cardDetailsPhrase.slice(-1) != "»"
@@ -190,11 +190,9 @@ export default {
           : res.status == "In Production"
           ? (this.cardDetailsStatus = " в производстве")
           : "";
-        console.log(res);
-      });
-      // Получение даты выхода, с какого возраста фильм
-      this.GET_MOVIE_DATES(this.cardId).then((res) => {
-        res.results.forEach((item) => {
+
+          // Получение даты выхода, с какого возраста фильм
+        res.release_dates.results.forEach((item) => {
           if (item.iso_3166_1 == "RU") {
             this.dataRelease = item.release_dates[0].release_date
               .slice(0, 10)
@@ -211,19 +209,8 @@ export default {
           }
         });
       });
-      // Получение ссылок на соц сети
-      this.GET_MOVIE_LINKS(this.cardId).then((res) => {
-        this.cardDetailsLinks = res;
-      });
+      
 
-      // Получение трейлера к фильму
-      this.GET_MOVIE_VIDEO(this.cardId).then((res) => {
-        res.results.forEach((item) => {
-          item.name == "Трейлер №1"
-            ? (this.cardDetailsVideoKey = item.key)
-            : "";
-        });
-      });
     },
   },
   mounted() {
@@ -383,6 +370,23 @@ export default {
         i {
           opacity: 1;
           margin-left: 0;
+        }
+      }
+
+      &:disabled{
+        opacity: .4;
+        border:1px solid #466296;
+        &::before,&::after{
+          display: none;
+        }
+
+        &:hover{
+          cursor: auto;
+          background-color: transparent;
+          i{
+            opacity: 0;
+            margin-left: -0.875rem;
+          }
         }
       }
     }
