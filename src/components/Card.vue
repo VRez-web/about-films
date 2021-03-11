@@ -13,19 +13,8 @@
         },
       }"
     >
-      <p
-        class="card__vote"
-        :class="
-          item.vote_average >= 7
-            ? 'high-rating'
-            : item.vote_average < 7 && item.vote_average > 3
-            ? 'mid-rating'
-            : item.vote_average <= 3
-            ? 'low-rating'
-            : ''
-        "
-      >
-        {{ item.vote_average }}
+      <p class="card__vote" :class="checkVote">
+        {{ voteCorrect }}
       </p>
       <div class="card__wrapper">
         <img
@@ -54,12 +43,7 @@
               : (item.release_date = item.first_air_date)
           "
         >
-          {{
-            (item.release_date = item.release_date
-              .split("")
-              .slice(0, 4)
-              .join(""))
-          }}
+          {{ formatDate }}
         </p>
       </div>
     </router-link>
@@ -77,6 +61,24 @@ export default {
     };
   },
   methods: {},
+  computed: {
+    checkVote() {
+      return {
+        "high-rating": this.data[0].vote_average >= 7,
+        "mid-rating":
+          this.data[0].vote_average < 7 && this.data[0].vote_average > 4,
+        "low-rating":
+          this.data[0].vote_average > 1 && this.data[0].vote_average < 4,
+        "no-rating": this.data[0].vote_average == 'NR',
+      };
+    },
+    voteCorrect(){
+      return this.data[0].vote_average === 0 ? this.data[0].vote_average='NR':this.data[0].vote_average
+    },
+    formatDate() {
+      return this.data[0].release_date.split("").slice(0, 4).join("");
+    },
+  },
 };
 </script>
 
@@ -155,6 +157,9 @@ export default {
     &.low-rating {
       background-color: $bg-lowRating;
     }
+    &.no-rating{
+      background-color: $bg-noRating;
+    }
   }
 
   &-name-and-date {
@@ -164,13 +169,13 @@ export default {
     margin: 0.625rem 0;
   }
 }
-.swiper-slide{ 
-  .card{
+.swiper-slide {
+  .card {
     width: 100%;
   }
 }
-.search{
-  .card{
+.search {
+  .card {
     width: 100%;
   }
 }
