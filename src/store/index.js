@@ -205,7 +205,7 @@ const store = createStore({
     async GET_CARD_DETAILS({ commit }, id) {
       return await axios
         .get(
-          `/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=credits`
+          `/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=credits,release_dates,videos,external_ids`
         )
         .then((res) => {
           commit("SET_CARD_DETAILS", res.data);
@@ -237,32 +237,6 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_MOVIE_DATES", res.data);
-          return res.data;
-        })
-        .catch((e) => {
-          console.log(e);
-          return e;
-        });
-    },
-    async GET_MOVIE_LINKS({ commit }, id) {
-      return await axios
-        .get(
-          `/movie/${id}/external_ids?api_key=${this.state.apiKey}&language=ru-RU`
-        )
-        .then((res) => {
-          commit("SET_MOVIE_LINKS", res.data);
-          return res.data;
-        })
-        .catch((e) => {
-          console.log(e);
-          return e;
-        });
-    },
-    async GET_MOVIE_VIDEO({ commit }, id) {
-      return await axios
-        .get(`/movie/${id}/videos?api_key=${this.state.apiKey}&language=ru-RU`)
-        .then((res) => {
-          commit("SET_MOVIE_VIDEO", res.data);
           return res.data;
         })
         .catch((e) => {
