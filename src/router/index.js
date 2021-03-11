@@ -19,14 +19,6 @@ const routes = [
   {
     path: "/movies-theatres",
     component: MoviesTheatres,
-    // children:[
-    //   {
-    //     path: "/cast",
-    //     component: cardDetailsCast,
-    //     name:'card-details-cast',
-    //     props: true,
-    //   },
-    // ]
   },
   {
     path: "/movies-popular",
