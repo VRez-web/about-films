@@ -8,7 +8,7 @@ const store = createStore({
   state() {
     return {
       apiKey: process.env.VUE_APP_API_KEY,
-      imgUrl: "https://image.tmdb.org/t/p/w500",
+      imgUrl: "https://image.tmdb.org/t/p/w342",
       fullimgUrlSize: "https://image.tmdb.org/t/p/original",
       imgProfileSize: "http://image.tmdb.org/t/p/w185",
       tvShowsTopRated: [],
