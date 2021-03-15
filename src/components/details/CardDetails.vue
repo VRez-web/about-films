@@ -58,10 +58,7 @@
                 <p>{{ cardDetailsVotes }}</p>
               </div>
             </div>
-            <p
-              class="card__details-phrase"
-              v-if="cardDetails.tagline != ''"
-            >
+            <p class="card__details-phrase" v-if="cardDetails.tagline != ''">
               {{ cardDetailsPhrase }}
             </p>
             <div class="card__details-links">
@@ -134,7 +131,7 @@ export default {
   data() {
     return {
       cardDetails: [],
-      imgUrl: this.$store.getters.IMG_URL,
+      imgUrl: this.$store.state.imgUrl,
       dataAnnounce: "",
       dataRelease: "",
       cardDetailsAge: "",
@@ -151,14 +148,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "GET_CARD_DETAILS",
-    ]),
-  },
-  computed: {
-    cardId() {
-      return (this.cardId = this.$route.params.id);
-    },
+    ...mapActions(["GET_CARD_DETAILS"]),
     getData() {
       // Получение общей информации о фильме
       this.GET_CARD_DETAILS(this.cardId).then((res) => {
@@ -167,11 +157,9 @@ export default {
         this.cardDetailsPlot = res.overview;
         this.cardDetailsGenres = res.genres.slice(0, 3);
         this.cardDetailsPhrase = res.tagline;
-        this.cardDetailsVideoKey=res.videos.results[0].key
+        this.cardDetailsVideoKey = res.videos.results[0].key;
         this.cardDetailsCredit = res.credits.cast.slice(0, 9);
-        this.cardDetailsLinks = res.external_ids
-
-
+        this.cardDetailsLinks = res.external_ids;
 
         // Обработка ключевой фразы фильма
         this.cardDetailsPhrase.slice(0, 1) != "«" &&
@@ -191,7 +179,7 @@ export default {
           ? (this.cardDetailsStatus = " в производстве")
           : "";
 
-          // Получение даты выхода, с какого возраста фильм
+        // Получение даты выхода, с какого возраста фильм
         res.release_dates.results.forEach((item) => {
           if (item.iso_3166_1 == "RU") {
             this.dataRelease = item.release_dates[0].release_date
@@ -209,12 +197,15 @@ export default {
           }
         });
       });
-      
-
+    },
+  },
+  computed: {
+    cardId() {
+      return this.cardId = this.$route.params.id;
     },
   },
   mounted() {
-    this.getData;
+    this.getData();
   },
   updated() {
     this.getData;
@@ -373,17 +364,18 @@ export default {
         }
       }
 
-      &:disabled{
-        opacity: .4;
-        border:1px solid #466296;
-        &::before,&::after{
+      &:disabled {
+        opacity: 0.4;
+        border: 1px solid #466296;
+        &::before,
+        &::after {
           display: none;
         }
 
-        &:hover{
+        &:hover {
           cursor: auto;
           background-color: transparent;
-          i{
+          i {
             opacity: 0;
             margin-left: -0.875rem;
           }
