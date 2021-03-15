@@ -1,14 +1,16 @@
 <template>
   <section class="cast">
     <div class="container">
-
-    </div>
+      
+      </div>
   </section>
 </template>
 
 <script>
 export default {
-data(){},
+data(){
+  return{}
+},
 methods:{},
 computed:{},
 
