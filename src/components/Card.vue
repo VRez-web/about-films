@@ -1,52 +1,43 @@
 <template>
-  <div class="card" v-for="item in data" :key="item.id">
-    <router-link
-      :to="{
-        name: 'card-details',
-        params: {
-          id: `${item.id}`,
-          title: `${
-            item.title
-              ? item.title.replace(/\s/g, '-')
-              : (item.title = item.name)
-          }`,
-        },
-      }"
-    >
-      <p class="card__vote" :class="checkVote">
-        {{ voteCorrect }}
+  <div
+    class="card"
+    v-for="item in data"
+    :key="item.id"
+    @click="goToCard(item.id)"
+  >
+    <p class="card__vote" :class="checkVote(item)">
+      {{ voteCorrect(item) }}
+    </p>
+    <div class="card__wrapper">
+      <img
+        :src="
+          item.poster_path
+            ? imgUrl + item.poster_path
+            : require('@/assets/img/no-poster.jpg')
+        "
+        :alt="item.title"
+      />
+      <div class="card__about">
+        <p class="card__details">Подробнее <i class="icofont-link"></i></p>
+      </div>
+    </div>
+    <div class="card-name-and-date">
+      <p
+        class="card__name"
+        v-if="item.title ? item.title : (item.title = item.name)"
+      >
+        {{ item.title }}
       </p>
-      <div class="card__wrapper">
-        <img
-          :src="
-            item.poster_path
-              ? imgUrl + item.poster_path
-              : require('@/assets/img/no-poster.jpg')
-          "
-          :alt="item.title"
-        />
-        <div class="card__about">
-          <p class="card__details">Подробнее <i class="icofont-link"></i></p>
-        </div>
-      </div>
-      <div class="card-name-and-date">
-        <p
-          class="card__name"
-          v-if="item.title ? item.title : (item.title = item.name)"
-        >
-          {{ item.title }}
-        </p>
-        <p
-          v-if="
-            item.release_date
-              ? item.release_date
-              : (item.release_date = item.first_air_date)
-          "
-        >
-          {{ formatDate }}
-        </p>
-      </div>
-    </router-link>
+      <p
+        v-if="
+          item.release_date
+            ? item.release_date
+            : (item.release_date = item.first_air_date)
+        "
+      >
+        {{ formatDate(item) }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -60,24 +51,37 @@ export default {
       imgUrl: this.$store.state.imgUrl,
     };
   },
-  computed: {
-    checkVote() {
+  methods: {
+    goToCard(id) {
+      this.$router
+        .push({
+          name: "card-details",
+          params: { id: `${id}`, title: `${this.correctTitle}` },
+        })
+        .catch((e) => {});
+    },
+    checkVote(item) {
       return {
-        "high-rating": this.data[0].vote_average >= 7,
-        "mid-rating":
-          this.data[0].vote_average < 7 && this.data[0].vote_average > 4,
-        "low-rating":
-          this.data[0].vote_average > 1 && this.data[0].vote_average < 4,
-        "no-rating": this.data[0].vote_average == "NR",
+        "high-rating": item.vote_average >= 7,
+        "mid-rating": item.vote_average < 7 && item.vote_average > 4,
+        "low-rating": item.vote_average > 1 && item.vote_average < 4,
+        "no-rating": item.vote_average == "NR",
       };
     },
-    voteCorrect() {
-      return this.data[0].vote_average === 0
-        ? (this.data[0].vote_average = "NR")
-        : this.data[0].vote_average;
+    voteCorrect(item) {
+      return item.vote_average === 0
+        ? (item.vote_average = "NR")
+        : item.vote_average;
     },
-    formatDate() {
-      return this.data[0].release_date.split("").slice(0, 4).join("");
+    formatDate(item) {
+      return item.release_date.split("").slice(0, 4).join("");
+    },
+  },
+  computed: {
+    correctTitle() {
+      return this.data[0].title
+        ? this.data[0].title.replace(/\s/g, "-")
+        : this.data[0].name;
     },
   },
 };
