@@ -219,7 +219,7 @@ export default {
   watch:{
     query: {
       immediate: true, 
-      handler: function (value) {
+      handler: function () {
         this.getData()
     }
     }
