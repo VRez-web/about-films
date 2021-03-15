@@ -36,6 +36,7 @@ export default {
       // this.currentPage = page;
       this.GET_SEARCH_TOTAL_MOVIES(this.query, page).then((res) => {
         this.totalMovies = res;
+        this.currentPage=page
         console.log(this.query);
         console.log(page);
         console.log(res);
