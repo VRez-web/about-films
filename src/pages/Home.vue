@@ -186,14 +186,14 @@ export default {
       "GET_TV_SHOWS_POPULAR",
       "GET_TV_SHOWS_TOP_RATED",
     ]),
-    onSwiper(swiper) {},
-    onSlideChange() {},
   },
   computed: {},
-  mounted() {
+  async mounted() {
     // Получение фильмов
-    this.GET_MOVIES_THEATRES().then((res) => {
-      this.moviesTeathers = res.results.slice(0, 12);
+    // Пока что так
+    try {
+      const MOVIES_THEATRES = await this.GET_MOVIES_THEATRES();
+      this.moviesTeathers = MOVIES_THEATRES.results.slice(0, 12);
       this.moviesTeathers.forEach((item) => {
         this.GET_MOVIE_DATES(item.id).then((resolve) => {
           resolve.results.forEach((date) => {
@@ -206,24 +206,12 @@ export default {
           });
         });
       });
-    });
-    this.GET_MOVIES_UPCOMING().then((res) => {
-      this.moviesUpcoming = res.results.slice(2, 14);
-      this.moviesUpcoming.forEach((item) => {
-        this.GET_MOVIE_DATES(item.id).then((resolve) => {
-          resolve.results.forEach((date) => {
-            if (date.iso_3166_1 == "RU") {
-              item.release_date = date.release_dates[0].release_date.slice(
-                0,
-                4
-              );
-            }
-          });
-        });
-      });
-    });
-    this.GET_MOVIES_POPULAR().then((res) => {
-      this.moviesPopular = res.results.slice(0, 12);
+
+      const MOVIES_UPCOMING = await this.GET_MOVIES_UPCOMING();
+      this.moviesUpcoming = MOVIES_UPCOMING.results.slice(2, 14);
+
+      const MOVIES_POPULAR = await this.GET_MOVIES_POPULAR();
+      this.moviesPopular = MOVIES_POPULAR.results.slice(0, 12);
       this.moviesPopular.forEach((item) => {
         this.GET_MOVIE_DATES(item.id).then((resolve) => {
           resolve.results.forEach((date) => {
@@ -236,24 +224,26 @@ export default {
           });
         });
       });
-    });
-    this.GET_MOVIES_TOP_RATED().then((res) => {
-      this.moviesTopRated = res.results.slice(0, 12);
-    });
 
-    // Получение сериалов
-    this.GET_TV_SHOWS_TODAY().then((res) => {
-      this.tvShowsToday = res.results.slice(0, 12);
-    });
-    this.GET_TV_SHOWS_WEEK().then((res) => {
-      this.tvShowsWeek = res.results.slice(0, 12);
-    });
-    this.GET_TV_SHOWS_POPULAR().then((res) => {
-      this.tvShowsPopular = res.results.slice(0, 12);
-    });
-    this.GET_TV_SHOWS_TOP_RATED().then((res) => {
-      this.tvShowsTopRated = res.results.slice(0, 12);
-    });
+      const MOVIES_TOP_RATED = await this.GET_MOVIES_TOP_RATED();
+      this.moviesTopRated = MOVIES_TOP_RATED.results.slice(0, 12);
+
+      // Получение сериалов
+      const TV_SHOWS_TODAY = await this.GET_TV_SHOWS_TODAY();
+      this.tvShowsToday = TV_SHOWS_TODAY.results.slice(0, 12);
+
+      const TV_SHOWS_WEEK = await this.GET_TV_SHOWS_WEEK();
+      this.tvShowsWeek = TV_SHOWS_WEEK.results.slice(0, 12);
+
+      const TV_SHOWS_POPULAR = await this.GET_TV_SHOWS_POPULAR();
+      this.tvShowsPopular = TV_SHOWS_POPULAR.results.slice(0, 12);
+
+      const TV_SHOWS_TOP_RATED = await this.GET_TV_SHOWS_TOP_RATED();
+      this.tvShowsTopRated = TV_SHOWS_TOP_RATED.results.slice(0, 12);
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
   },
 };
 </script>
