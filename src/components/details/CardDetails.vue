@@ -157,7 +157,9 @@ export default {
         this.cardDetailsPlot = res.overview;
         this.cardDetailsGenres = res.genres.slice(0, 3);
         this.cardDetailsPhrase = res.tagline;
-        this.cardDetailsVideoKey = res.videos.results[0].key;
+        if (!!res.videos.results.length) {
+          this.cardDetailsVideoKey = res.videos.results[0].key;
+        }
         this.cardDetailsCredit = res.credits.cast.slice(0, 9);
         this.cardDetailsLinks = res.external_ids;
 
@@ -204,13 +206,13 @@ export default {
       return this.$route.params.id;
     },
   },
-   watch:{
+  watch: {
     cardId: {
-      immediate: true, 
+      immediate: true,
       handler: function () {
-        this.getData()
-    }
-    }
+        this.getData();
+      },
+    },
   },
   mounted() {
     this.getData();
