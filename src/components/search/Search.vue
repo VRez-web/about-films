@@ -16,19 +16,19 @@
             <input type="text" v-model="query" id="search" />
             <label
               for="search"
-              :class="query !== '' ? 'placeholder-show' : 'placeholder'"
+              :class="labelClasses"
               >Фильмы, сериалы, персоны</label
             >
           </fieldset>
         </form>
-        <div class="search__defolt-links" v-if="query == 0 && query == ''">
+        <div class="search__defolt-links" v-if="query == 0 && !query">
           <div class="search__defolt-item" @click="close(), backOverflow()">
             <router-link to="/movies-popular" class="link"
               >Популярные фильмы</router-link
             >
           </div>
           <div class="search__defolt-item" @click="close(), backOverflow()">
-            <router-link to="/tvShows-popular" class="link"
+            <router-link to="/serials-popular" class="link"
               >Популярные сериалы</router-link
             >
           </div>
@@ -40,19 +40,19 @@
           </div>
 
           <div class="search__defolt-item" @click="close(), backOverflow()">
-            <router-link to="/tvShows-topRated" class="link"
+            <router-link to="/serials-topRated" class="link"
               >Лучшие сериалы</router-link
             >
           </div>
         </div>
-        <div class="search__result" v-if="query != ''">
+        <div class="search__result" v-if="!!query">
           <h2 class="search__result-total">
             Найдено
             {{ result.total_results }}
           </h2>
           <div
             class="search__result-movies search__result-wrapper"
-            v-if="resultMovie != 0 && query != ''"
+            v-if="resultMovie != 0 && !!query"
           >
             <h2 class="search__result-title">Фильмы:</h2>
             <div class="search__result-inner">
@@ -76,7 +76,7 @@
 
           <div
             class="search__result-tv search__result-wrapper"
-            v-if="resultTv != 0 && query != ''"
+            v-if="resultTv != 0 && !!query"
           >
             <h2 class="search__result-title">Сериалы:</h2>
             <div class="search__result-inner">
@@ -100,7 +100,7 @@
 
           <div
             class="search__result-person search__result-wrapper"
-            v-if="resultPerson != 0 && query != ''"
+            v-if="resultPerson != 0 && !!query"
           >
             <h2 class="search__result-title">Люди:</h2>
             <div class="search__result-inner">
@@ -157,12 +157,10 @@ export default {
     backOverflow() {
       document.body.classList.remove("search-open");
     },
-  },
-  computed: {
-    // Получение данных по запросу
+        // Получение данных по запросу
     getData() {
       // делаем только если строка не пуста
-      if (this.query !== "") {
+      if (!!this.query) {
         this.GET_SEARCH(this.query).then((res) => {
           this.result = res;
 
@@ -201,11 +199,11 @@ export default {
               this.resultPerson = this.resultPerson.slice(0, 8);
             }
           });
-          if(this.resultTv.length !== 8){
-            this.GET_SEARCH(this.query,this.currentPage++).then((res)=>{
-              console.log(res);
-            })
-          }
+          // if(this.resultTv.length !== 8){
+          //   this.GET_SEARCH(this.query,this.currentPage++).then((res)=>{
+          //     console.log(res);
+          //   })
+          // }
           // else if(this.resultMovie.length !== 8){}else{
           //    this.resultPerson !== 8
           // }
@@ -213,8 +211,18 @@ export default {
       }
     },
   },
-  updated() {
-    this.getData;
+  computed: {
+    labelClasses(){
+      return !!this.query ? 'placeholder-show' : 'placeholder'
+    }
+  },
+  watch:{
+    query: {
+      immediate: true, 
+      handler: function (value) {
+        this.getData()
+    }
+    }
   },
 };
 </script>
