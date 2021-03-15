@@ -99,7 +99,7 @@
         </div>
       </div>
     </section>
-    <cardDetailsAbout
+    <card-details-about
       :cardId="cardId"
       :cast="cardDetailsCredit"
       :title="cardDetails.title"
@@ -201,14 +201,19 @@ export default {
   },
   computed: {
     cardId() {
-      return this.cardId = this.$route.params.id;
+      return this.$route.params.id;
     },
+  },
+   watch:{
+    cardId: {
+      immediate: true, 
+      handler: function () {
+        this.getData()
+    }
+    }
   },
   mounted() {
     this.getData();
-  },
-  updated() {
-    this.getData;
   },
 };
 </script>
