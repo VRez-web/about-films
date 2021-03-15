@@ -9,7 +9,7 @@
       :alt="data.name"
     />
     <p class="card__title">{{ data.name }}</p>
-    <p class="card__character">{{ data.character }}</p>
+    <p class="card__character" v-if="!!data.character">{{ data.character }}</p>
   </div>
 </template>
 <script>
@@ -41,5 +41,9 @@ export default {
     padding: 0 1.5rem;
     line-height: 20px;
   }
+}
+
+.search .card{
+  margin-bottom: 1rem;
 }
 </style>
