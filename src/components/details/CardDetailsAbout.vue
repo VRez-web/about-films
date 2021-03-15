@@ -24,7 +24,7 @@
           <div class="prev"></div>
           <div class="next"></div>
         </swiper>
-        <router-link :to="{name:'card-details-cast',params:{id:cardId,title:title}}" class="all-cast link">Полный актёрский и съёмочный состав</router-link>
+        <router-link :to="{name:'card-details-cast',params:{id:cardId,title:currectTitleLink}}" class="all-cast link">Полный актёрский и съёмочный состав</router-link>
       </div>
     </div>
   </section>
@@ -73,6 +73,9 @@ export default {
         this.similarMovies = res.results.slice(0, 9);
       });
     },
+    currectTitleLink(){
+      return this.title.replace(/\s/g, "-")
+    }
   },
   mounted() {
     this.getSimilarMovies
