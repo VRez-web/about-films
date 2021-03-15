@@ -15,7 +15,7 @@
             :key="item.id"
             class="card__details-cast-item swiper-slide-cast"
           >
-          <CardOfPeople :data="item" />
+          <card-of-people :data="item" />
           </swiper-slide>
           <swiper-slide class="card__details-cast-more"
             ><p>Смотреть еще</p>
