@@ -9,7 +9,6 @@ const store = createStore({
     return {
       apiKey: process.env.VUE_APP_API_KEY,
       imgUrl: "https://image.tmdb.org/t/p/w342",
-      fullimgUrlSize: "https://image.tmdb.org/t/p/original",
       imgProfileSize: "http://image.tmdb.org/t/p/w185",
       tvShowsTopRated: [],
       tvShowsWeek: [],
@@ -287,11 +286,7 @@ const store = createStore({
     },
   },
   modules: {},
-  getters: {
-    IMG_URL: (state) => {
-      return state.imgUrl;
-    },
-  },
+  getters: {},
 });
 
 export default store;
