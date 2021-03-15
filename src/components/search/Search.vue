@@ -110,7 +110,7 @@
                 :key="item.id"
                 @click="close(), backOverflow()"
               >
-                <card :data="[item]" />
+                <card-of-people :data="item" />
               </div>
             </div>
             <div class="link-wrapper" @click="close(), backOverflow()">
@@ -133,8 +133,9 @@
 <script>
 import card from "../Card";
 import { mapActions } from "vuex";
+import CardOfPeople from '../CardOfPeople.vue';
 export default {
-  components: { card },
+  components: { card,CardOfPeople },
   data() {
     return {
       query: "",
@@ -307,8 +308,8 @@ body {
     }
   }
   &__close {
-    position: absolute;
-    right: 20px;
+    position: fixed;
+    right: 30px;
     top: 20px;
     cursor: pointer;
     font-size: 1.3rem;
@@ -356,8 +357,5 @@ body {
       margin-bottom: 0.5rem;
     }
   }
-}
-.link-wrapper {
-  margin-top: -2rem;
 }
 </style>
