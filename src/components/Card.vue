@@ -57,10 +57,9 @@ export default {
   },
   data() {
     return {
-      imgUrl: this.$store.getters.IMG_URL,
+      imgUrl: this.$store.state.imgUrl,
     };
   },
-  methods: {},
   computed: {
     checkVote() {
       return {
@@ -69,11 +68,13 @@ export default {
           this.data[0].vote_average < 7 && this.data[0].vote_average > 4,
         "low-rating":
           this.data[0].vote_average > 1 && this.data[0].vote_average < 4,
-        "no-rating": this.data[0].vote_average == 'NR',
+        "no-rating": this.data[0].vote_average == "NR",
       };
     },
-    voteCorrect(){
-      return this.data[0].vote_average === 0 ? this.data[0].vote_average='NR':this.data[0].vote_average
+    voteCorrect() {
+      return this.data[0].vote_average === 0
+        ? (this.data[0].vote_average = "NR")
+        : this.data[0].vote_average;
     },
     formatDate() {
       return this.data[0].release_date.split("").slice(0, 4).join("");
@@ -106,6 +107,7 @@ export default {
   }
   a {
     color: inherit;
+    display: block;
   }
   img {
     width: 100%;
@@ -157,7 +159,7 @@ export default {
     &.low-rating {
       background-color: $bg-lowRating;
     }
-    &.no-rating{
+    &.no-rating {
       background-color: $bg-noRating;
     }
   }
