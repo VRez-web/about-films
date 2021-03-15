@@ -32,8 +32,7 @@ export default {
   methods: {
     ...mapActions(["GET_MOVIES_POPULAR", "GET_MOVIE_DATES"]),
     pageChange(page) {
-      this.currentPage = page;
-      this.GET_MOVIES_POPULAR((page = this.currentPage)).then((res) => {
+      this.GET_MOVIES_POPULAR(page).then((res) => {
         this.moviesPopular = res;
       });
     },
