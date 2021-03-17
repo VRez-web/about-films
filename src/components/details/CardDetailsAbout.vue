@@ -15,7 +15,7 @@
             :key="item.id"
             class="card__details-cast-item swiper-slide-cast"
           >
-          <card-of-people :data="item" />
+            <card-of-people :data="item" />
           </swiper-slide>
           <swiper-slide class="card__details-cast-more"
             ><p>Смотреть еще</p>
@@ -24,7 +24,12 @@
           <div class="prev"></div>
           <div class="next"></div>
         </swiper>
-        <router-link :to="{name:'card-details-cast',params:{id:cardId,title:currectTitleLink}}" class="all-cast link">Полный актёрский и съёмочный состав</router-link>
+        <a
+          href="#"
+          @click.prevent="currectTitleLink(cardId,title)"
+          class="all-cast link"
+          >Полный актёрский и съёмочный состав</a
+        >
       </div>
     </div>
   </section>
@@ -52,37 +57,42 @@
 import { mapActions } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import card from "../Card";
-import CardOfPeople from '../CardOfPeople'
+import CardOfPeople from "../CardOfPeople";
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 export default {
-  props: { cardId: String, cast: Array, title:String },
-  components: { Swiper, SwiperSlide, card,CardOfPeople },
+  props: { cardId: String, cast: Array, title: String },
+  components: { Swiper, SwiperSlide, card, CardOfPeople },
   data() {
     return {
-      imgUrl: this.$store.getters.IMG_URL,
       similarMovies: [],
     };
   },
   methods: {
     ...mapActions(["GET_MOVIE_SIMILAR"]),
-  },
-  computed: {
     getSimilarMovies() {
       this.GET_MOVIE_SIMILAR(this.cardId).then((res) => {
         this.similarMovies = res.results.slice(0, 9);
       });
     },
-    currectTitleLink(){
-      return this.title.replace(/\s/g, "-")
-    }
+
+    currectTitleLink(id, title) {
+      this.$router
+        .push({
+          name: "card-details-cast",
+          params: {id:id,title:title.replace(/\s/g, "-")},
+        })
+        .catch((e) => {});
+    },
   },
+  computed: {},
   mounted() {
-    this.getSimilarMovies
+    this.getSimilarMovies();
+    console.log(this.title);
   },
-  updated(){
-    this.getSimilarMovies
-  }
+  updated() {
+    this.getSimilarMovies();
+  },
 };
 </script>
 
