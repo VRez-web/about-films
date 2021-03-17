@@ -3,7 +3,7 @@
     <div class="container-second">
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/movies-theatres" class="link"
+          <router-link :to="{name:'movies-theatres'}" class="link"
             >В кинотеатрах сейчас</router-link
           >
           <i class="icofont-arrow-right"></i>
@@ -22,7 +22,7 @@
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/movies-upcoming" class="link"
+          <router-link :to="{name:'movies-upcoming'}" class="link"
             >Ожидаемые фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
@@ -40,7 +40,7 @@
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/movies-popular" class="link"
+          <router-link :to="{name:'movies-popular'}" class="link"
             >Популярные фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
@@ -58,7 +58,7 @@
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/movies-topRated" class="link"
+          <router-link :to="{name:'movies-topRated'}" class="link"
             >Лучшие фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
@@ -76,7 +76,7 @@
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/serials-today" class="link">
+          <router-link :to="{name:'serials-today'}" class="link">
             Сериалы на сегодня</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
@@ -94,7 +94,7 @@
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/serials-week" class="link">
+          <router-link :to="{name:'serials-week'}" class="link">
             Сериалы на неделю</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
@@ -112,7 +112,7 @@
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/serials-popular" class="link">
+          <router-link :to="{name:'serials-popular'}" class="link">
             Популярные сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
@@ -130,7 +130,7 @@
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link to="/serials-topRated" class="link">
+          <router-link :to="{name:'serials-topRated'}" class="link">
             Лучшие сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
@@ -186,6 +186,10 @@ export default {
       "GET_TV_SHOWS_POPULAR",
       "GET_TV_SHOWS_TOP_RATED",
     ]),
+    onSwiper(swiper) {
+      },
+      onSlideChange() {
+      },
   },
   computed: {},
   async mounted() {
