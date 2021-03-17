@@ -19,14 +19,10 @@ const store = createStore({
       moviesTopRated: [],
       moviesUpcoming: [],
       cardDetails: [],
-      cardMovieImages: [],
       movieDates: [],
-      movieSocialLinks: [],
-      movieDetailsVideo: [],
       movieDetailsSimilar: [],
       searchQuery: "",
       searchTotalMovies: [],
-
       page: 1,
     };
   },
@@ -61,17 +57,8 @@ const store = createStore({
     SET_CARD_DETAILS: (state, cardDetails) => {
       state.cardDetails = cardDetails;
     },
-    SET_MOVIE_IMAGES: (state, cardMovieImages) => {
-      state.cardMovieImages = cardMovieImages;
-    },
     SET_MOVIE_DATES: (state, movieDates) => {
       state.movieDates = movieDates;
-    },
-    SET_MOVIE_LINKS: (state, movieSocialLinks) => {
-      state.movieSocialLinks = movieSocialLinks;
-    },
-    SET_MOVIE_VIDEO: (state, movieDetailsVideo) => {
-      state.movieDetailsVideo = movieDetailsVideo;
     },
     SET_MOVIE_SIMILAR: (state, movieDetailsSimilar) => {
       state.movieDetailsSimilar = movieDetailsSimilar;
@@ -84,6 +71,7 @@ const store = createStore({
     SET_SEARCH_TOTAL_MOVIES: (state, searchTotalMovies) => {
       state.searchTotalMovies = searchTotalMovies;
     },
+
   },
   actions: {
     // Tv Shows
@@ -208,20 +196,6 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_CARD_DETAILS", res.data);
-          return res.data;
-        })
-        .catch((e) => {
-          console.log(e);
-          return e;
-        });
-    },
-    async GET_MOVIE_IMAGES({ commit }, id) {
-      return await axios
-        .get(
-          `/movie/${id}/images?api_key=${this.state.apiKey}&language=ru,null`
-        )
-        .then((res) => {
-          commit("SET_MOVIE_IMAGES", res.data);
           return res.data;
         })
         .catch((e) => {
