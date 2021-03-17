@@ -11,7 +11,7 @@
           @slideChange="onSlideChange"
         >
           <swiper-slide
-            v-for="item in cast"
+            v-for="item in castSlider"
             :key="item.id"
             class="card__details-cast-item swiper-slide-cast"
           >
@@ -26,7 +26,7 @@
         </swiper>
         <a
           href="#"
-          @click.prevent="currectTitleLink(cardId,title)"
+          @click.prevent="currectTitleLink(cardId, title)"
           class="all-cast link"
           >Полный актёрский и съёмочный состав</a
         >
@@ -61,7 +61,7 @@ import CardOfPeople from "../CardOfPeople";
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 export default {
-  props: { cardId: String, cast: Array, title: String },
+  props: { cardId: String, castSlider: Array, title: String},
   components: { Swiper, SwiperSlide, card, CardOfPeople },
   data() {
     return {
@@ -80,17 +80,21 @@ export default {
       this.$router
         .push({
           name: "card-details-cast",
-          params: {id:id,title:title.replace(/\s/g, "-")},
+          params: { id: id, title: title.replace(/\s/g, "-")},
         })
         .catch((e) => {});
     },
   },
   computed: {},
-  mounted() {
-    this.getSimilarMovies();
-    console.log(this.title);
+    watch:{
+    cardId: {
+      immediate: true, 
+      handler: function () {
+        this.getSimilarMovies()
+    }
+    }
   },
-  updated() {
+  mounted() {
     this.getSimilarMovies();
   },
 };
