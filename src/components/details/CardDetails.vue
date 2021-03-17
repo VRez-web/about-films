@@ -101,7 +101,7 @@
     </section>
     <card-details-about
       :cardId="cardId"
-      :cast="cardDetailsCredit"
+      :castSlider="cardDetailsCredit"
       :title="cardDetails.title"
     />
   </main>
@@ -160,7 +160,7 @@ export default {
         if (!!res.videos.results.length) {
           this.cardDetailsVideoKey = res.videos.results[0].key;
         }
-        this.cardDetailsCredit = res.credits.cast.slice(0, 9);
+        this.cardDetailsCredit = res.credits.cast.slice(0,9);
         this.cardDetailsLinks = res.external_ids;
 
         // Обработка ключевой фразы фильма
@@ -193,7 +193,7 @@ export default {
             )}/${this.dataRelease.slice(5, 7)}/${this.dataRelease.slice(0, 4)}`;
 
             this.cardDetailsAge = item.release_dates[0].certification;
-            this.cardDetailsAge == ""
+            !!this.cardDetailsAge
               ? (this.cardDetailsAge = "?__?")
               : this.cardDetailsAge;
           }
