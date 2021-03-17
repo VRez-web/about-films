@@ -210,7 +210,7 @@ export default {
     cardId: {
       immediate: true,
       handler: function () {
-        this.getData();
+        !!this.cardId ? this.getData() : "";
       },
     },
   },
