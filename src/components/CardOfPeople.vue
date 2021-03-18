@@ -8,8 +8,13 @@
       "
       :alt="data.name"
     />
-    <p class="card__title">{{ data.name }}</p>
-    <p class="card__character" v-if="!!data.character">{{ data.character }}</p>
+    <div class="card__description">
+      <p class="card__title">{{ data.name }}</p>
+      <p class="card__character" v-if="!!data.character">
+        {{ data.character }}
+      </p>
+      <p class="card__job" v-if="!!data.job">{{ data.job }}</p>
+    </div>
   </div>
 </template>
 <script>
@@ -22,15 +27,18 @@ export default {
       imgProfile: this.$store.state.imgProfileSize,
     };
   },
-
-  mounted() {},
+  mounted() {
+    console.log(this.data);
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/_vars.scss";
 .card {
   width: 100%;
   text-align: center;
+  color: $color-white;
   img {
     border-radius: 0.625rem;
     margin-bottom: 1rem;
@@ -43,7 +51,16 @@ export default {
   }
 }
 
-.search .card{
+.search .card {
   margin-bottom: 1rem;
+}
+.cast .card {
+  width: 13%;
+  text-align: center;
+  margin-bottom: 1rem;
+  img {
+    height: 185px;
+  }
+
 }
 </style>
