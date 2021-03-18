@@ -3,7 +3,7 @@
     <div class="container">
       <div class="header__inner">
         <h1>
-          <router-link to="/" class="header__logo">
+          <router-link :to="{name:'home'}" class="header__logo">
             about<span>Films</span>
           </router-link>
         </h1>
