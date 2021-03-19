@@ -8,12 +8,14 @@
           </p>
 
           <p class="card__details-status">
-            Статус: <span>{{ cardDetailsStatus }}</span>
+            Статус: <span> {{ statusProduction }} </span>
           </p>
         </h2>
         <p class="card__details-subtitle">
-          <span class="card__details-age">{{ cardDetailsAge }} </span>
-          <span class="card__details-realese">{{ dataRelease }}(RU)</span>
+          <span class="card__details-age">{{ formattedAge }} </span>
+          <span class="card__details-realese"
+            >{{ formattedDateRelease }} (RU)</span
+          >
           <span class="card__details-genres"
             ><span v-for="genre in cardDetailsGenres" :key="genre.id">{{
               genre.name
@@ -58,8 +60,8 @@
                 <p>{{ cardDetailsVotes }}</p>
               </div>
             </div>
-            <p class="card__details-phrase" v-if="cardDetails.tagline != ''">
-              {{ cardDetailsPhrase }}
+            <p class="card__details-phrase" v-if="!!cardDetails.tagline">
+              {{ phrase }}
             </p>
             <div class="card__details-links">
               <a
@@ -71,7 +73,7 @@
               <button
                 class="card__details-trailer-btn link-hover"
                 @click="cardDetailsVideo = true"
-                :disabled="cardDetailsVideoKey == ''"
+                :disabled="!trailerKey"
               >
                 <i class="icofont-ui-play"></i> Трейлер
               </button>
@@ -113,7 +115,7 @@
     <span class="card__details-trailer-close link">Назад</span>
     <div class="card__details-trailer-wrapper">
       <iframe
-        :src="`https://www.youtube.com/embed/${cardDetailsVideoKey}`"
+        :src="`https://www.youtube.com/embed/${trailerKey}`"
         width="750px"
         height="500px"
         frameborder="0"
@@ -143,67 +145,65 @@ export default {
       cardDetailsVotes: "",
       cardDetailsStatus: "",
       cardDetailsVideo: false,
-      cardDetailsVideoKey: "",
+      cardDetailsVideoTotal: [],
       cardDetailsCredit: [],
     };
   },
   methods: {
     ...mapActions(["GET_CARD_DETAILS"]),
-    getData() {
+    async getData() {
       // Получение общей информации о фильме
-      this.GET_CARD_DETAILS(this.cardId).then((res) => {
-        this.cardDetails = res;
-        this.dataAnnounce = res.release_date.slice(0, 4);
-        this.cardDetailsPlot = res.overview;
-        this.cardDetailsGenres = res.genres.slice(0, 3);
-        this.cardDetailsPhrase = res.tagline;
-        if (!!res.videos.results.length) {
-          this.cardDetailsVideoKey = res.videos.results[0].key;
-        }
-        this.cardDetailsCredit = res.credits.cast.slice(0,9);
-        this.cardDetailsLinks = res.external_ids;
-
-        // Обработка ключевой фразы фильма
-        this.cardDetailsPhrase.slice(0, 1) != "«" &&
-        this.cardDetailsPhrase.slice(-1) != "»"
-          ? (this.cardDetailsPhrase = `«${this.cardDetailsPhrase}»`)
-          : "";
-
-        this.cardDetailsRating = res.vote_average;
-        this.cardDetailsVotes = res.vote_count;
-
-        // Обработка статуса фильма
-        res.status == "Released"
-          ? (this.cardDetailsStatus = "вышел")
-          : res.status == "Post Production"
-          ? (this.cardDetailsStatus = "постпроизводство")
-          : res.status == "In Production"
-          ? (this.cardDetailsStatus = " в производстве")
-          : "";
-
-        // Получение даты выхода, с какого возраста фильм
-        res.release_dates.results.forEach((item) => {
-          if (item.iso_3166_1 == "RU") {
-            this.dataRelease = item.release_dates[0].release_date
-              .slice(0, 10)
-              .replace(/-/g, "/");
-            this.dataRelease = `${this.dataRelease.slice(
-              8,
-              10
-            )}/${this.dataRelease.slice(5, 7)}/${this.dataRelease.slice(0, 4)}`;
-
-            this.cardDetailsAge = item.release_dates[0].certification;
-            !!this.cardDetailsAge
-              ? (this.cardDetailsAge = "?__?")
-              : this.cardDetailsAge;
-          }
-        });
-      });
+      const CARD_DETAILS = await this.GET_CARD_DETAILS(this.cardId);
+      this.cardDetails = CARD_DETAILS;
+      this.dataAnnounce = this.cardDetails.release_date.slice(0, 4);
+      this.cardDetailsPlot = this.cardDetails.overview;
+      this.cardDetailsGenres = this.cardDetails.genres.slice(0, 3);
+      this.cardDetailsPhrase = this.cardDetails.tagline;
+      this.cardDetailsCredit = this.cardDetails.credits.cast.slice(0, 9);
+      this.cardDetailsLinks = this.cardDetails.external_ids;
+      this.cardDetailsRating = this.cardDetails.vote_average;
+      this.cardDetailsVotes = this.cardDetails.vote_count;
+      this.cardDetailsVideoTotal = this.cardDetails.videos.results;
+      this.dataRelease = this.cardDetails.release_dates.results.filter(
+        (el) => el.iso_3166_1 == "RU"
+      );
+      this.cardDetailsAge = this.dataRelease[0].release_dates[0].certification;
+      this.dataRelease = this.dataRelease[0].release_dates[0].release_date;
     },
   },
   computed: {
     cardId() {
       return this.$route.params.id;
+    },
+    trailerKey() {
+      return this.cardDetailsVideoTotal.length
+        ? this.cardDetails.videos.results[0].key
+        : "";
+    },
+    phrase() {
+      return this.cardDetailsPhrase.slice(0, 1) != "«" &&
+        this.cardDetailsPhrase.slice(-1) != "»"
+        ? (this.cardDetailsPhrase = `«${this.cardDetailsPhrase}»`)
+        : "";
+    },
+    statusProduction() {
+      if (this.cardDetails.status == "Released") {
+        return (this.cardDetailsStatus = "вышел");
+      } else if (this.cardDetails.status == "Post Production") {
+        return (this.cardDetailsStatus = "постпроизводство");
+      }
+      return (this.cardDetailsStatus = "In Production");
+    },
+    formattedDateRelease() {
+      return `${this.dataRelease.slice(8, 10)}/${this.dataRelease.slice(
+        5,
+        7
+      )}/${this.dataRelease.slice(0, 4)}`;
+    },
+    formattedAge() {
+      return !this.cardDetailsAge
+        ? (this.cardDetailsAge = "?__?")
+        : this.cardDetailsAge;
     },
   },
   watch: {
@@ -214,9 +214,7 @@ export default {
       },
     },
   },
-  mounted() {
-    this.getData();
-  },
+  mounted() {},
 };
 </script>
 <style lang="scss" scoped>
@@ -224,7 +222,6 @@ export default {
 .card__details {
   margin-top: -30px;
   padding: 2rem 0;
-  color: $color-white;
   &-inner {
     display: flex;
     justify-content: space-between;
@@ -391,7 +388,6 @@ export default {
     }
 
     &-close {
-      color: $color-white;
       position: absolute;
       right: 20px;
       top: 20px;
