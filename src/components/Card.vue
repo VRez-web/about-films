@@ -91,7 +91,6 @@ export default {
 @import "../assets/scss/_vars.scss";
 .card {
   width: 18%;
-  color: $color-white;
   margin: 0 1.25rem 2.5rem 0;
   transition: all 0.3s linear;
   cursor: pointer;

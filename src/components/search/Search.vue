@@ -241,13 +241,11 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   z-index: 2;
-  color: $color-white;
   padding-top: 3.75rem;
   overflow-y: scroll;
   &__title {
     font-size: 2rem;
     font-weight: 700;
-    color: $color-white;
     margin-bottom: 1rem;
   }
   &__wrapper {

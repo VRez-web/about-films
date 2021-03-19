@@ -106,7 +106,6 @@ export default {
   &-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: $color-white;
   }
   &-cast {
     &-more {
@@ -127,8 +126,6 @@ export default {
   margin-top: 1rem;
 }
 .card__details-about {
-  color: $color-white;
-
   &-title {
     margin: 1rem 0;
   }

@@ -117,7 +117,6 @@ export default {
       font-size: 1.25rem;
       border-radius: 0.313rem;
       background-color: $color-darkBlue;
-      color: $color-white;
       padding: 0.5rem;
       text-align: center;
 

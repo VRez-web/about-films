@@ -58,14 +58,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: $color-white;
     height: 4.375rem;
   }
 
   &__logo {
     font-size: 2rem;
     font-weight: 900;
-    color: $color-white;
     transition: all .4s linear;
     span {
       color: $color-tematic;
