@@ -27,9 +27,7 @@ export default {
       imgProfile: this.$store.state.imgProfileSize,
     };
   },
-  mounted() {
-    console.log(this.data);
-  },
+  mounted() {},
 };
 </script>
 
@@ -38,7 +36,6 @@ export default {
 .card {
   width: 100%;
   text-align: center;
-  color: $color-white;
   img {
     border-radius: 0.625rem;
     margin-bottom: 1rem;
@@ -57,7 +54,11 @@ export default {
 .cast .card {
   width: 13%;
   text-align: center;
-  margin-bottom: 1rem;
+  margin: 0 1rem 1rem 0;
+
+  &__title{
+    margin-bottom: .5rem;
+  }
   img {
     height: 185px;
   }
