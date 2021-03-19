@@ -250,6 +250,7 @@ export default {
           el.job == "Makeup Artist" ||
           el.job == "Prosthetic Makeup Artist" ||
           el.job == "Wigmaker" ||
+          el.job == "Additional Wardrobe Assistant" ||
           el.job == "Property Master"
       );
     },
@@ -335,7 +336,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.cardDetails.credits.crew.length);
   },
 };
 </script>
