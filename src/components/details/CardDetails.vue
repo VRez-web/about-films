@@ -13,17 +13,15 @@
         </h2>
         <p class="card__details-subtitle">
           <span class="card__details-age">{{ formattedAge }} </span>
-          <span class="card__details-realese"
-            >{{ formattedDateRelease }} (RU)</span
-          >
+          <span class="card__details-realese">{{ dateCheck }} (RU)</span>
           <span class="card__details-genres"
             ><span v-for="genre in cardDetailsGenres" :key="genre.id">{{
               genre.name
             }}</span></span
           >
           <span class="card__details-time"
-            ><i class="icofont-clock-time"></i
-          ></span>
+            >{{ movieTime() }} <i class="icofont-clock-time"></i>
+          </span>
         </p>
         <div class="card__details-inner">
           <img
@@ -147,6 +145,7 @@ export default {
       cardDetailsVideo: false,
       cardDetailsVideoTotal: [],
       cardDetailsCredit: [],
+      cardDetailsMovieTime: 0,
     };
   },
   methods: {
@@ -164,12 +163,29 @@ export default {
       this.cardDetailsRating = this.cardDetails.vote_average;
       this.cardDetailsVotes = this.cardDetails.vote_count;
       this.cardDetailsVideoTotal = this.cardDetails.videos.results;
+      this.cardDetailsMovieTime = this.cardDetails.runtime;
       this.dataRelease = this.cardDetails.release_dates.results.filter(
         (el) => el.iso_3166_1 == "RU"
-      );
-      this.cardDetailsAge = this.dataRelease[0].release_dates[0].certification;
-      this.dataRelease = this.dataRelease[0].release_dates[0].release_date;
+      )[0];
+      this.dataRelease
+        ? (this.cardDetailsAge = this.dataRelease.release_dates[0].certification)
+        : "";
+      this.dataRelease
+        ? (this.dataRelease = this.dataRelease.release_dates[0].release_date)
+        : "";
     },
+    // Пока что так
+    movieTime(time) {
+      let result = 0;
+      time = this.cardDetailsMovieTime
+      for (let i = 0; 60 <= time; i++) {
+        result += 1;
+        time -= 60;
+      }
+
+      return `${result} ч ${time} м`;
+    },
+    //////
   },
   computed: {
     cardId() {
@@ -194,16 +210,25 @@ export default {
       }
       return (this.cardDetailsStatus = "In Production");
     },
-    formattedDateRelease() {
-      return `${this.dataRelease.slice(8, 10)}/${this.dataRelease.slice(
-        5,
-        7
-      )}/${this.dataRelease.slice(0, 4)}`;
+    // Работа с датой => нахождение нужной даты в массиве,обработка случая если нет нужной даты и тд
+    dateCheck() {
+      return this.dataRelease
+        ? this.dataRelease //this.formattedDateRelease
+        : this.cardDetails.release_date;
     },
+    // formattedDateRelease() {
+    //   return  `${this.dateCheck.slice(8, 10)}/${this.dateCheck.slice(
+    //     5,
+    //     7
+    //   )}/${this.dateCheck.slice(0, 4)}`;
+    // },
+
+    // Конец работы с датой
+
     formattedAge() {
-      return !this.cardDetailsAge
-        ? (this.cardDetailsAge = "?__?")
-        : this.cardDetailsAge;
+      return this.cardDetailsAge
+        ? this.cardDetailsAge
+        : (this.cardDetailsAge = "?__?");
     },
   },
   watch: {
@@ -214,7 +239,9 @@ export default {
       },
     },
   },
-  mounted() {},
+  mounted() {
+    console.log();
+  },
 };
 </script>
 <style lang="scss" scoped>
