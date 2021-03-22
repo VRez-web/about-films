@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       imgUrl: this.$store.state.imgUrl,
+      category:this.$store.state.category
     };
   },
   methods: {
@@ -56,7 +57,7 @@ export default {
       this.$router
         .push({
           name: "card-details",
-          params: { id: `${id}`, title: `${this.correctTitle}` },
+          params: { id: `${id}`, category: `${this.category}` },
         })
         .catch((e) => {});
     },
