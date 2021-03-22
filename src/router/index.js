@@ -46,7 +46,7 @@ const routes = [
     component: () => import("../pages/tvShows/TvShowsTopRated"),
   },
   {
-    path: "/:title/:id",
+    path: "/:category/:id",
     name: "card-details",
     component: () => import("../components/details/CardDetails"),
     props: true,
@@ -58,7 +58,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/:title/:id/cast",
+    path: "/:id/cast",
     component: () => import("../components/details/CardDetailsCast"),
     name: "card-details-cast",
     props: true,
