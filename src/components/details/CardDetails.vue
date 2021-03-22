@@ -164,20 +164,32 @@ export default {
       this.cardDetailsVotes = this.cardDetails.vote_count;
       this.cardDetailsVideoTotal = this.cardDetails.videos.results;
       this.cardDetailsMovieTime = this.cardDetails.runtime;
+      // Работа с датой => нахождение нужной даты в массиве,обработка случая если нет нужной даты и тд
+      // если это делать вне получение данных ошибки вылизают
+      
+      // Проверка есть ли дата, потому что оттуда можно получить данные о возрастных ограничениях фильма
       this.dataRelease = this.cardDetails.release_dates.results.filter(
         (el) => el.iso_3166_1 == "RU"
       )[0];
-      this.dataRelease
-        ? (this.cardDetailsAge = this.dataRelease.release_dates[0].certification)
-        : "";
-      this.dataRelease
-        ? (this.dataRelease = this.dataRelease.release_dates[0].release_date)
-        : "";
+
+      if (this.dataRelease) {
+        this.cardDetailsAge=this.dataRelease.release_dates[0].certification
+        this.dataRelease = `${this.dataRelease.release_dates[0].release_date.slice(
+          8,
+          10
+        )}/${this.dataRelease.release_dates[0].release_date.slice(
+          5,
+          7
+        )}/${this.dataRelease.release_dates[0].release_date.slice(0, 4)}`;
+      } else {
+        this.dataRelease = this.cardDetails.release_date;
+      }
+
     },
     // Пока что так
     movieTime(time) {
       let result = 0;
-      time = this.cardDetailsMovieTime
+      time = this.cardDetailsMovieTime;
       for (let i = 0; 60 <= time; i++) {
         result += 1;
         time -= 60;
@@ -185,7 +197,6 @@ export default {
 
       return `${result} ч ${time} м`;
     },
-    //////
   },
   computed: {
     cardId() {
@@ -210,20 +221,11 @@ export default {
       }
       return (this.cardDetailsStatus = "In Production");
     },
-    // Работа с датой => нахождение нужной даты в массиве,обработка случая если нет нужной даты и тд
     dateCheck() {
       return this.dataRelease
-        ? this.dataRelease //this.formattedDateRelease
+        ? this.dataRelease 
         : this.cardDetails.release_date;
     },
-    // formattedDateRelease() {
-    //   return  `${this.dateCheck.slice(8, 10)}/${this.dateCheck.slice(
-    //     5,
-    //     7
-    //   )}/${this.dateCheck.slice(0, 4)}`;
-    // },
-
-    // Конец работы с датой
 
     formattedAge() {
       return this.cardDetailsAge
