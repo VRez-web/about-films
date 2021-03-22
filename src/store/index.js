@@ -24,6 +24,7 @@ const store = createStore({
       searchQuery: "",
       searchTotalMovies: [],
       page: 1,
+      category:''
     };
   },
   mutations: {
@@ -64,7 +65,7 @@ const store = createStore({
       state.movieDetailsSimilar = movieDetailsSimilar;
     },
 
-    // SEARCH
+    // Search
     SET_SEARCH: (state, searchQuery) => {
       state.searchQuery = searchQuery;
     },
@@ -72,6 +73,10 @@ const store = createStore({
       state.searchTotalMovies = searchTotalMovies;
     },
 
+    // Category
+    SET_CATEGORY:(state,category)=>{
+      state.category = category
+    }
   },
   actions: {
     // Tv Shows
@@ -82,6 +87,7 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_TV_SHOWS_TOP_RATED", res.data);
+          commit("SET_CATEGORY", 'serial')
           return res.data;
         })
         .catch((e) => {
@@ -96,6 +102,7 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_TV_SHOWS_WEEK", res.data);
+          commit("SET_CATEGORY", 'serial')
           return res.data;
         })
         .catch((e) => {
@@ -110,6 +117,7 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_TV_SHOWS_TODAY", res.data);
+          commit("SET_CATEGORY", 'serial')
           return res.data;
         })
         .catch((e) => {
@@ -124,6 +132,7 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_TV_SHOWS_POPULAR", res.data);
+          commit("SET_CATEGORY", 'serial')
           return res.data;
         })
         .catch((e) => {
@@ -140,6 +149,7 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_MOVIES_THEATRES", res.data);
+          commit("SET_CATEGORY", 'movie')
           return res.data;
         })
         .catch((e) => {
@@ -154,6 +164,7 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_MOVIES_POPULAR", res.data);
+          commit("SET_CATEGORY", 'movie')
           return res.data;
         })
         .catch((e) => {
@@ -168,6 +179,7 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_MOVIES_TOP_RATED", res.data);
+          commit("SET_CATEGORY", 'movie')
           return res.data;
         })
         .catch((e) => {
@@ -182,6 +194,7 @@ const store = createStore({
         )
         .then((res) => {
           commit("SET_MOVIES_UPCOMING", res.data);
+          commit("SET_CATEGORY", 'movie')
           return res.data;
         })
         .catch((e) => {
@@ -189,6 +202,7 @@ const store = createStore({
           return e;
         });
     },
+    // more info about movies
     async GET_CARD_DETAILS({ commit }, id) {
       return await axios
         .get(
@@ -229,6 +243,24 @@ const store = createStore({
           return e;
         });
     },
+    // more info about tv-shows
+    async GET_CARD_DETAILS({ commit }, id) {
+      return await axios
+        .get(
+          `/tv/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=content_ratings,aggregate_credits,videos`
+        )
+        .then((res) => {
+          commit("SET_CARD_DETAILS", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+
+
+    // Multi search
     async GET_SEARCH({ commit }, query, page = this.state.page) {
       return await axios
         .get(
