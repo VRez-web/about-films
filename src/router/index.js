@@ -59,7 +59,7 @@ const routes = [
   },
   {
     path: "/:id/cast",
-    component: () => import("../components/details/CardDetailsCast"),
+    component: () => import("../components/details/CardDetailsCastAll"),
     name: "card-details-cast",
     props: true,
   },
