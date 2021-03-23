@@ -1,28 +1,15 @@
 <template>
   <main>
     <section class="card__details">
+      <card-details-header
+        :data="cardDetails"
+        :dateAnnounce="dateAnnounce"
+        :age="age"
+        :dateRelease="dateRelease"
+        :genres="genres"
+        :time="movieTime"
+      />
       <div class="container">
-        <h2 class="card__details-title">
-          <p>
-            {{ cardDetails.title }} <span>({{ dataAnnounce }})</span>
-          </p>
-
-          <p class="card__details-status">
-            Статус: <span> {{ statusProduction }} </span>
-          </p>
-        </h2>
-        <p class="card__details-subtitle">
-          <span class="card__details-age">{{ formattedAge }} </span>
-          <span class="card__details-realese">{{ dateCheck }} (RU)</span>
-          <span class="card__details-genres"
-            ><span v-for="genre in cardDetailsGenres" :key="genre.id">{{
-              genre.name
-            }}</span></span
-          >
-          <span class="card__details-time"
-            >{{ movieTime() }} <i class="icofont-clock-time"></i>
-          </span>
-        </p>
         <div class="card__details-inner">
           <img
             :src="
@@ -35,27 +22,27 @@
           />
           <div class="card__details-description">
             <h2 class="card__details-description-title">Сюжет</h2>
-            <p class="card__details-plot">{{ cardDetailsPlot }}</p>
+            <p class="card__details-plot">{{ plot }}</p>
             <div class="card__details-rating-wrapper">
               <div class="card__details-rating">
                 <h2>Рейтинг</h2>
                 <p
                   :class="
-                    cardDetailsRating >= 7
+                    rating >= 7
                       ? 'high-rating'
-                      : cardDetailsRating < 7 && cardDetailsRating > 3
+                      : rating < 7 && rating > 3
                       ? 'mid-rating'
-                      : cardDetailsRating <= 3
+                      : rating <= 3
                       ? 'low-rating'
                       : ''
                   "
                 >
-                  {{ cardDetailsRating }}
+                  {{ rating }}
                 </p>
               </div>
               <div class="card__details-votes">
                 <h2>Голосов</h2>
-                <p>{{ cardDetailsVotes }}</p>
+                <p>{{ votes }}</p>
               </div>
             </div>
             <p class="card__details-phrase" v-if="!!cardDetails.tagline">
@@ -70,7 +57,7 @@
               >
               <button
                 class="card__details-trailer-btn link-hover"
-                @click="cardDetailsVideo = true"
+                @click="showTrailer = true"
                 :disabled="!trailerKey"
               >
                 <i class="icofont-ui-play"></i> Трейлер
@@ -78,17 +65,17 @@
 
               <div class="card__details-links-social">
                 <a
-                  :href="`https://www.facebook.com/${cardDetailsLinks.facebook_id}`"
+                  :href="`https://www.facebook.com/${socialLinks.facebook_id}`"
                   target="_blank"
                   ><i class="icofont-facebook"></i
                 ></a>
                 <a
-                  :href="`https://www.instagram.com/${cardDetailsLinks.instagram_id}`"
+                  :href="`https://www.instagram.com/${socialLinks.instagram_id}`"
                   target="_blank"
                   ><i class="icofont-instagram"></i
                 ></a>
                 <a
-                  :href="`https://www.twitter.com/${cardDetailsLinks.twitter_id}`"
+                  :href="`https://www.twitter.com/${socialLinks.twitter_id}`"
                   target="_blank"
                   ><i class="icofont-twitter"></i
                 ></a>
@@ -101,14 +88,14 @@
     </section>
     <card-details-about
       :cardId="cardId"
-      :castSlider="cardDetailsCredit"
+      :castSlider="cast"
       :title="cardDetails.title"
     />
   </main>
   <div
     class="card__details-trailer"
-    v-if="cardDetailsVideo"
-    @click="cardDetailsVideo = !cardDetailsVideo"
+    v-if="showTrailer"
+    @click="showTrailer = !showTrailer"
   >
     <span class="card__details-trailer-close link">Назад</span>
     <div class="card__details-trailer-wrapper">
@@ -126,76 +113,64 @@
 <script>
 import { mapActions } from "vuex";
 import cardDetailsAbout from "./CardDetailsAbout";
+import cardDetailsHeader from "./cardDetailsHeader";
 export default {
-  components: { cardDetailsAbout },
+  components: { cardDetailsAbout, cardDetailsHeader },
   data() {
     return {
       cardDetails: [],
       imgUrl: this.$store.state.imgUrl,
-      dataAnnounce: "",
-      dataRelease: "",
-      cardDetailsAge: "",
-      cardDetailsPlot: "",
-      cardDetailsGenres: [],
-      cardDetailsPhrase: "",
-      cardDetailsLinks: [],
-      cardDetailsRating: "",
-      cardDetailsVotes: "",
-      cardDetailsStatus: "",
-      cardDetailsVideo: false,
-      cardDetailsVideoTotal: [],
-      cardDetailsCredit: [],
-      cardDetailsMovieTime: 0,
+      dateAnnounce: "",
+      dateRelease: "",
+      age: "",
+      plot: "",
+      genres: [],
+      keyPhrase: "",
+      socialLinks: [],
+      rating: "",
+      votes: "",
+      showTrailer: false,
+      trailersTotal: [],
+      cast: [],
+      movieTime: 0,
     };
   },
   methods: {
-    ...mapActions(["GET_CARD_DETAILS"]),
+    ...mapActions(["GET_CARD_DETAILS_MOVIE"]),
     async getData() {
       // Получение общей информации о фильме
-      const CARD_DETAILS = await this.GET_CARD_DETAILS(this.cardId);
+      const CARD_DETAILS = await this.GET_CARD_DETAILS_MOVIE(this.cardId);
       this.cardDetails = CARD_DETAILS;
-      this.dataAnnounce = this.cardDetails.release_date.slice(0, 4);
-      this.cardDetailsPlot = this.cardDetails.overview;
-      this.cardDetailsGenres = this.cardDetails.genres.slice(0, 3);
-      this.cardDetailsPhrase = this.cardDetails.tagline;
-      this.cardDetailsCredit = this.cardDetails.credits.cast.slice(0, 9);
-      this.cardDetailsLinks = this.cardDetails.external_ids;
-      this.cardDetailsRating = this.cardDetails.vote_average;
-      this.cardDetailsVotes = this.cardDetails.vote_count;
-      this.cardDetailsVideoTotal = this.cardDetails.videos.results;
-      this.cardDetailsMovieTime = this.cardDetails.runtime;
+      this.dateAnnounce = this.cardDetails.release_date.slice(0, 4);
+      this.plot = this.cardDetails.overview;
+      this.genres = this.cardDetails.genres.slice(0, 3);
+      this.keyPhrase = this.cardDetails.tagline;
+      this.cast = this.cardDetails.credits.cast.slice(0, 9);
+      this.socialLinks = this.cardDetails.external_ids;
+      this.rating = this.cardDetails.vote_average;
+      this.votes = this.cardDetails.vote_count;
+      this.trailersTotal = this.cardDetails.videos.results;
+      this.movieTime = this.cardDetails.runtime;
       // Работа с датой => нахождение нужной даты в массиве,обработка случая если нет нужной даты и тд
-      // если это делать вне получение данных ошибки вылизают
-      
+      // если это делать вне получение данных ошибки вылезают
+
       // Проверка есть ли дата, потому что оттуда можно получить данные о возрастных ограничениях фильма
-      this.dataRelease = this.cardDetails.release_dates.results.filter(
+      this.dateRelease = this.cardDetails.release_dates.results.filter(
         (el) => el.iso_3166_1 == "RU"
       )[0];
 
-      if (this.dataRelease) {
-        this.cardDetailsAge=this.dataRelease.release_dates[0].certification
-        this.dataRelease = `${this.dataRelease.release_dates[0].release_date.slice(
+      if (this.dateRelease) {
+        this.age = this.dateRelease.release_dates[0].certification;
+        this.dateRelease = `${this.dateRelease.release_dates[0].release_date.slice(
           8,
           10
-        )}/${this.dataRelease.release_dates[0].release_date.slice(
+        )}/${this.dateRelease.release_dates[0].release_date.slice(
           5,
           7
-        )}/${this.dataRelease.release_dates[0].release_date.slice(0, 4)}`;
+        )}/${this.dateRelease.release_dates[0].release_date.slice(0, 4)}`;
       } else {
-        this.dataRelease = this.cardDetails.release_date;
+        this.dateRelease = this.cardDetails.release_date;
       }
-
-    },
-    // Пока что так
-    movieTime(time) {
-      let result = 0;
-      time = this.cardDetailsMovieTime;
-      for (let i = 0; 60 <= time; i++) {
-        result += 1;
-        time -= 60;
-      }
-
-      return `${result} ч ${time} м`;
     },
   },
   computed: {
@@ -203,34 +178,15 @@ export default {
       return this.$route.params.id;
     },
     trailerKey() {
-      return this.cardDetailsVideoTotal.length
+      return this.trailersTotal.length
         ? this.cardDetails.videos.results[0].key
         : "";
     },
     phrase() {
-      return this.cardDetailsPhrase.slice(0, 1) != "«" &&
-        this.cardDetailsPhrase.slice(-1) != "»"
-        ? (this.cardDetailsPhrase = `«${this.cardDetailsPhrase}»`)
+      return this.keyPhrase.slice(0, 1) != "«" &&
+        this.keyPhrase.slice(-1) != "»"
+        ? (this.keyPhrase = `«${this.keyPhrase}»`)
         : "";
-    },
-    statusProduction() {
-      if (this.cardDetails.status == "Released") {
-        return (this.cardDetailsStatus = "вышел");
-      } else if (this.cardDetails.status == "Post Production") {
-        return (this.cardDetailsStatus = "постпроизводство");
-      }
-      return (this.cardDetailsStatus = "In Production");
-    },
-    dateCheck() {
-      return this.dataRelease
-        ? this.dataRelease 
-        : this.cardDetails.release_date;
-    },
-
-    formattedAge() {
-      return this.cardDetailsAge
-        ? this.cardDetailsAge
-        : (this.cardDetailsAge = "?__?");
     },
   },
   watch: {
@@ -240,9 +196,6 @@ export default {
         !!this.cardId ? this.getData() : "";
       },
     },
-  },
-  mounted() {
-    console.log();
   },
 };
 </script>
@@ -263,29 +216,6 @@ export default {
     border-radius: 0.938rem;
     box-shadow: 0px 0px 15px 0px rgba(0, 255, 255, 0.75);
   }
-  &-title {
-    font-size: 2rem;
-    margin-bottom: 0.625rem;
-    font-weight: 700;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    span {
-      font-weight: 300;
-      font-size: 1.4rem;
-    }
-  }
-  &-status {
-    font-size: 1.5rem;
-
-    span {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.3rem;
-    }
-  }
-  &-subtitle {
-    margin-bottom: 1.5rem;
-  }
   &-description {
     width: 65%;
 
@@ -297,49 +227,6 @@ export default {
   &-plot {
     font-size: 1.1rem;
     line-height: 1.5rem;
-  }
-  &-age {
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    color: rgba(255, 255, 255, 0.6);
-    padding: 0 0.125rem 0.125rem 0.125rem;
-    margin-right: 0.625rem;
-    min-width: 35px;
-    text-align: center;
-  }
-  &-genres {
-    &::after {
-      content: "";
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      background-color: $color-tematic;
-      border-radius: 50%;
-      margin: 0 0.625rem;
-      vertical-align: middle;
-    }
-    &::before {
-      content: "";
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      background-color: $color-tematic;
-      border-radius: 50%;
-      margin: 0 0.625rem;
-      vertical-align: middle;
-    }
-    span {
-      &:nth-child(2) {
-        margin: 0 0.625rem;
-      }
-
-      &::after {
-        content: ",";
-        display: inline-block;
-      }
-      &:last-child::after {
-        content: "";
-      }
-    }
   }
   &-links {
     margin-top: 1.5rem;
