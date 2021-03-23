@@ -26,7 +26,7 @@
         </swiper>
         <a
           href="#"
-          @click.prevent="currectTitleLink(cardId, title)"
+          @click.prevent="currectTitleLink(cardId)"
           class="all-cast link"
           >Полный актёрский и съёмочный состав</a
         >
@@ -61,7 +61,7 @@ import CardOfPeople from "../CardOfPeople";
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 export default {
-  props: { cardId: String, castSlider: Array, title: String},
+  props: { cardId: String, castSlider: Array, title: String },
   components: { Swiper, SwiperSlide, card, CardOfPeople },
   data() {
     return {
@@ -70,29 +70,28 @@ export default {
   },
   methods: {
     ...mapActions(["GET_MOVIE_SIMILAR"]),
-    getSimilarMovies() {
-      this.GET_MOVIE_SIMILAR(this.cardId).then((res) => {
-        this.similarMovies = res.results.slice(0, 9);
-      });
+    async getSimilarMovies() {
+      const MOVIE_SIMILAR = await this.GET_MOVIE_SIMILAR(this.cardId);
+      this.similarMovies = MOVIE_SIMILAR.results.slice(0, 9);
     },
 
-    currectTitleLink(id, title) {
+    currectTitleLink(id) {
       this.$router
         .push({
           name: "card-details-cast",
-          params: { id: id, title: title.replace(/\s/g, "-")},
+          params: { id: id },
         })
         .catch((e) => {});
     },
   },
   computed: {},
-    watch:{
+  watch: {
     cardId: {
-      immediate: true, 
+      immediate: true,
       handler: function () {
-        this.getSimilarMovies()
-    }
-    }
+        this.getSimilarMovies();
+      },
+    },
   },
   mounted() {
     this.getSimilarMovies();
