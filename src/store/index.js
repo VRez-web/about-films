@@ -203,7 +203,7 @@ const store = createStore({
         });
     },
     // more info about movies
-    async GET_CARD_DETAILS({ commit }, id) {
+    async GET_CARD_DETAILS_MOVIE({ commit }, id) {
       return await axios
         .get(
           `/movie/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=credits,release_dates,videos,external_ids`
@@ -244,7 +244,7 @@ const store = createStore({
         });
     },
     // more info about tv-shows
-    async GET_CARD_DETAILS({ commit }, id) {
+    async GET_CARD_DETAILS_SERIAL({ commit }, id) {
       return await axios
         .get(
           `/tv/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=content_ratings,aggregate_credits,videos`
