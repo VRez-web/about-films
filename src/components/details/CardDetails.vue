@@ -89,7 +89,7 @@
     <card-details-about
       :cardId="cardId"
       :castSlider="cast"
-      :title="cardDetails.title"
+      :title="cardDetails.title ? cardDetails.title:cardDetails.name"
     />
   </main>
   <div
@@ -136,11 +136,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_CARD_DETAILS_MOVIE"]),
-    async getData() {
-      // Получение общей информации о фильме
-      const CARD_DETAILS = await this.GET_CARD_DETAILS_MOVIE(this.cardId);
-      this.cardDetails = CARD_DETAILS;
+    ...mapActions(["GET_CARD_DETAILS_MOVIE", "GET_CARD_DETAILS_SERIAL"]),
+
+    // Получение общей информации о фильме
+    async getMovieData() {
+      const CARD_DETAILS_MOVIE = await this.GET_CARD_DETAILS_MOVIE(this.cardId);
+      this.cardDetails = CARD_DETAILS_MOVIE;
       this.dateAnnounce = this.cardDetails.release_date.slice(0, 4);
       this.plot = this.cardDetails.overview;
       this.genres = this.cardDetails.genres.slice(0, 3);
@@ -172,6 +173,31 @@ export default {
         this.dateRelease = this.cardDetails.release_date;
       }
     },
+
+    // Получение общей информации о сериале
+    async getSerialData() {
+      const CARD_DETAILS_SERIAL = await this.GET_CARD_DETAILS_SERIAL(
+        this.cardId
+      );
+      this.cardDetails = CARD_DETAILS_SERIAL;
+      this.dateAnnounce = this.cardDetails.first_air_date.slice(0, 4);
+      this.plot = this.cardDetails.overview;
+      this.genres = this.cardDetails.genres.slice(0, 3);
+      this.keyPhrase = this.cardDetails.tagline;
+      this.cast = this.cardDetails.credits.cast.slice(0, 9);
+      this.socialLinks = this.cardDetails.external_ids;
+      this.rating = this.cardDetails.vote_average;
+      this.votes = this.cardDetails.vote_count;
+      this.trailersTotal = this.cardDetails.videos.results;
+      this.movieTime = this.cardDetails.episode_run_time[0];
+      this.dateRelease=this.cardDetails.last_air_date
+    },
+
+    getData() {
+      return this.category == "movie"
+        ? this.getMovieData()
+        : this.getSerialData();
+    },
   },
   computed: {
     cardId() {
@@ -187,6 +213,9 @@ export default {
         this.keyPhrase.slice(-1) != "»"
         ? (this.keyPhrase = `«${this.keyPhrase}»`)
         : "";
+    },
+    category() {
+      return this.$route.params.category;
     },
   },
   watch: {
