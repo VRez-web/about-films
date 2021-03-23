@@ -3,7 +3,7 @@
     <div class="container">
       <h2 class="card__details-title">
         <p>
-          {{ data.title }} <span>({{ dateAnnounce }})</span>
+          {{ dataTitle }} <span>({{ dateAnnounce }})</span>
         </p>
 
         <p class="card__details-status">
@@ -62,8 +62,14 @@ export default {
         return (this.dataStatus = "вышел");
       } else if (this.data.status == "Post Production") {
         return (this.dataStatus = "постпроизводство");
+      } else if (this.data.status == "Returning Series") {
+        return (this.dataStatus = "Продолжается");
       }
       return (this.dataStatus = "In Production");
+    },
+
+    dataTitle(){
+      return  this.data.title ? this.data.title : this.data.name
     },
 
     // Обработка возраста
