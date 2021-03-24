@@ -35,6 +35,10 @@ export default {
 .card {
   width: 100%;
   text-align: center;
+
+  &__title {
+    margin-bottom: 0.5rem;
+  }
   img {
     border-radius: 0.625rem;
     margin-bottom: 1rem;
@@ -55,12 +59,11 @@ export default {
   text-align: center;
   margin: 0 1rem 1rem 0;
 
-  &__title{
-    margin-bottom: .5rem;
-  }
   img {
     height: 185px;
   }
-
+}
+.swiper-slide .card {
+  margin-top: -2rem;
 }
 </style>
