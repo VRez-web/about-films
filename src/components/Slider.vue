@@ -8,8 +8,8 @@
   >
     <swiper-slide v-for="item in data" :key="item.id">
       <card :data="[item]" :category="category" v-if="category != 'people'" />
-      <card-of-people v-else :data="item"/>
-    </swiper-slide >
+      <card-of-people v-else :data="item" />
+    </swiper-slide>
   </swiper>
 </template>
 
@@ -37,5 +37,14 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.swiper {
+  padding-left: 1.25rem;
+  &-slide {
+    padding-top: 3rem;
+    &-cast {
+      padding-top: 1rem;
+    }
+  }
+}
 </style>
