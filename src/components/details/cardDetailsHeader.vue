@@ -64,8 +64,10 @@ export default {
         return (this.dataStatus = "постпроизводство");
       } else if (this.data.status == "Returning Series") {
         return (this.dataStatus = "Продолжается");
+      }else if(this.data.status == "Ended"){
+        return this.dataStatus="Закончен"
       }
-      return (this.dataStatus = "In Production");
+      return (this.dataStatus = "В производстве");
     },
 
     dataTitle(){
