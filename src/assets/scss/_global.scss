@@ -9,7 +9,7 @@ body {
   font-size: 16px;
   background-color: $bg-body;
   overflow-x: hidden;
-  color:$color-white;
+  color: $color-white;
 }
 img {
   image-rendering: -o-crisp-edges;
@@ -98,15 +98,6 @@ a {
 }
 .hidden {
   display: none;
-}
-.swiper {
-  padding-left: 1.25rem;
-  &-slide {
-    padding-top: 3rem;
-    &-cast {
-      padding-top: 1rem;
-    }
-  }
 }
 
 a {
