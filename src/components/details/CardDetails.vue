@@ -86,11 +86,8 @@
         </div>
       </div>
     </section>
-    <card-details-about
-      :cardId="cardId"
-      :castSlider="cast"
-      :title="cardDetails.title ? cardDetails.title:cardDetails.name"
-    />
+    <card-details-short-cast :cardId="cardId" :castSlider="cast" />
+    <card-details-similar :cardId="cardId" />
   </main>
   <div
     class="card__details-trailer"
@@ -112,10 +109,11 @@
 
 <script>
 import { mapActions } from "vuex";
-import cardDetailsAbout from "./CardDetailsAbout";
-import cardDetailsHeader from "./cardDetailsHeader";
+import cardDetailsShortCast from "./CardDetailsShortCast";
+import cardDetailsHeader from "./CardDetailsHeader";
+import cardDetailsSimilar from "./CardDetailsSimilar";
 export default {
-  components: { cardDetailsAbout, cardDetailsHeader },
+  components: { cardDetailsSimilar, cardDetailsHeader, cardDetailsShortCast },
   data() {
     return {
       cardDetails: [],
@@ -190,7 +188,7 @@ export default {
       this.votes = this.cardDetails.vote_count;
       this.trailersTotal = this.cardDetails.videos.results;
       this.movieTime = this.cardDetails.episode_run_time[0];
-      this.dateRelease=this.cardDetails.last_air_date
+      this.dateRelease = this.cardDetails.last_air_date;
     },
 
     getData() {
