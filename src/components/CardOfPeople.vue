@@ -27,7 +27,6 @@ export default {
       imgProfile: this.$store.state.imgProfileSize,
     };
   },
-  mounted() {},
 };
 </script>
 
