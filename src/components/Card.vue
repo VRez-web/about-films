@@ -45,11 +45,11 @@
 export default {
   props: {
     data: Array,
+    category:String
   },
   data() {
     return {
       imgUrl: this.$store.state.imgUrl,
-      category:this.$store.state.category
     };
   },
   methods: {

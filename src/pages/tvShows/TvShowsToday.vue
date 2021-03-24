@@ -5,7 +5,7 @@
         Сериалы на сегодня:
       </h2>
       <div class="tv__shows__inner section__inner">
-           <card :data="tvShowsToday.results" />
+           <card :data="tvShowsToday.results" :category="'serial'"/>
       </div>
 
       <pagination

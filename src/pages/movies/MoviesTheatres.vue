@@ -5,7 +5,7 @@
         Сейчас в кинотеатрах:
       </h2>
       <div class="movies__theatres-inner section__inner">
-        <card :data="moviesTeatres.results" />
+        <card :data="moviesTeatres.results" :category="'movie'"/>
       </div>
 
       <pagination

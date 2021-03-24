@@ -3,148 +3,68 @@
     <div class="container-second">
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link :to="{name:'movies-theatres'}" class="link"
+          <router-link :to="{ name: 'movies-theatres' }" class="link"
             >В кинотеатрах сейчас</router-link
           >
           <i class="icofont-arrow-right"></i>
         </h2>
-        <swiper
-          :slides-per-view="6"
-          :space-between="20"
-          navigation
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in moviesTeathers" :key="item.id"
-            ><card :data="[item]" />
-          </swiper-slide>
-        </swiper>
+        <slider :data="moviesTeathers"  :category="'movie'"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link :to="{name:'movies-upcoming'}" class="link"
+          <router-link :to="{ name: 'movies-upcoming' }" class="link"
             >Ожидаемые фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <swiper
-          :slides-per-view="6"
-          :space-between="20"
-          navigation
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in moviesUpcoming" :key="item.id"
-            ><card :data="[item]" />
-          </swiper-slide>
-        </swiper>
+        <slider :data="moviesUpcoming"  :category="'movie'"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link :to="{name:'movies-popular'}" class="link"
+          <router-link :to="{ name: 'movies-popular' }" class="link"
             >Популярные фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <swiper
-          :slides-per-view="6"
-          :space-between="20"
-          navigation
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in moviesPopular" :key="item.id"
-            ><card :data="[item]" />
-          </swiper-slide>
-        </swiper>
+        <slider :data="moviesPopular"  :category="'movie'"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link :to="{name:'movies-topRated'}" class="link"
+          <router-link :to="{ name: 'movies-topRated' }" class="link"
             >Лучшие фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <swiper
-          :slides-per-view="6"
-          :space-between="20"
-          navigation
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in moviesTopRated" :key="item.id"
-            ><card :data="[item]" />
-          </swiper-slide>
-        </swiper>
+        <slider :data="moviesTopRated"  :category="'movie'"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link :to="{name:'serials-today'}" class="link">
+          <router-link :to="{ name: 'serials-today' }" class="link">
             Сериалы на сегодня</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <swiper
-          :slides-per-view="6"
-          :space-between="20"
-          navigation
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in tvShowsToday" :key="item.id"
-            ><card :data="[item]" />
-          </swiper-slide>
-        </swiper>
+        <slider :data="tvShowsToday" :category="'serial'"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link :to="{name:'serials-week'}" class="link">
+          <router-link :to="{ name: 'serials-week' }" class="link">
             Сериалы на неделю</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <swiper
-          :slides-per-view="6"
-          :space-between="20"
-          navigation
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in tvShowsWeek" :key="item.id"
-            ><card :data="[item]" />
-          </swiper-slide>
-        </swiper>
+        <slider :data="tvShowsWeek" :category="'serial'"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link :to="{name:'serials-popular'}" class="link">
+          <router-link :to="{ name: 'serials-popular' }" class="link">
             Популярные сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <swiper
-          :slides-per-view="6"
-          :space-between="20"
-          navigation
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in tvShowsPopular" :key="item.id"
-            ><card :data="[item]" />
-          </swiper-slide>
-        </swiper>
+        <slider :data="tvShowsPopular" :category="'serial'"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
-          <router-link :to="{name:'serials-topRated'}" class="link">
+          <router-link :to="{ name: 'serials-topRated' }" class="link">
             Лучшие сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <swiper
-          :slides-per-view="6"
-          :space-between="20"
-          navigation
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in tvShowsTopRated" :key="item.id"
-            ><card :data="[item]" />
-          </swiper-slide>
-        </swiper>
+        <slider :data="tvShowsTopRated" :category="'serial'"/>
       </section>
     </div>
   </main>
@@ -152,14 +72,9 @@
 
 <script>
 import { mapActions } from "vuex";
-import SwiperCore, { Navigation } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import card from "../components/Card";
-import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
-SwiperCore.use([Navigation]);
+import slider from "../components/Slider";
 export default {
-  components: { Swiper, SwiperSlide, card },
+  components: { slider },
   data() {
     return {
       moviesTeathers: [],
@@ -186,10 +101,6 @@ export default {
       "GET_TV_SHOWS_POPULAR",
       "GET_TV_SHOWS_TOP_RATED",
     ]),
-    onSwiper(swiper) {
-      },
-      onSlideChange() {
-      },
   },
   computed: {},
   async mounted() {

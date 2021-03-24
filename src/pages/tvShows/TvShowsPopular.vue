@@ -3,7 +3,7 @@
     <div class="container">
       <h2 class="section__title">Популярные сериалы</h2>
       <div class="tv__shows__inner section__inner">
-        <card :data="tvShowsPopular.results" />
+        <card :data="tvShowsPopular.results" :category="'serial'"/>
       </div>
 
       <pagination

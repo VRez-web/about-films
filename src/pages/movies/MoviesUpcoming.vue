@@ -5,7 +5,7 @@
         Ожидаемое в кинотеатрах
       </h2>
       <div class="movies__popular-inner section__inner">
-        <card :data="moviesUpcoming.results" />
+        <card :data="moviesUpcoming.results" :category="'movie'"/>
       </div>
 
       <pagination

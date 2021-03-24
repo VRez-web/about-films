@@ -5,7 +5,7 @@
         Сериалы на неделю:
       </h2>
       <div class="tv__shows__inner section__inner">
-       <card :data="tvShowsWeek.results" />
+       <card :data="tvShowsWeek.results" :category="'serial'"/>
       </div>
       <pagination
         :data="tvShowsWeek"

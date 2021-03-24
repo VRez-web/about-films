@@ -3,7 +3,7 @@
     <div class="container">
       <h2 class="movies__popular-title section__title">Популярное кино</h2>
       <div class="movies__popular-inner section__inner">
-        <card :data="moviesPopular.results" />
+        <card :data="moviesPopular.results" :category="'movie'"/>
       </div>
 
       <pagination

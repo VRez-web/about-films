@@ -3,7 +3,7 @@
     <div class="container">
       <h2 class="-title section__title">Лучшее кино:</h2>
       <div class="section__inner">
-        <card :data="moviesTopRated.results" />
+        <card :data="moviesTopRated.results" :category="'movie'"/>
       </div>
       <pagination
         :data="moviesTopRated"
