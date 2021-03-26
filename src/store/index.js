@@ -14,6 +14,7 @@ const store = createStore({
       tvShowsWeek: [],
       tvShowsToday: [],
       tvShowsPopular: [],
+      tvShowsSimilar:[],
       moviesTheatres: [],
       moviesPopular: [],
       moviesTopRated: [],
@@ -39,6 +40,9 @@ const store = createStore({
     },
     SET_TV_SHOWS_POPULAR: (state, tvShowsPopular) => {
       state.tvShowsPopular = tvShowsPopular;
+    },
+    SET_TV_SHOWS_SIMILAR: (state, tvShowsSimilar) => {
+      state.tvShowsSimilar = tvShowsSimilar;
     },
 
     // Movies
@@ -247,7 +251,18 @@ const store = createStore({
           return e;
         });
     },
-
+    async GET_TV_SHOWS_SIMILAR({ commit }, id) {
+      return await axios
+        .get(`/tv/${id}/similar?api_key=${this.state.apiKey}&language=ru-RU`)
+        .then((res) => {
+          commit("SET_TV_SHOWS_SIMILAR", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
     // Multi search
     async GET_SEARCH({ commit }, query, page = this.state.page) {
       return await axios
