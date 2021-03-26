@@ -1,8 +1,8 @@
 <template>
   <section class="card__details-similar">
     <div class="container">
-      <h2 class="card__details-title">Похожие фильмы</h2>
-      <slider :data="similarMovies" :category="'movie'"/>
+      <h2 class="card__details-title">Похожие {{correctTitle}}</h2>
+      <slider :data="correctData" :category="category" />
     </div>
   </section>
 </template>
@@ -14,6 +14,7 @@ export default {
   components: { slider },
   props: {
     cardId: String,
+    category: String,
   },
   data() {
     return {
@@ -22,18 +23,36 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIE_SIMILAR"]),
+    ...mapActions(["GET_MOVIE_SIMILAR", "GET_TV_SHOWS_SIMILAR"]),
     async getSimilarMovies() {
       const MOVIE_SIMILAR = await this.GET_MOVIE_SIMILAR(this.cardId);
-      this.similarMovies = MOVIE_SIMILAR.results.slice(0, 9);
+      this.similarMovies = MOVIE_SIMILAR.results.slice(0, 12);
     },
-
+    async getSimilarTvShows() {
+      const SERIAL_SIMILAR = await this.GET_TV_SHOWS_SIMILAR(this.cardId);
+      this.similarSerials = SERIAL_SIMILAR.results.slice(0, 12);
+    },
+    getData() {
+      return this.category == "movie"
+        ? this.getSimilarMovies()
+        : this.getSimilarTvShows();
+    },
+  },
+  computed: {
+    correctData() {
+      return this.category == "movie"
+        ? this.similarMovies
+        : this.similarSerials;
+    },
+    correctTitle(){
+      return this.category == "movie" ? 'фильмы':'сериалы'
+    }
   },
   watch: {
     cardId: {
       immediate: true,
       handler: function () {
-        this.getSimilarMovies();
+        this.getData();
       },
     },
   },
