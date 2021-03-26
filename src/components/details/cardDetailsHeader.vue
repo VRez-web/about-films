@@ -11,15 +11,17 @@
         </p>
       </h2>
       <p class="card__details-subtitle">
-        <span class="card__details-age">{{ formattedAge }} </span>
-        <span class="card__details-realese">{{ dateCheck }} (RU)</span>
+        <span class="card__details-age">{{ age }} </span>
+        <span class="card__details-realese"
+          >{{ dateCheck }} ({{ country }})</span
+        >
         <span class="card__details-genres"
           ><span v-for="genre in genres" :key="genre.id">{{
             genre.name
           }}</span></span
         >
-        <span class="card__details-time"
-          v-show="!!time">{{ movieTime() }} <i class="icofont-clock-time"></i>
+        <span class="card__details-time" v-show="!!time"
+          >{{ movieTime() }} <i class="icofont-clock-time"></i>
         </span>
       </p>
     </div>
@@ -31,14 +33,14 @@ export default {
   props: {
     data: Object,
     dateAnnounce: String,
-    age: String,
+    countryAndAge: Object,
     dateRelease: String,
     genres: Array,
     time: Number,
   },
   data() {
     return {
-      ageNone: "?__?",
+      ageNone: "?_?",
     };
   },
 
@@ -64,21 +66,34 @@ export default {
         return (this.dataStatus = "постпроизводство");
       } else if (this.data.status == "Returning Series") {
         return (this.dataStatus = "Продолжается");
-      }else if(this.data.status == "Ended"){
-        return this.dataStatus="Закончен"
+      } else if (this.data.status == "Ended") {
+        return (this.dataStatus = "Закончен");
       }
       return (this.dataStatus = "В производстве");
     },
 
-    dataTitle(){
-      return  this.data.title ? this.data.title : this.data.name
+    dataTitle() {
+      return this.data.title ? this.data.title : this.data.name;
     },
 
     // Обработка возраста
     formattedAge() {
-      return this.age ? this.age : this.ageNone;
+      return this.countryAndAge.rating
+        ? this.countryAndAge.rating
+        : this.countryAndAge.certification;
     },
-
+    age(){
+      return !!this.formattedAge?this.formattedAge:this.ageNone
+    },
+    // Обработка страны
+    formattedCountry() {
+      return this.countryAndAge.iso_3166_1
+        ? this.countryAndAge.iso_3166_1
+        : this.countryAndAge.iso_639_1;
+    },
+    country(){
+      return this.formattedCountry? this.formattedCountry : "RU"
+    },
     // Обработка даты
     dateCheck() {
       return this.dateRelease ? this.dateRelease : this.data.release_date;

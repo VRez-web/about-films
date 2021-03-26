@@ -4,7 +4,7 @@
       <card-details-header
         :data="cardDetails"
         :dateAnnounce="dateAnnounce"
-        :age="age"
+        :countryAndAge="age"
         :dateRelease="dateRelease"
         :genres="genres"
         :time="movieTime"
@@ -77,7 +77,7 @@
       </div>
     </section>
     <card-details-short-cast :cardId="cardId" :castSlider="cast" />
-    <card-details-similar :cardId="cardId" :category="category"/>
+    <card-details-similar :cardId="cardId" :category="category" />
   </main>
   <div
     class="card__details-trailer"
@@ -147,9 +147,8 @@ export default {
       this.dateRelease = this.cardDetails.release_dates.results.filter(
         (el) => el.iso_3166_1 == "RU"
       )[0];
-
       if (this.dateRelease) {
-        this.age = this.dateRelease.release_dates[0].certification;
+        this.age = this.dateRelease.release_dates[0];
         this.dateRelease = `${this.dateRelease.release_dates[0].release_date.slice(
           8,
           10
@@ -179,6 +178,9 @@ export default {
       this.trailersTotal = this.cardDetails.videos.results;
       this.movieTime = this.cardDetails.episode_run_time[0];
       this.dateRelease = this.cardDetails.last_air_date;
+      this.age = this.cardDetails.content_ratings.results.filter(
+        (el) => el.iso_3166_1 == "US"
+      )[0];
     },
 
     getData() {
