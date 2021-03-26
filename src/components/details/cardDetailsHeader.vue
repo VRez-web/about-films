@@ -19,7 +19,7 @@
           }}</span></span
         >
         <span class="card__details-time"
-          >{{ movieTime() }} <i class="icofont-clock-time"></i>
+          v-show="!!time">{{ movieTime() }} <i class="icofont-clock-time"></i>
         </span>
       </p>
     </div>
