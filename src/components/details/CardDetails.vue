@@ -26,18 +26,8 @@
             <div class="card__details-rating-wrapper">
               <div class="card__details-rating">
                 <h2>Рейтинг</h2>
-                <p
-                  :class="
-                    rating >= 7
-                      ? 'high-rating'
-                      : rating < 7 && rating > 3
-                      ? 'mid-rating'
-                      : rating <= 3
-                      ? 'low-rating'
-                      : ''
-                  "
-                >
-                  {{ rating }}
+                <p :class="checkRating">
+                  {{ correctRating }}
                 </p>
               </div>
               <div class="card__details-votes">
@@ -87,7 +77,7 @@
       </div>
     </section>
     <card-details-short-cast :cardId="cardId" :castSlider="cast" />
-    <card-details-similar :cardId="cardId" />
+    <card-details-similar :cardId="cardId" :category="category"/>
   </main>
   <div
     class="card__details-trailer"
@@ -214,6 +204,17 @@ export default {
     },
     category() {
       return this.$route.params.category;
+    },
+    checkRating() {
+      return {
+        "high-rating": this.rating >= 7,
+        "mid-rating": this.rating < 7 && this.rating > 4,
+        "low-rating": this.rating > 1 && this.rating < 4,
+        "no-rating": this.rating == "NR",
+      };
+    },
+    correctRating() {
+      return this.rating == 0 ? (this.rating = "NR") : this.rating;
     },
   },
   watch: {
@@ -364,6 +365,9 @@ export default {
       }
       &.low-rating {
         background-color: $bg-lowRating;
+      }
+      &.no-rating {
+        background-color: $bg-noRating;
       }
     }
   }
