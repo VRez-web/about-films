@@ -1,7 +1,7 @@
 # aboutFilms
 
 ## Краткое описание
-aboutFilms- приложение для просмотра информации о фильмах/сериалах.Созданный на основе данного [API](https://www.themoviedb.org/documentation/api?language=ru)
+aboutFilms- сайт для просмотра информации о фильмах/сериалах.Созданный на основе данного [API](https://www.themoviedb.org/documentation/api?language=ru)
 ## Project setup
 ```
 npm install
