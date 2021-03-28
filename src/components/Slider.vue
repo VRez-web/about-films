@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       sliderStyles: {
-        background: `url(${require("@/assets/img/right-arrow.svg")})center no-repeat`,
+        background: `url(${require("@/assets/img/right-arrow.svg")})center/cover no-repeat`,
       },
     };
   },
