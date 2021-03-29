@@ -63,6 +63,12 @@ const routes = [
     name: "card-details-cast",
     props: true,
   },
+  {
+    path:"/person/:id",
+    component: () => import("../components/AboutPerson"),
+    name: "about-person",
+    props: true,
+  }
 ];
 
 const router = createRouter({
@@ -75,7 +81,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title='aboutFilms'
+  document.title='About films'
   next()
 })
 export default router;
