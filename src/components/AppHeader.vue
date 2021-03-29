@@ -4,7 +4,7 @@
       <div class="header__inner">
         <h1>
           <router-link :to="{name:'home'}" class="header__logo">
-            about<span>Films</span>
+            About<span>films</span>
           </router-link>
         </h1>
         <div
