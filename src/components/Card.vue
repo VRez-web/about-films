@@ -1,9 +1,12 @@
 <template>
-  <div
+  <router-link
     class="card"
     v-for="item in data"
     :key="item.id"
-    @click="goToCard(item.id)"
+    :to="{
+      name: 'card-details',
+      params: { id: `${item.id}`, category: `${category}` },
+    }"
   >
     <p class="card__vote" :class="checkVote(item)">
       {{ voteCorrect(item) }}
@@ -38,14 +41,14 @@
         {{ formatDate(item) }}
       </p>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
 export default {
   props: {
     data: Array,
-    category:String
+    category: String,
   },
   data() {
     return {
@@ -53,14 +56,6 @@ export default {
     };
   },
   methods: {
-    goToCard(id) {
-      this.$router
-        .push({
-          name: "card-details",
-          params: { id: `${id}`, category: `${this.category}` },
-        })
-        .catch((e) => {});
-    },
     checkVote(item) {
       return {
         "high-rating": item.vote_average >= 7,
@@ -97,7 +92,7 @@ export default {
   cursor: pointer;
   font-size: 1rem;
   min-height: 400px;
-
+  display: block;
   &:hover {
     transform: scale(1.05);
 
