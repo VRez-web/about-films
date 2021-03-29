@@ -1,5 +1,8 @@
 <template>
-  <div class="card">
+  <router-link
+    :to="{ name: 'about-person', params: { id: data.credit_id } }"
+    class="card"
+  >
     <img
       :src="
         data.profile_path
@@ -15,7 +18,7 @@
       </p>
       <p class="card__job" v-if="!!data.job">{{ data.job }}</p>
     </div>
-  </div>
+  </router-link>
 </template>
 <script>
 export default {
@@ -35,6 +38,7 @@ export default {
 .card {
   width: 100%;
   text-align: center;
+  display: block;
 
   &__title {
     margin-bottom: 0.5rem;
