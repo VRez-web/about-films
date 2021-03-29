@@ -210,7 +210,7 @@ export default {
     checkRating() {
       return {
         "high-rating": this.rating >= 7,
-        "mid-rating": this.rating < 7 && this.rating > 4,
+        "mid-rating": this.rating < 7 && this.rating >= 4,
         "low-rating": this.rating > 1 && this.rating < 4,
         "no-rating": this.rating == "NR",
       };
