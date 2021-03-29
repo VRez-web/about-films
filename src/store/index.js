@@ -264,7 +264,7 @@ const store = createStore({
         });
     },
     // Multi search
-    async GET_SEARCH({ commit }, query, page = this.state.page) {
+    async GET_SEARCH({ commit }, {query, page = this.state.page}) {
       return await axios
         .get(
           `/search/multi?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
@@ -279,7 +279,7 @@ const store = createStore({
         });
     },
 
-    async GET_SEARCH_TOTAL_MOVIES({ commit }, query, page = this.state.page) {
+    async GET_SEARCH_TOTAL_MOVIES({ commit }, {query, page = this.state.page}) {
       return await axios
         .get(
           `/search/movie?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
