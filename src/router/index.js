@@ -71,6 +71,11 @@ const router = createRouter({
   scrollBehavior() {
     document.getElementById("app").scrollIntoView();
   },
+  
 });
 
+router.beforeEach((to, from, next) => {
+  document.title='aboutFilms'
+  next()
+})
 export default router;
