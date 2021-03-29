@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'about-person', params: { id: data.credit_id } }"
+    :to="{ name: 'about-person', params: { id: data.id } }"
     class="card"
   >
     <img
