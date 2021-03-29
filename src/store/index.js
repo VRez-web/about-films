@@ -14,7 +14,7 @@ const store = createStore({
       tvShowsWeek: [],
       tvShowsToday: [],
       tvShowsPopular: [],
-      tvShowsSimilar:[],
+      tvShowsSimilar: [],
       moviesTheatres: [],
       moviesPopular: [],
       moviesTopRated: [],
@@ -24,6 +24,7 @@ const store = createStore({
       movieDetailsSimilar: [],
       searchQuery: "",
       searchTotalMovies: [],
+      aboutPerson: [],
       page: 1,
     };
   },
@@ -74,6 +75,10 @@ const store = createStore({
     },
     SET_SEARCH_TOTAL_MOVIES: (state, searchTotalMovies) => {
       state.searchTotalMovies = searchTotalMovies;
+    },
+    // About person
+    SET_ABOUT_PERSON: (state, aboutPerson) => {
+      state.aboutPerson = aboutPerson;
     },
   },
   actions: {
@@ -264,7 +269,7 @@ const store = createStore({
         });
     },
     // Multi search
-    async GET_SEARCH({ commit }, {query, page = this.state.page}) {
+    async GET_SEARCH({ commit }, { query, page = this.state.page }) {
       return await axios
         .get(
           `/search/multi?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
@@ -279,13 +284,31 @@ const store = createStore({
         });
     },
 
-    async GET_SEARCH_TOTAL_MOVIES({ commit }, {query, page = this.state.page}) {
+    async GET_SEARCH_TOTAL_MOVIES(
+      { commit },
+      { query, page = this.state.page }
+    ) {
       return await axios
         .get(
           `/search/movie?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
         )
         .then((res) => {
           commit("SET_SEARCH_TOTAL_MOVIES", res.data);
+          return res.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          return e;
+        });
+    },
+    // detials person
+    async GET_ABOUT_PERSON({ commit }, id) {
+      return await axios
+        .get(
+          `/person/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=movie_credits,tv_credits,external_ids`
+        )
+        .then((res) => {
+          commit("SET_ABOUT_PERSON", res.data);
           return res.data;
         })
         .catch((e) => {
