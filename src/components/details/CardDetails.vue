@@ -53,7 +53,7 @@
                 <i class="icofont-ui-play"></i> Трейлер
               </button>
 
-              <div class="card__details-links-social">
+              <div class="links-social">
                 <a
                   :href="`https://www.facebook.com/${socialLinks.facebook_id}`"
                   target="_blank"
@@ -264,24 +264,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 80%;
-    &-social {
-      a {
-        color: inherit;
-        font-size: 1.5rem;
-        border: 2px solid transparent;
-        border-radius: 50%;
-        padding: 0 3px 0 3px;
-        transition: all 0.4s linear;
-
-        &:nth-child(2) {
-          margin: 0 0.625rem;
-        }
-        &:hover {
-          color: $color-tematic;
-          border-color: $color-tematic;
-        }
-      }
-    }
   }
   &-trailer {
     position: fixed;
