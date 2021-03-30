@@ -305,7 +305,7 @@ const store = createStore({
     async GET_ABOUT_PERSON({ commit }, id) {
       return await axios
         .get(
-          `/person/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=movie_credits,external_ids`
+          `/person/${id}?api_key=${this.state.apiKey}&language=ru-RU&append_to_response=movie_credits,tv_credits,external_ids`
         )
         .then((res) => {
           commit("SET_ABOUT_PERSON", res.data);
