@@ -86,6 +86,122 @@
       </div>
     </div>
   </section>
+  <section class="career">
+    <div class="container">
+      <h2 class="person__title">Карьера</h2>
+      <div class="career__inner">
+        <div class="career__actor">
+          <h3 class="career__title-category">Актёрское искусство</h3>
+          <ul class="career__actor-list">
+            <li class="career__actor-item" v-for="role in allRoles" :key="role">
+              <span class="career__actor-item-date">-</span>
+              <p>
+                <router-link
+                  :to="{
+                    name: 'card-details',
+                    params: { id: role.id, category: category(role) },
+                  }"
+                  class="link"
+                  >{{ correctTitle(role) }}</router-link
+                >
+                <span v-show="role.episode_count"
+                  >({{ role.episode_count }} эпизод)</span
+                >
+                <span
+                  class="career__actor-item-before-characher"
+                  v-show="role.character"
+                  >как</span
+                >
+                <span v-show="role.character">"{{ role.character }}"</span>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="career__other">
+          <div class="career__other-wrapper">
+            <h3 class="career__title-category">Продакшн</h3>
+            <ul class="career__actor-list">
+              <li
+                class="career__actor-item"
+                v-for="role in production"
+                :key="role"
+              >
+                <span class="career__actor-item-date">-</span>
+                <p>
+                  <router-link
+                    :to="{
+                      name: 'card-details',
+                      params: { id: role.id, category: category(role) },
+                    }"
+                    class="link"
+                    >{{ correctTitle(role) }}</router-link
+                  >
+                  <span v-show="role.episode_count"
+                    >({{ role.episode_count }} эпизод)</span
+                  >
+                  <span v-show="role.job" class="career__actor-item-job"
+                    >"{{ role.job }}"</span
+                  >
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="career__other-wrapper">
+            <h3 class="career__title-category">Создатель</h3>
+            <ul class="career__actor-list">
+              <li
+                class="career__actor-item"
+                v-for="role in creator"
+                :key="role"
+              >
+                <span class="career__actor-item-date">-</span>
+                <p>
+                  <router-link
+                    :to="{
+                      name: 'card-details',
+                      params: { id: role.id, category: category(role) },
+                    }"
+                    class="link"
+                    >{{ correctTitle(role) }}</router-link
+                  >
+                  <span v-show="role.episode_count"
+                    >({{ role.episode_count }} эпизод)</span
+                  >
+                  <span v-show="role.job" class="career__actor-item-job"
+                    >"{{ role.job }}"</span
+                  >
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="career__other-wrapper">
+            <h3 class="career__title-category">Сценарий</h3>
+            <ul class="career__actor-list">
+              <li class="career__actor-item" v-for="role in writer" :key="role">
+                <span class="career__actor-item-date">-</span>
+                <p>
+                  <router-link
+                    :to="{
+                      name: 'card-details',
+                      params: { id: role.id, category: category(role) },
+                    }"
+                    class="link"
+                    >{{ correctTitle(role) }}</router-link
+                  >
+                  <span v-show="role.episode_count"
+                    >({{ role.episode_count }} эпизод)</span
+                  >
+                  <span v-show="role.job" class="career__actor-item-job"
+                    >"{{ role.job }}"</span
+                  >
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -108,6 +224,7 @@ export default {
       placeBirth: "",
       bigText: true,
       allRoles: [],
+      allCrewRoles: [],
     };
   },
   methods: {
@@ -126,10 +243,22 @@ export default {
       this.allRoles = this.person.movie_credits.cast.concat(
         this.person.tv_credits.cast
       );
+      this.allCrewRoles = this.person.movie_credits.crew.concat(
+        this.person.tv_credits.crew
+      );
+
       console.log(ABOUT_PERSON);
     },
     showTxt() {
       this.bigText = !this.bigText;
+    },
+    // обработка названия фильма/сериала
+    correctTitle(item) {
+      return item.title ? item.title : item.name;
+    },
+
+    category(item) {
+      return item.episode_count ? "serial" : "movie";
     },
   },
   computed: {
@@ -157,11 +286,29 @@ export default {
     hiddenClass() {
       return this.hiddenTxt ? "hide-txt" : "";
     },
+    // сортировка для получения самых известных фильмов/сериалов
     sortBestRoles() {
       return this.allRoles
-        .sort((a, b) => a.vote_count - b.vote_count)
-        .reverse()
+        .sort((a, b) => b.vote_count - a.vote_count)
         .slice(0, 8);
+    },
+    // сортировка по дате всех фильмов/сериалов
+    // sortAllRoles() {
+    //   return this.allRoles.sort((a, b) => {
+    //     b.release_date - a.release_date;
+    //   });
+    // },
+    // Получение всех фильмов и сериалов где человек работал в продакшене
+    production() {
+      return this.allCrewRoles.filter((el) => el.department == "Production");
+    },
+    // Получение всех фильмов и сериалов где человек работал как создатель
+    creator() {
+      return this.allCrewRoles.filter((el) => el.department == "Creator");
+    },
+    // Получение всех фильмов и сериалов где человек работал над сценарием
+    writer() {
+      return this.allCrewRoles.filter((el) => el.department == "Writing");
     },
     biography() {
       return this.person.biography
@@ -249,7 +396,7 @@ export default {
       background-color: $color-tematic;
       position: absolute;
       right: 10%;
-      bottom: -10%;
+      bottom: -20%;
       cursor: pointer;
       padding: 0.313rem;
       border-radius: 0.313rem;
@@ -267,5 +414,41 @@ export default {
 }
 .known__for {
   margin-top: 2rem;
+}
+.career {
+  &__title-category {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  &__inner{
+    display: flex;
+  }
+  &__actor {
+    margin-bottom: 1rem;
+    width: fit-content;
+    &-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      &-date {
+        margin-right: 1rem;
+      }
+      p {
+        display: flex;
+        align-items: flex-end;
+      }
+      &-job {
+        margin-left: 0.5rem;
+      }
+      .link {
+        font-size: 1rem;
+      }
+
+      &-before-characher {
+        margin: 0 0.5rem;
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  }
 }
 </style>
