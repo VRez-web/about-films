@@ -168,6 +168,82 @@
         </li>
       </ul>
     </div>
+    <div class="career__other-wrapper" v-show="!!visualEffects.length">
+      <h3 class="career__title-category">Визуальные эффекты</h3>
+      <ul class="career__actor-list">
+        <li
+          class="career__actor-item"
+          v-for="role in visualEffects"
+          :key="role"
+        >
+          <span class="career__actor-item-date">-</span>
+          <p>
+            <router-link
+              :to="{
+                name: 'card-details',
+                params: { id: role.id, category: category(role) },
+              }"
+              class="link"
+              >{{ correctTitle(role) }}</router-link
+            >
+            <span v-show="role.episode_count"
+              >({{ role.episode_count }} эпизод)</span
+            >
+            <span v-show="role.job" class="career__actor-item-job"
+              >"{{ role.job }}"</span
+            >
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="career__other-wrapper" v-show="!!lighting.length">
+      <h3 class="career__title-category">Свет</h3>
+      <ul class="career__actor-list">
+        <li class="career__actor-item" v-for="role in lighting" :key="role">
+          <span class="career__actor-item-date">-</span>
+          <p>
+            <router-link
+              :to="{
+                name: 'card-details',
+                params: { id: role.id, category: category(role) },
+              }"
+              class="link"
+              >{{ correctTitle(role) }}</router-link
+            >
+            <span v-show="role.episode_count"
+              >({{ role.episode_count }} эпизод)</span
+            >
+            <span v-show="role.job" class="career__actor-item-job"
+              >"{{ role.job }}"</span
+            >
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="career__other-wrapper" v-show="!!art.length">
+      <h3 class="career__title-category">Оформление</h3>
+      <ul class="career__actor-list">
+        <li class="career__actor-item" v-for="role in art" :key="role">
+          <span class="career__actor-item-date">-</span>
+          <p>
+            <router-link
+              :to="{
+                name: 'card-details',
+                params: { id: role.id, category: category(role) },
+              }"
+              class="link"
+              >{{ correctTitle(role) }}</router-link
+            >
+            <span v-show="role.episode_count"
+              >({{ role.episode_count }} эпизод)</span
+            >
+            <span v-show="role.job" class="career__actor-item-job"
+              >"{{ role.job }}"</span
+            >
+          </p>
+        </li>
+      </ul>
+    </div>
     <div class="career__other-wrapper" v-show="!!categoryMore.length">
       <h3 class="career__title-category">Еще</h3>
       <ul class="career__actor-list">
@@ -206,6 +282,9 @@ export default {
     director: Array,
     editing: Array,
     categoryMore: Array,
+    art: Array,
+    visualEffects: Array,
+    lighting: Array,
   },
   data() {
     return {};
