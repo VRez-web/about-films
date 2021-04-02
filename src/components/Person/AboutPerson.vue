@@ -130,6 +130,9 @@
           :director="director"
           :editing="editing"
           :categoryMore="categoryMore"
+          :art="art"
+          :visualEffects="visualEffects"
+          :lighting="lighting"
         />
       </div>
     </div>
@@ -212,6 +215,7 @@ export default {
         ? new Date().getFullYear() - this.birthday.slice(0, 4)
         : "";
     },
+    // какой деятельностью славиться человек
     specialization() {
       if (this.person.known_for_department == "Acting") {
         return "Актёрское искусство";
@@ -223,6 +227,16 @@ export default {
         return "Режиссура";
       } else if (this.person.known_for_department == "Production") {
         return "Продакшн";
+      } else if (this.person.known_for_department == "Visual Effects") {
+        return "Визуальные эффекты";
+      } else if (this.person.known_for_department == "Sound") {
+        return "Звук";
+      } else if (this.person.known_for_department == "Lighting") {
+        return "Свет";
+      } else if (this.person.known_for_department == "Camera") {
+        return "Камера";
+      } else if (this.person.known_for_department == "Editing") {
+        return "Монтаж";
       }
     },
     hiddenTxt() {
@@ -272,6 +286,20 @@ export default {
     // категория "звук"
     sound() {
       return this.allCrewRoles.filter((el) => el.department == "Sound");
+    },
+    // категория "оформление"
+    art() {
+      return this.allCrewRoles.filter((el) => el.department == "Art");
+    },
+    // категория "визуальные эффекты"
+    visualEffects() {
+      return this.allCrewRoles.filter(
+        (el) => el.department == "Visual Effects"
+      );
+    },
+    // категория "свет"
+    lighting() {
+      return this.allCrewRoles.filter((el) => el.department == "Lighting");
     },
     // категория "еще"
     categoryMore() {
@@ -334,10 +362,9 @@ export default {
       margin-bottom: 1rem;
     }
     li {
-      margin-bottom: 0.625rem;
       font-size: 0.875rem;
-      &:last-child {
-        margin-bottom: 0;
+      &:not(:last-child) {
+       margin-bottom: 0.625rem;
       }
     }
   }
