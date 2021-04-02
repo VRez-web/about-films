@@ -58,7 +58,7 @@ export default {
     width: 2.5rem;
     height: 2.5rem;
     position: absolute;
-    top: 50%;
+    top: 45%;
     transform: translate(0%, -50%);
     z-index: 10;
     cursor: pointer;
