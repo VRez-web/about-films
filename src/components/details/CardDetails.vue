@@ -99,11 +99,11 @@
 
 <script>
 import { mapActions } from "vuex";
-import CardDetailsShortCast from "./CardDetailsShortCast";
-import CardDetailsHeader from "./CardDetailsHeader";
-import CardDetailsSimilar from "./CardDetailsSimilar";
+import cardDetailsShortCast from "./CardDetailsShortCast";
+import cardDetailsHeader from './CardDetailsHeader'
+import cardDetailsSimilar from "./CardDetailsSimilar";
 export default {
-  components: { CardDetailsSimilar, CardDetailsHeader, CardDetailsShortCast },
+  components: { cardDetailsSimilar, cardDetailsHeader, cardDetailsShortCast },
   data() {
     return {
       cardDetails: [],
