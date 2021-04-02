@@ -9,12 +9,12 @@
     @swiper="onSwiper"
     @slideChange="onSlideChange"
   >
-    <div class="swiper-button swiper-button-prev" :style="sliderStyles"></div>
-    <div class="swiper-button swiper-button-next" :style="sliderStyles"></div>
     <swiper-slide v-for="item in data" :key="item.id">
       <card :data="[item]" :category="category" v-if="category != 'people'" />
       <card-of-people v-else :data="item" />
     </swiper-slide>
+    <div class="swiper-button swiper-button-prev" :style="sliderStyles"></div>
+    <div class="swiper-button swiper-button-next" :style="sliderStyles"></div>
   </swiper>
 </template>
 
@@ -23,7 +23,6 @@ import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import card from "../components/Card";
 import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
 import CardOfPeople from "./CardOfPeople.vue";
 SwiperCore.use([Navigation]);
 export default {
@@ -58,13 +57,25 @@ export default {
   &-button {
     width: 2.5rem;
     height: 2.5rem;
-    transform: translate(0%,-50%),;
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    z-index: 10;
+    cursor: pointer;
     &-prev {
-      transform: translate(0%,-50%) scaleX(-1);
+      transform: translate(0%, -50%) scaleX(-1);
+    }
+    &-next{
+      right: 0;
     }
 
     &::after {
       content: "";
+    }
+
+    &-disabled{
+      opacity: .4;
+      pointer-events: none;
     }
   }
 }
