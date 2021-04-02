@@ -65,7 +65,7 @@ const routes = [
   },
   {
     path:"/person/:id",
-    component: () => import("../components/AboutPerson"),
+    component: () => import("../components/Person/AboutPerson"),
     name: "about-person",
     props: true,
   }
