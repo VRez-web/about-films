@@ -124,12 +124,12 @@
             />
           </div>
         </div>
-        <div class="crew__group" v-show="!!Tricks.length">
-          <h4 class="cast__subtitle">Трюки</h4>
+        <div class="crew__group" v-show="!!categoryMore.length">
+          <h4 class="cast__subtitle">Еще</h4>
           <div class="cast__people-inner">
             <card-of-people
               :data="people"
-              v-for="people in Tricks"
+              v-for="people in categoryMore"
               :key="people.id"
             />
           </div>
@@ -174,171 +174,39 @@ export default {
         : this.cardDetails.name;
     },
     directors() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Director" ||
-          el.job == "Co-Director" ||
-          el.job == "Assistant Director" ||
-          el.job == "Second Assistant Director" ||
-          el.job == "First Assistant Director" ||
-          el.job == "Second Unit Director" ||
-          el.job == "Script Supervisor"
-      );
+      return this.credits.crew.filter((el) => el.department == "Directing");
     },
     actors() {
       return this.credits.cast.filter((el) => el);
     },
     production() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Associate Producer" ||
-          el.job == "Casting" ||
-          el.job == "Character Technical Supervisor" ||
-          el.job == "Executive Producer" ||
-          el.job == "Producer" ||
-          el.job == "Post Production Supervisor" ||
-          el.job == "Production Manager" ||
-          el.job == "Co-Producer" ||
-          el.job == "Line Producer" ||
-          el.job == "Executive In Charge Of Production" ||
-          el.job == "Unit Production Manager" ||
-          el.job == "Assistant Accountant" ||
-          el.job == "Assistant Production Coordinator" ||
-          el.job == "Production Coordinator" ||
-          el.job == "First Assistant Accountant" ||
-          el.job == "Production Secretary" ||
-          el.job == "Payroll Accountant" ||
-          el.job == "Production Accountant"
-      );
+      return this.credits.crew.filter((el) => el.department == "Production");
     },
     scenario() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Head of Story" ||
-          el.job == "Screenplay" ||
-          el.job == "Screenplay, Story" ||
-          el.job == "Story" ||
-          el.job == "Writer"
-      );
+      return this.credits.crew.filter((el) => el.department == "Writing");
     },
     decor() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Art Direction" ||
-          el.job == "Painter" ||
-          el.job == "Production Design" ||
-          el.job == "Sets & Props Supervisor" ||
-          el.job == "Technical Supervisor" ||
-          el.job == "Set Decoration" ||
-          el.job == "Props" ||
-          el.job == "Leadman" ||
-          el.job == "Art Department Coordinator" ||
-          el.job == "Assistant Property Master" ||
-          el.job == "Graphic Designer" ||
-          el.job == "Set Decoration Buyer" ||
-          el.job == "Set Designer" ||
-          el.job == "Storyboard Artist" ||
-          el.job == "Set Dresser" ||
-          el.job == "Supervising Art Director" ||
-          el.job == "Costume Design" ||
-          el.job == "Costumer " ||
-          el.job == "Ager/Dyer" ||
-          el.job == "Costume Assistant" ||
-          el.job == "Key Costumer" ||
-          el.job == "Key Hair Stylist" ||
-          el.job == "Key Makeup Artist" ||
-          el.job == "Makeup Department Head" ||
-          el.job == "Makeup Effects Designer" ||
-          el.job == "Costume Supervisor" ||
-          el.job == "Hair Department Head" ||
-          el.job == "Hairstylist" ||
-          el.job == "Concept Artist" ||
-          el.job == "Draughtsman" ||
-          el.job == "Makeup Artist" ||
-          el.job == "Prosthetic Makeup Artist" ||
-          el.job == "Wigmaker" ||
-          el.job == "Additional Wardrobe Assistant" ||
-          el.job == "Property Master"
-      );
+      return this.credits.crew.filter((el) => el.department == "Art");
     },
     effects() {
       return this.credits.crew.filter(
-        (el) =>
-          el.job == "Animation Supervisor" ||
-          el.job == "Character Modelling Supervisor" ||
-          el.job == "Effects Supervisor" ||
-          el.job == "Head of Animation" ||
-          el.job == "Modelling Supervisor" ||
-          el.job == "Simulation & Effects Artist" ||
-          el.job == "Visual Effects Supervisor" ||
-          el.job == "Visual Effects" ||
-          el.job == "Visual Effects Producer" ||
-          el.job == "Special Effects Supervisor" ||
-          el.job == "Special Effects Technician"
+        (el) => el.department == "Visual Effects"
       );
     },
     sound() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Original Music Composer" ||
-          el.job == "Music Supervisor" ||
-          el.job == "Boom Operator" ||
-          el.job == "Sound Mixer" ||
-          el.job == "Sound" ||
-          el.job == "Sound Assistant"
-      );
+      return this.credits.crew.filter((el) => el.department == "Sound");
     },
     shine() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Lighting Director" ||
-          el.job == "Rigging Supervisor" ||
-          el.job == "Lighting Technician" ||
-          el.job == "Rigging Gaffer" ||
-          el.job == "Rigging Grip" ||
-          el.job == "Assistant Chief Lighting Technician" ||
-          el.job == "Chief Lighting Technician"
-      );
+      return this.credits.crew.filter((el) => el.department == "Lighting");
     },
     camera() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Director of Photography" ||
-          el.job == "Head of Layout" ||
-          el.job == `"B" Camera Operator` ||
-          el.job == `"A" Camera Operator` ||
-          el.job == "Camera Loader" ||
-          el.job == `"C" Camera Operator` ||
-          el.job == "Camera Operator" ||
-          el.job == "Dolly Grip" ||
-          el.job == "Grip" ||
-          el.job == "Digital Imaging Technician " ||
-          el.job == "Still Photographer" ||
-          el.job == `First Assistant "A" Camera` ||
-          el.job == `First Assistant "B" Camera` ||
-          el.job == `Key Grip` ||
-          el.job == `Second Assistant "A" Camera` ||
-          el.job == `Additional Photography` ||
-          el.job == `Second Assistant "B" Camera`
-      );
+      return this.credits.crew.filter((el) => el.department == "Camera");
     },
     installation() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Editor" ||
-          el.job == "Digital Intermediate Colorist" ||
-          el.job == "Assistant Editor" ||
-          el.job == "First Assistant Editor"
-      );
+      return this.credits.crew.filter((el) => el.department == "Editing");
     },
-    Tricks() {
-      return this.credits.crew.filter(
-        (el) =>
-          el.job == "Stunts" ||
-          el.job == "Fight Choreographer" ||
-          el.job == "Stunt Coordinator" ||
-          el.job == "Thanks"
-      );
+    categoryMore() {
+      return this.credits.crew.filter((el) => el.department == "Crew");
     },
   },
 };
