@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="container-second">
+    <div class="container">
       <section class="home__gallery">
         <h2 class="home__gallery-title">
           <router-link :to="{ name: 'movies-theatres' }" class="link"
