@@ -29,7 +29,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_TV_SHOWS_TOP_RATED"]),
+    ...mapActions('serialsTopRated',["GET_TV_SHOWS_TOP_RATED"]),
     pageChange(page) {
       this.currentPage = page;
       this.GET_TV_SHOWS_TOP_RATED((page = this.currentPage)).then((res) => {
