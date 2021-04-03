@@ -42,6 +42,7 @@
               <a
                 :href="cardDetails.homepage"
                 target="_blank"
+                rel="noopener"
                 class="card__details-homepage link-hover"
                 >Официальная страница</a
               >
@@ -57,16 +58,19 @@
                 <a
                   :href="`https://www.facebook.com/${socialLinks.facebook_id}`"
                   target="_blank"
+                  rel="noopener"
                   ><i class="icofont-facebook"></i
                 ></a>
                 <a
                   :href="`https://www.instagram.com/${socialLinks.instagram_id}`"
                   target="_blank"
+                  rel="noopener"
                   ><i class="icofont-instagram"></i
                 ></a>
                 <a
                   :href="`https://www.twitter.com/${socialLinks.twitter_id}`"
                   target="_blank"
+                  rel="noopener"
                   ><i class="icofont-twitter"></i
                 ></a>
               </div>

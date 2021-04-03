@@ -6,7 +6,7 @@
           <i class="icofont-copyright"></i> copyright all rights reserved.
         </p>
         <p class="footer__author">
-          Telegram: <a href="https://t.me/victor_web" class="link" target="_blank">vr-web</a>
+          Telegram: <a href="https://t.me/victor_web" class="link" target="_blank" rel="noopener">vr-web</a>
         </p>
       </div>
     </div>

@@ -11,6 +11,7 @@
                 :href="`https://www.instagram.com/${socialLinks.instagram_id}`"
                 title="Посетить instagram"
                 target="_blank"
+                rel="noopener"
                 v-show="!!socialLinks.instagram_id"
               >
                 <i class="icofont-instagram"></i>
@@ -19,6 +20,7 @@
                 :href="`https://www.facebook.com/${socialLinks.facebook_id}`"
                 title="Посетить facebook"
                 target="_blank"
+                rel="noopener"
                 v-show="!!socialLinks.facebook_id"
               >
                 <i class="icofont-facebook"></i>
@@ -28,6 +30,7 @@
                 title="Посетить twitter"
                 v-show="!!socialLinks.twitter_id"
                 target="_blank"
+                rel="noopener"
               >
                 <i class="icofont-twitter"></i>
               </a>
@@ -35,6 +38,7 @@
                 :href="homepage"
                 title="Посетить Домашнюю страницу"
                 target="_blank"
+                rel="noopener"
                 v-show="!!homepage"
               >
                 <i class="icofont-link"></i>
