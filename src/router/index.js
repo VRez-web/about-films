@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
-    name:"home",
+    name: "home",
     path: "/",
     component: () => import("../pages/Home"),
   },
@@ -64,11 +64,11 @@ const routes = [
     props: true,
   },
   {
-    path:"/person/:id",
-    component:()=> import("@/components/person/AboutPerson"),
+    path: "/person/:id",
+    component: () => import("../components/person/AboutPerson"),
     name: "about-person",
     props: true,
-  }
+  },
 ];
 
 const router = createRouter({
@@ -77,11 +77,10 @@ const router = createRouter({
   scrollBehavior() {
     document.getElementById("app").scrollIntoView();
   },
-  
 });
 
 router.beforeEach((to, from, next) => {
-  document.title='About films'
-  next()
-})
+  document.title = "About films";
+  next();
+});
 export default router;
