@@ -29,7 +29,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIES_TOP_RATED", "GET_MOVIE_DATES"]),
+    ...mapActions('moviesTopRated',["GET_MOVIES_TOP_RATED"]),
+    ...mapActions('moviesDates',["GET_MOVIE_DATES"]),
     pageChange(page) {
       this.currentPage = page;
       this.GET_MOVIES_TOP_RATED((page = this.currentPage)).then((res) => {
