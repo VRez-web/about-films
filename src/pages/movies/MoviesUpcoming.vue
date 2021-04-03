@@ -5,7 +5,7 @@
         Ожидаемое в кинотеатрах
       </h2>
       <div class="movies__popular-inner section__inner">
-        <card :data="moviesUpcoming.results" :category="'movie'"/>
+        <card :data="moviesUpcoming.results" :category="'movie'" />
       </div>
 
       <pagination
@@ -32,7 +32,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIES_UPCOMING","GET_MOVIE_DATES"]),
+    ...mapActions("moviesUpcoming", ["GET_MOVIES_UPCOMING"]),
+    ...mapActions("moviesDates", ["GET_MOVIE_DATES"]),
     pageChange(page) {
       this.currentPage = page;
       this.GET_MOVIES_UPCOMING((page = this.currentPage)).then((res) => {
@@ -44,7 +45,7 @@ export default {
   mounted() {
     this.GET_MOVIES_UPCOMING().then((res) => {
       this.moviesUpcoming = res;
-       this.moviesUpcoming.results.forEach((item) => {
+      this.moviesUpcoming.results.forEach((item) => {
         this.GET_MOVIE_DATES(item.id).then((resolve) => {
           resolve.results.forEach((date) => {
             if (date.iso_3166_1 == "RU") {
