@@ -31,7 +31,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_TV_SHOWS_WEEK"]),
+    ...mapActions('serialsWeek',["GET_TV_SHOWS_WEEK"]),
         pageChange(page) {
       this.currentPage = page;
       this.GET_TV_SHOWS_WEEK((page = this.currentPage)).then((res) => {
