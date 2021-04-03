@@ -301,7 +301,7 @@ const store = createStore({
           return e;
         });
     },
-    // detials person
+    // details person
     async GET_ABOUT_PERSON({ commit }, id) {
       return await axios
         .get(
