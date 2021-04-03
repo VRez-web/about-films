@@ -16,8 +16,13 @@
       >
         {{ page }}
       </li>
-      <li>...</li>
-      <li @click="pageChange(totalPages)">{{ totalPages }}</li>
+      <li  v-show="currentPage + pageRange < totalPages">...</li>
+      <li
+        @click="pageChange(totalPages)"
+        v-show="currentPage + pageRange < totalPages"
+      >
+        {{ totalPages }}
+      </li>
     </ul>
 
     <button
@@ -101,7 +106,7 @@ export default {
     }
     &:disabled {
       background-color: rgba(31, 33, 54, 0.3);
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba($color-white, 0.3);
     }
   }
 
