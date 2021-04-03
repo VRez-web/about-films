@@ -30,7 +30,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_TV_SHOWS_POPULAR"]),
+    ...mapActions('serialsPopular',["GET_TV_SHOWS_POPULAR"]),
     pageChange(page) {
       this.currentPage = page;
       this.GET_TV_SHOWS_POPULAR((page = this.currentPage)).then((res) => {
