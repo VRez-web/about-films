@@ -5,7 +5,7 @@
         Сейчас в кинотеатрах:
       </h2>
       <div class="movies__theatres-inner section__inner">
-        <card :data="moviesTeatres.results" :category="'movie'"/>
+        <card :data="moviesTeatres.results" :category="'movie'" />
       </div>
 
       <pagination
@@ -33,15 +33,14 @@ export default {
   },
   methods: {
     ...mapActions(["GET_MOVIES_THEATRES", "GET_MOVIE_DATES"]),
-    pageChange(page) {
+    async pageChange(page) {
+      const MOVIES_THEATRES = await this.GET_MOVIES_THEATRES(page);
+      this.moviesTeatres = MOVIES_THEATRES;
       this.currentPage = page;
-      this.GET_MOVIES_THEATRES((page = this.currentPage)).then((res) => {
-        this.moviesTeatres = res;
-      });
     },
   },
 
-  mounted() {
+ mounted() {
     this.GET_MOVIES_THEATRES().then((res) => {
       this.moviesTeatres = res;
       this.moviesTeatres.results.forEach((item) => {
