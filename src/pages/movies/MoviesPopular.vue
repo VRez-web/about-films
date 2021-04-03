@@ -30,7 +30,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIES_POPULAR", "GET_MOVIE_DATES"]),
+    ...mapActions('moviesPopular',["GET_MOVIES_POPULAR"]),
+    ...mapActions('moviesDates',["GET_MOVIE_DATES"]),
     async pageChange(page) {
       const MOVIES_POPULAR = await this.GET_MOVIES_POPULAR(page);
       this.moviesPopular = MOVIES_POPULAR;
