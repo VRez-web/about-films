@@ -131,11 +131,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_CARD_DETAILS_MOVIE", "GET_CARD_DETAILS_SERIAL"]),
-
+    ...mapActions('moviesDetails',["GET_MOVIES_DETAILS"]),
+    ...mapActions('serialsDetails',["GET_SERIAL_DETAILS"]),
     // Получение общей информации о фильме
     async getMovieData() {
-      const CARD_DETAILS_MOVIE = await this.GET_CARD_DETAILS_MOVIE(this.cardId);
+      const CARD_DETAILS_MOVIE = await this.GET_MOVIES_DETAILS(this.cardId);
       this.cardDetails = CARD_DETAILS_MOVIE;
       this.dateAnnounce = this.cardDetails.release_date.slice(0, 4);
       this.plot = this.cardDetails.overview;
@@ -170,7 +170,7 @@ export default {
 
     // Получение общей информации о сериале
     async getSerialData() {
-      const CARD_DETAILS_SERIAL = await this.GET_CARD_DETAILS_SERIAL(
+      const CARD_DETAILS_SERIAL = await this.GET_SERIAL_DETAILS(
         this.cardId
       );
       this.cardDetails = CARD_DETAILS_SERIAL;
