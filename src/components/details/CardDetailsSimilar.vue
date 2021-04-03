@@ -23,13 +23,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIE_SIMILAR", "GET_TV_SHOWS_SIMILAR"]),
+    ...mapActions('moviesSimilar',['GET_MOVIE_SIMILAR']),
+    ...mapActions('serialsSimilar',['GET_SERIAL_SIMILAR']),
     async getSimilarMovies() {
       const MOVIE_SIMILAR = await this.GET_MOVIE_SIMILAR(this.cardId);
       this.similarMovies = MOVIE_SIMILAR.results.slice(0, 12);
     },
     async getSimilarTvShows() {
-      const SERIAL_SIMILAR = await this.GET_TV_SHOWS_SIMILAR(this.cardId);
+      const SERIAL_SIMILAR = await this.GET_SERIAL_SIMILAR(this.cardId);
       this.similarSerials = SERIAL_SIMILAR.results.slice(0, 12);
     },
     getData() {
