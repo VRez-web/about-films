@@ -32,7 +32,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_MOVIES_THEATRES", "GET_MOVIE_DATES"]),
+    ...mapActions("moviesTheatres", ["GET_MOVIES_THEATRES"]),
+    ...mapActions("moviesDates", ["GET_MOVIE_DATES"]),
     async pageChange(page) {
       const MOVIES_THEATRES = await this.GET_MOVIES_THEATRES(page);
       this.moviesTeatres = MOVIES_THEATRES;
@@ -40,7 +41,7 @@ export default {
     },
   },
 
- mounted() {
+  mounted() {
     this.GET_MOVIES_THEATRES().then((res) => {
       this.moviesTeatres = res;
       this.moviesTeatres.results.forEach((item) => {
