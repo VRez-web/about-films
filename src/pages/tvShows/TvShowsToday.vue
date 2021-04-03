@@ -32,7 +32,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_TV_SHOWS_TODAY"]),
+    ...mapActions('serialsToday',["GET_TV_SHOWS_TODAY"]),
     pageChange(page) {
       this.currentPage = page;
       this.GET_TV_SHOWS_TODAY((page = this.currentPage)).then((res) => {
