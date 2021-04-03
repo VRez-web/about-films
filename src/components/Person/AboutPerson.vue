@@ -364,7 +364,7 @@ export default {
     li {
       font-size: 0.875rem;
       &:not(:last-child) {
-       margin-bottom: 0.625rem;
+        margin-bottom: 0.625rem;
       }
     }
   }
