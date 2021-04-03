@@ -59,18 +59,21 @@
                   :href="`https://www.facebook.com/${socialLinks.facebook_id}`"
                   target="_blank"
                   rel="noopener"
+                  v-show="!!socialLinks.facebook_id"
                   ><i class="icofont-facebook"></i
                 ></a>
                 <a
                   :href="`https://www.instagram.com/${socialLinks.instagram_id}`"
                   target="_blank"
                   rel="noopener"
+                  v-show="!!socialLinks.instagram_id"
                   ><i class="icofont-instagram"></i
                 ></a>
                 <a
                   :href="`https://www.twitter.com/${socialLinks.twitter_id}`"
                   target="_blank"
                   rel="noopener"
+                  v-show="!!socialLinks.twitter_id"
                   ><i class="icofont-twitter"></i
                 ></a>
               </div>
@@ -104,7 +107,7 @@
 <script>
 import { mapActions } from "vuex";
 import cardDetailsShortCast from "./CardDetailsShortCast";
-import cardDetailsHeader from './CardDetailsHeader'
+import cardDetailsHeader from "./CardDetailsHeader";
 import cardDetailsSimilar from "./CardDetailsSimilar";
 export default {
   components: { cardDetailsSimilar, cardDetailsHeader, cardDetailsShortCast },
@@ -278,7 +281,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba($color-black, 0.5);
     z-index: 9999;
     &-btn {
       background-color: transparent;
