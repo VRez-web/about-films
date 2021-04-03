@@ -8,7 +8,7 @@
           >
           <i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesTeathers"  :category="'movie'"/>
+        <slider :data="moviesTeathers" :category="'movie'" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -16,7 +16,7 @@
             >Ожидаемые фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesUpcoming"  :category="'movie'"/>
+        <slider :data="moviesUpcoming" :category="'movie'" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -24,7 +24,7 @@
             >Популярные фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesPopular"  :category="'movie'"/>
+        <slider :data="moviesPopular" :category="'movie'" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -32,7 +32,7 @@
             >Лучшие фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesTopRated"  :category="'movie'"/>
+        <slider :data="moviesTopRated" :category="'movie'" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -40,7 +40,7 @@
             Сериалы на сегодня</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsToday" :category="'serial'"/>
+        <slider :data="tvShowsToday" :category="'serial'" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -48,7 +48,7 @@
             Сериалы на неделю</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsWeek" :category="'serial'"/>
+        <slider :data="tvShowsWeek" :category="'serial'" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -56,7 +56,7 @@
             Популярные сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsPopular" :category="'serial'"/>
+        <slider :data="tvShowsPopular" :category="'serial'" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -64,7 +64,7 @@
             Лучшие сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsTopRated" :category="'serial'"/>
+        <slider :data="tvShowsTopRated" :category="'serial'" />
       </section>
     </div>
   </main>
@@ -89,18 +89,18 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "GET_MOVIES_THEATRES",
-      "GET_MOVIES_UPCOMING",
-      "GET_MOVIES_POPULAR",
-      "GET_MOVIES_TOP_RATED",
-      "GET_MOVIE_DATES",
+    // получение сериалов
+    ...mapActions("serialsTopRated", ["GET_TV_SHOWS_TOP_RATED"]),
+    ...mapActions("serialsPopular", ["GET_TV_SHOWS_POPULAR"]),
+    ...mapActions("serialsWeek", ["GET_TV_SHOWS_WEEK"]),
+    ...mapActions("serialsToday", ["GET_TV_SHOWS_TODAY"]),
 
-      "GET_TV_SHOWS_TODAY",
-      "GET_TV_SHOWS_WEEK",
-      "GET_TV_SHOWS_POPULAR",
-      "GET_TV_SHOWS_TOP_RATED",
-    ]),
+    // получение фильмов
+      ...mapActions("moviesUpcoming", ["GET_MOVIES_UPCOMING"]),
+      ...mapActions("moviesTheatres", ["GET_MOVIES_THEATRES"]),
+      ...mapActions("moviesPopular", ["GET_MOVIES_POPULAR"]),
+      ...mapActions("moviesTopRated", ["GET_MOVIES_TOP_RATED"]),
+      ...mapActions("moviesDates", ["GET_MOVIE_DATES"]),
   },
   computed: {},
   async mounted() {
