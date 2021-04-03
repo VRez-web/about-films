@@ -1,7 +1,7 @@
 <template>
   <section class="search__total">
     <div class="container">
-      <div class="search__total-inner">
+      <div class="search__total-inner section__inner">
         <card :data="totalMovies.results" />
       </div>
       <pagination
@@ -32,25 +32,26 @@ export default {
   },
   methods: {
     ...mapActions(["GET_SEARCH_TOTAL_MOVIES"]),
-    pageChange(page) {
-      // this.currentPage = page;
-      this.GET_SEARCH_TOTAL_MOVIES(this.query, page).then((res) => {
-        this.totalMovies = res;
-        this.currentPage=page
-        console.log(this.query);
-        console.log(page);
-        console.log(res);
+    async pageChange(page) {
+      const TOTAL_MOVIES = await this.GET_SEARCH_TOTAL_MOVIES({
+        query: this.query,
+        page: page,
       });
+      this.totalMovies = TOTAL_MOVIES;
+      this.currentPage = page;
     },
   },
   computed: {},
-  created() {
+  async created() {
     if (this.category == "movie") {
-      this.GET_SEARCH_TOTAL_MOVIES(this.query, this.currentPage).then((res) => {
-        this.totalMovies = res;
-        this.currentPage = res.page;
+      const TOTAL_MOVIES = await this.GET_SEARCH_TOTAL_MOVIES({
+        query: this.query,
+        page: this.currentPage,
       });
-    } else if (this.category == "tv-shows") {
+      this.totalMovies = TOTAL_MOVIES;
+      this.currentPage = TOTAL_MOVIES.page;
+    } else if (this.category == "serial") {
+      
     } else {
     }
   },
@@ -59,10 +60,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/scss/_vars.scss";
-.search__total {
-  &-inner {
-    display: flex;
-    flex-wrap: wrap;
-  }
-}
 </style>
