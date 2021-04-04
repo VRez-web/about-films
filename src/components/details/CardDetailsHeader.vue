@@ -92,7 +92,7 @@ export default {
         : this.countryAndAge.iso_639_1;
     },
     country() {
-      return !!this.countryAndAge ? this.formattedCountry : "RU";
+      return !!this.countryAndAge.iso_639_1 ? this.formattedCountry : "RU";
     },
     // Обработка даты
     dateCheck() {
