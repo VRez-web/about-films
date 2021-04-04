@@ -70,4 +70,10 @@ export default {
 .swiper-slide .card {
   margin-top: -2rem;
 }
+.search__total-inner {
+  .card {
+    width: 20%;
+    margin-bottom: 1rem;
+  }
+}
 </style>
