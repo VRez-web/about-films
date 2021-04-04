@@ -24,6 +24,7 @@ export default {};
   width: 100%;
   padding: 1rem 0;
   border-top: 0.063rem solid rgba($color-white, 0.2);
+  margin-top: 1rem;
   &__inner {
     text-align: center;
   }
