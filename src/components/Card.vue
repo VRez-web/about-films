@@ -73,13 +73,6 @@ export default {
       return item.release_date.split("").slice(0, 4).join("");
     },
   },
-  computed: {
-    correctTitle() {
-      return this.data[0].title
-        ? this.data[0].title.replace(/\s/g, "-")
-        : this.data[0].name;
-    },
-  },
 };
 </script>
 
@@ -91,7 +84,7 @@ export default {
   transition: all 0.3s linear;
   cursor: pointer;
   font-size: 1rem;
-  min-height: 400px;
+  min-height: 350px;
   display: block;
   &:hover {
     transform: scale(1.05);
@@ -111,8 +104,8 @@ export default {
   img {
     width: 100%;
     height: auto;
-    min-height: 350px;
-    max-height: 350px;
+    min-height: 300px;
+    max-height: 300px;
     display: block;
     border-radius: 0.938rem;
     transition: all 0.3s linear;
@@ -178,6 +171,15 @@ export default {
 .search {
   .card {
     width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .swiper-slide {
+    .card {
+      width: 70%;
+      margin: 0 auto;
+    }
   }
 }
 </style>

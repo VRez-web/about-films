@@ -1,21 +1,43 @@
 <template>
-  <swiper
-    :slides-per-view="6"
-    :space-between="20"
-    :navigation="{
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    }"
-    @swiper="onSwiper"
-    @slideChange="onSlideChange"
-  >
-    <swiper-slide v-for="item in data" :key="item.id">
-      <card :data="[item]" :category="category" v-if="category != 'people'" />
-      <card-of-people v-else :data="item" />
-    </swiper-slide>
+  <div class="slider">
+    <swiper
+      :slides-per-view="6"
+      :space-between="20"
+      :navigation="{
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }"
+      :breakpoints="{
+        1500: {
+          slidesPerView: 6,
+        },
+        1300: {
+          slidesPerView: 5,
+        },
+        1000: {
+          slidesPerView: 4,
+        },
+        800: {
+          slidesPerView: 3,
+        },
+        550:{
+           slidesPerView: 2,
+        },
+        300:{
+           slidesPerView: 1,
+        }
+      }"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+    >
+      <swiper-slide v-for="item in data" :key="item.id">
+        <card :data="[item]" :category="category" v-if="category != 'people'" />
+        <card-of-people v-else :data="item" />
+      </swiper-slide>
+    </swiper>
     <div class="swiper-button swiper-button-prev" :style="sliderStyles"></div>
     <div class="swiper-button swiper-button-next" :style="sliderStyles"></div>
-  </swiper>
+  </div>
 </template>
 
 <script>
@@ -64,19 +86,42 @@ export default {
     cursor: pointer;
     &-prev {
       transform: translate(0%, -50%) scaleX(-1);
+      left: -50px;
     }
-    &-next{
-      right: 0;
+    &-next {
+      right: -50px;
     }
 
     &::after {
       content: "";
     }
 
-    &-disabled{
-      opacity: .4;
+    &-disabled {
+      opacity: 0.4;
       pointer-events: none;
     }
   }
+}
+.slider {
+  position: relative;
+}
+@media (max-width:550px) {
+
+  .swiper{
+
+
+    &-button{
+
+
+      &-prev{
+        left: -10px;
+      }
+
+      &-next{
+        right: -10px;
+      }
+    }
+  }
+  
 }
 </style>
