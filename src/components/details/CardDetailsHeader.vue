@@ -82,8 +82,8 @@ export default {
         ? this.countryAndAge.rating
         : this.countryAndAge.certification;
     },
-    age(){
-      return !!this.formattedAge?this.formattedAge:this.ageNone
+    age() {
+      return !!this.countryAndAge ? this.formattedAge : this.ageNone;
     },
     // Обработка страны
     formattedCountry() {
@@ -91,8 +91,8 @@ export default {
         ? this.countryAndAge.iso_3166_1
         : this.countryAndAge.iso_639_1;
     },
-    country(){
-      return this.formattedCountry? this.formattedCountry : "RU"
+    country() {
+      return !!this.countryAndAge ? this.formattedCountry : "RU";
     },
     // Обработка даты
     dateCheck() {
