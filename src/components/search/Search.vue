@@ -95,7 +95,7 @@
               <router-link
                 :to="{
                   name: 'search-total',
-                  params: { title: 'tv-shows', query: query },
+                  params: { title: 'serial', query: query },
                 }"
                 class="link"
                 v-show="resultTv.length == 8"
@@ -161,7 +161,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_SEARCH"]),
+    ...mapActions("multiSearch", ["GET_SEARCH"]),
+    ...mapActions("searchMovies", ["GET_SEARCH_MOVIES"]),
+    ...mapActions("searchSerials", ["GET_SEARCH_SERIALS"]),
+    ...mapActions("searchPerson", ["GET_SEARCH_PERSON"]),
     close(data) {
       this.$emit("close", !data);
     },
@@ -195,16 +198,28 @@ export default {
           .filter((el) => el.media_type == "person")
           .slice(0, 8);
 
-        // if (this.resultTv.length !== 8) {
-        //   let GET_SEARCH_TV = await this.GET_SEARCH({
-        //     query: this.query,
-        //     page: this.currentPage + 1,
-        //   });
-        //   GET_SEARCH_TV.results.filter((tv) =>
-        //     tv.media_type == "tv" ? this.resultTv.push(tv) : ""
-        //   );
-        //   this.resultTv = new Set(this.resultTv)
-        // }
+        if (this.resultMovie.length !== 8) {
+          let GET_SEARCH_MOVIES = await this.GET_SEARCH_MOVIES({
+            query: this.query,
+            page: this.currentPage,
+          });
+          this.resultMovie = GET_SEARCH_MOVIES.results.slice(0, 8);
+        }
+
+        if (this.resultTv.length !== 8) {
+          let GET_SEARCH_TV = await this.GET_SEARCH_SERIALS({
+            query: this.query,
+            page: this.currentPage,
+          });
+          this.resultTv = GET_SEARCH_TV.results.slice(0, 8);
+        }
+        if (this.resultPerson.length !== 8) {
+          let GET_SEARCH_PERSON = await this.GET_SEARCH_PERSON({
+            query: this.query,
+            page: this.currentPage,
+          });
+          this.resultPerson = GET_SEARCH_PERSON.results.slice(0, 8);
+        }
       }
     },
   },
