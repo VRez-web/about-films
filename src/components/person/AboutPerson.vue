@@ -86,7 +86,7 @@
     <div class="container">
       <h2 class="person__title">Известность за</h2>
       <div class="known__for-inner">
-        <slider :data="sortBestRoles" :category="'movie'" />
+        <slider :data="sortBestRoles" />
       </div>
     </div>
   </section>
@@ -170,7 +170,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_ABOUT_PERSON"]),
+    ...mapActions('aboutPerson',["GET_ABOUT_PERSON"]),
 
     async getData() {
       const ABOUT_PERSON = await this.GET_ABOUT_PERSON(this.id);
@@ -192,8 +192,6 @@ export default {
       );
 
       this.allRoles = this.allCastRoles.concat(this.allCrewRoles);
-
-      console.log(ABOUT_PERSON);
     },
     showTxt() {
       this.bigText = !this.bigText;
