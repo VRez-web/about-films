@@ -3,13 +3,16 @@
     <div class="container">
       <div class="header__inner">
         <h1>
-          <router-link :to="{name:'home'}" class="header__logo">
+          <router-link :to="{ name: 'home' }" class="header__logo">
             About<span>films</span>
           </router-link>
         </h1>
         <div
           class="header__group"
-          @click="searchShow = !searchShow;removeOverflow()"
+          @click="
+            searchShow = !searchShow;
+            removeOverflow();
+          "
         >
           <div class="header__search">
             <i class="icofont-search-2"></i>
@@ -64,16 +67,16 @@ export default {
   &__logo {
     font-size: 2rem;
     font-weight: 900;
-    transition: all .4s linear;
+    transition: all 0.4s linear;
     span {
       color: $color-tematic;
-       transition: all .4s linear;
+      transition: all 0.4s linear;
     }
 
-    &:hover{
+    &:hover {
       color: $color-tematic;
-      span{
-         color: $color-white;
+      span {
+        color: $color-white;
       }
     }
   }
@@ -81,7 +84,7 @@ export default {
   &__group {
     display: flex;
     align-items: center;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba($color-white, 0.5);
   }
 
   &__search {
@@ -97,11 +100,30 @@ export default {
       margin: 0 0.625rem 0 0;
     }
 
+    span {
+      position: relative;
+      &::after {
+        content: "";
+        width: 0%;
+        height: 0.125rem;
+        background-color: $color-tematic;
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        transition: all 0.4s linear;
+      }
+    }
+
     &:hover {
-      color: rgba(255, 255, 255, 1);
+      color: rgba($color-white, 1);
 
       i {
         transform: scale(1.3);
+      }
+      span {
+        &::after {
+          width: 100%;
+        }
       }
     }
   }
@@ -119,7 +141,7 @@ export default {
     }
 
     &:hover {
-      color: rgba(255, 255, 255, 1);
+      color: rgba($color-white, 1);
 
       i {
         border: 1px solid $color-white;
@@ -128,5 +150,4 @@ export default {
     }
   }
 }
-
 </style>
