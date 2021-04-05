@@ -8,7 +8,7 @@
           >
           <i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesTeathers" :category="'movie'" />
+        <slider :data="moviesTeathers" :category="'movie'" id="swiper-1"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -16,7 +16,7 @@
             >Ожидаемые фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesUpcoming" :category="'movie'" />
+        <slider :data="moviesUpcoming" :category="'movie'" id="swiper-2" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -24,7 +24,7 @@
             >Популярные фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesPopular" :category="'movie'" />
+        <slider :data="moviesPopular" :category="'movie'" id="swiper-3"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -32,7 +32,7 @@
             >Лучшие фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesTopRated" :category="'movie'" />
+        <slider :data="moviesTopRated" :category="'movie'" id="swiper-4"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -40,7 +40,7 @@
             Сериалы на сегодня</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsToday" :category="'serial'" />
+        <slider :data="tvShowsToday" :category="'serial'" id="swiper-5"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -48,7 +48,7 @@
             Сериалы на неделю</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsWeek" :category="'serial'" />
+        <slider :data="tvShowsWeek" :category="'serial'" id="swiper-6"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -56,7 +56,7 @@
             Популярные сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsPopular" :category="'serial'" />
+        <slider :data="tvShowsPopular" :category="'serial'" id="swiper-7"/>
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -64,7 +64,7 @@
             Лучшие сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsTopRated" :category="'serial'" />
+        <slider :data="tvShowsTopRated" :category="'serial'" id="swiper-8" />
       </section>
     </div>
   </main>
@@ -189,6 +189,12 @@ export default {
       opacity: 0;
       transition: all 0.3s linear;
     }
+  }
+}
+
+@media (max-width:550px) {
+  .home__gallery {
+    margin-bottom: 2rem;
   }
 }
 </style>
