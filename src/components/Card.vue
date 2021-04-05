@@ -173,11 +173,19 @@ export default {
     width: 100%;
   }
 }
-
+@media (max-width: 700px) {
+  .card {
+    min-height: auto;
+    img {
+      max-height: auto;
+      min-height: auto;
+    }
+  }
+}
 @media (max-width: 550px) {
   .swiper-slide {
     .card {
-      width: 70%;
+      width: 100%;
       margin: 0 auto;
     }
   }
