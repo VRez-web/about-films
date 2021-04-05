@@ -250,8 +250,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 2;
+  background-color: rgba($color-black, 0.9);
+  z-index: 99;
   padding-top: 3.75rem;
   overflow-y: scroll;
   &__title {
@@ -364,6 +364,49 @@ body {
     &-total {
       font-size: 1.5rem;
       margin-bottom: 0.5rem;
+    }
+  }
+}
+@media (max-width: 1200px) {
+  .search {
+    &__inner {
+      width: 70%;
+    }
+    &__result {
+      &-item {
+        width: 30%;
+      }
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .search {
+    &__inner {
+      width: 90%;
+    }
+  }
+}
+@media (max-width: 800px) {
+  .search {
+    &__result {
+      &-item {
+        width: 40%;
+      }
+    }
+  }
+}
+@media (max-width: 500px) {
+  .search {
+    &__inner{
+      width: 100%;
+    }
+    &__result {
+      &-item {
+        width: 43%;
+      }
+    }
+    &__close {
+      position: absolute;
     }
   }
 }
