@@ -1,8 +1,8 @@
 <template>
-  <section class="card__details-similar" v-show="!!correctData.length">
+  <section class="card__details-similar">
     <div class="container">
       <h2 class="card__details-title">Похожие {{correctTitle}}</h2>
-      <slider :data="correctData" :category="category" />
+      <slider :data="correctData" :category="category" id="slider-similar"/>
     </div>
   </section>
 </template>

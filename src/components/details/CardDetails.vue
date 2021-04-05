@@ -11,18 +11,18 @@
       />
       <div class="container">
         <div class="card__details-inner">
-          <img
-            :src="
-              cardDetails.poster_path
-                ? imgUrl + cardDetails.poster_path
-                : require('@/assets/img/no-poster.jpg')
-            "
-            alt=""
-            class="card__details-img"
-          />
-          <div class="card__details-description">
-            <h2 class="card__details-description-title">Сюжет</h2>
-            <p class="card__details-plot">{{ plot }}</p>
+          <div class="card__details-img-wrapper">
+            <img
+              :src="
+                cardDetails.poster_path
+                  ? imgUrl + cardDetails.poster_path
+                  : require('@/assets/img/no-poster.jpg')
+              "
+              alt=""
+              class="card__details-img"
+            />
+          </div>
+          <div class="card__details-description-wrapper-second">
             <div class="card__details-rating-wrapper">
               <div class="card__details-rating">
                 <h2>Рейтинг</h2>
@@ -80,6 +80,12 @@
             </div>
             <a href="#" class="card__details-scroll link">Подробнее</a>
           </div>
+          <div class="card__details-description">
+            <div class="card__details-description-wrapper">
+              <h2 class="card__details-description-title">Сюжет</h2>
+              <p class="card__details-plot">{{ plot }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -131,8 +137,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions('moviesDetails',["GET_MOVIES_DETAILS"]),
-    ...mapActions('serialsDetails',["GET_SERIAL_DETAILS"]),
+    ...mapActions("moviesDetails", ["GET_MOVIES_DETAILS"]),
+    ...mapActions("serialsDetails", ["GET_SERIAL_DETAILS"]),
     // Получение общей информации о фильме
     async getMovieData() {
       const CARD_DETAILS_MOVIE = await this.GET_MOVIES_DETAILS(this.cardId);
@@ -170,9 +176,7 @@ export default {
 
     // Получение общей информации о сериале
     async getSerialData() {
-      const CARD_DETAILS_SERIAL = await this.GET_SERIAL_DETAILS(
-        this.cardId
-      );
+      const CARD_DETAILS_SERIAL = await this.GET_SERIAL_DETAILS(this.cardId);
       this.cardDetails = CARD_DETAILS_SERIAL;
       this.dateAnnounce = this.cardDetails.first_air_date.slice(0, 4);
       this.plot = this.cardDetails.overview;
@@ -243,8 +247,10 @@ export default {
   padding: 2rem 0;
   &-inner {
     display: flex;
-    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
   }
+
   &-img {
     max-width: 350px;
     width: 100%;
@@ -252,13 +258,20 @@ export default {
     display: block;
     border-radius: 0.938rem;
     box-shadow: 0px 0px 15px 0px rgba(0, 255, 255, 0.75);
+
+    &-wrapper {
+      width: 20%;
+    }
   }
   &-description {
-    width: 65%;
-
+    width: 100%;
     &-title {
       font-size: 2rem;
       margin: 1rem 0;
+    }
+    &-wrapper-second {
+      width: 60%;
+      margin-left: 10rem;
     }
   }
   &-plot {
@@ -374,6 +387,116 @@ export default {
   }
   &-scroll {
     margin-top: 2rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .card__details {
+    &-description {
+      &-wrapper-second {
+        width: 70%;
+        margin-left: 5rem;
+      }
+    }
+    &-links {
+      width: 100%;
+    }
+  }
+}
+@media (max-width: 950px) {
+  .card__details {
+    &-inner {
+      justify-content: space-between;
+    }
+    &-img-wrapper {
+      img {
+        min-width: 250px;
+      }
+    }
+    &-description {
+      &-wrapper-second {
+        width: auto;
+        margin-left: 0rem;
+      }
+    }
+    &-links {
+      width: 90%;
+      flex-wrap: wrap;
+
+      .links-social {
+        margin-top: 1rem;
+      }
+    }
+  }
+}
+@media (max-width: 850px) {
+  .card__details {
+    &-img-wrapper {
+      width: 35%;
+      img {
+        min-width: auto;
+        max-width: 250px;
+      }
+    }
+    &-description {
+      &-wrapper-second {
+        width: 60%;
+      }
+    }
+    &-links {
+      width: 100%;
+    }
+  }
+}
+@media (max-width: 610px) {
+  .card__details {
+    &-trailer-btn {
+      margin-top: 0.5rem;
+    }
+  }
+}
+@media (max-width: 500px) {
+  .card__details {
+    &-img-wrapper {
+      width: 40%;
+    }
+    &-description {
+      &-wrapper-second {
+        width: 50%;
+      }
+    }
+    &-links {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    &-trailer-btn {
+      order: -1;
+      margin: 0 0 0.5rem 0;
+    }
+  }
+}
+@media (max-width: 400px) {
+  .card__details {
+    &-img-wrapper {
+      width: 100%;
+      img {
+        margin: 0 auto;
+      }
+    }
+    &-description {
+      &-wrapper-second {
+        width: 100%;
+        margin: 1rem 0;
+      }
+    }
+    &-links {
+      flex-direction: row;
+      align-items: normal;
+    }
+    &-plot{
+      font-size: 1rem;
+      text-align: center;
+    }
   }
 }
 </style>

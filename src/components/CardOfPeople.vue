@@ -76,4 +76,16 @@ export default {
     margin-bottom: 1rem;
   }
 }
+
+@media (max-width: 400px) {
+  .swiper-slide .card {
+    img {
+      width: 100%;
+      height: auto;
+    }
+    &__character{
+      padding:0 .5rem
+    }
+  }
+}
 </style>

@@ -62,4 +62,10 @@ export default {
     margin: 1rem 0;
   }
 }
+
+@media (max-width:400px) {
+  .all-cast{
+    font-size: .9rem;
+  }
+}
 </style>

@@ -20,7 +20,7 @@
         800: {
           slidesPerView: 3,
         },
-        300: {
+        280: {
           slidesPerView: 2,
         },
       }"
@@ -107,7 +107,7 @@ export default {
 .slider {
   position: relative;
 }
-@media (max-width: 550px) {
+@media (max-width: 600px) {
   .swiper {
     &-button {
       width: 3rem;

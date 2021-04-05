@@ -178,4 +178,63 @@ export default {
     }
   }
 }
+@media (max-width: 850px) {
+  .card__details {
+    &-title {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &-status {
+      margin: 0.5rem 0;
+    }
+  }
+}
+@media (max-width: 700px) {
+  .card__details {
+    &-subtitle {
+      display: flex;
+      flex-wrap: wrap;
+      span {
+        &:nth-child(3) {
+          order: 4;
+          margin-top: 0.5rem;
+        }
+        &:nth-child(4) {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 400px) {
+  .card__details {
+    &-title {
+      font-size: 1.5rem;
+
+      p {
+        &:first-child {
+          span {
+            display: block;
+            font-size: 1.4rem;
+            margin-top: 0.5rem;
+          }
+        }
+      }
+    }
+    &-genres {
+      span {
+        &:nth-child(2) {
+          margin: 0 0.2rem;
+        }
+      }
+      &::before {
+        margin: 0 0.5rem 0 0;
+      }
+      &::after {
+        margin: 0 0 0 0.5rem;
+      }
+    }
+  }
+}
 </style>

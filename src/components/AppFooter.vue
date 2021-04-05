@@ -36,4 +36,10 @@ export default {};
     display: inline-block;
   }
 }
+
+@media (max-width:400px) {
+  .footer{
+    margin-top: 2rem;
+  }
+}
 </style>

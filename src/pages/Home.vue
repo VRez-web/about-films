@@ -199,4 +199,12 @@ export default {
     }
   }
 }
+@media (max-width:319px) {
+   .home__gallery{
+
+     &-title{
+       font-size: 1.3rem;
+     }
+   }
+}
 </style>
