@@ -4,8 +4,8 @@
       :slides-per-view="6"
       :space-between="20"
       :navigation="{
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
+        nextEl: `.next-${id}`,
+        prevEl: `.prev-${id}`,
       }"
       :breakpoints="{
         1500: {
@@ -20,23 +20,29 @@
         800: {
           slidesPerView: 3,
         },
-        550:{
-           slidesPerView: 2,
+        300: {
+          slidesPerView: 2,
         },
-        300:{
-           slidesPerView: 1,
-        }
       }"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
+      :id="id"
     >
       <swiper-slide v-for="item in data" :key="item.id">
         <card :data="[item]" :category="category" v-if="category != 'people'" />
         <card-of-people v-else :data="item" />
       </swiper-slide>
     </swiper>
-    <div class="swiper-button swiper-button-prev" :style="sliderStyles"></div>
-    <div class="swiper-button swiper-button-next" :style="sliderStyles"></div>
+    <div
+      class="swiper-button swiper-button-prev"
+      :class="`prev-${id}`"
+      :style="sliderStyles"
+    ></div>
+    <div
+      class="swiper-button swiper-button-next"
+      :class="`next-${id}`"
+      :style="sliderStyles"
+    ></div>
   </div>
 </template>
 
@@ -52,6 +58,7 @@ export default {
   props: {
     data: Object,
     category: String,
+    id: String,
   },
   data() {
     return {
@@ -91,11 +98,6 @@ export default {
     &-next {
       right: -50px;
     }
-
-    &::after {
-      content: "";
-    }
-
     &-disabled {
       opacity: 0.4;
       pointer-events: none;
@@ -105,23 +107,27 @@ export default {
 .slider {
   position: relative;
 }
-@media (max-width:550px) {
-
-  .swiper{
-
-
-    &-button{
-
-
-      &-prev{
+@media (max-width: 550px) {
+  .swiper {
+    &-button {
+      width: 3rem;
+      height: 3rem;
+      &-prev {
         left: -10px;
       }
 
-      &-next{
+      &-next {
         right: -10px;
       }
     }
   }
-  
+}
+@media (max-width: 400px) {
+  .swiper {
+    &-button {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
 }
 </style>
