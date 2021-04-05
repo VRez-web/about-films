@@ -194,7 +194,9 @@ export default {
 
 @media (max-width:550px) {
   .home__gallery {
+    &:not(:last-child){
     margin-bottom: 2rem;
+    }
   }
 }
 </style>
