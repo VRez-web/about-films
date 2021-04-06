@@ -215,9 +215,7 @@ export default {
       p {
         &:first-child {
           span {
-            display: block;
             font-size: 1.4rem;
-            margin-top: 0.5rem;
           }
         }
       }
