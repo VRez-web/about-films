@@ -8,7 +8,7 @@
           >
           <i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesTeathers" :category="'movie'" id="swiper-1"/>
+        <slider :data="moviesTeathers" :category="'movie'" id="swiper-1" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -24,7 +24,7 @@
             >Популярные фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesPopular" :category="'movie'" id="swiper-3"/>
+        <slider :data="moviesPopular" :category="'movie'" id="swiper-3" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -32,7 +32,7 @@
             >Лучшие фильмы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="moviesTopRated" :category="'movie'" id="swiper-4"/>
+        <slider :data="moviesTopRated" :category="'movie'" id="swiper-4" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -40,7 +40,7 @@
             Сериалы на сегодня</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsToday" :category="'serial'" id="swiper-5"/>
+        <slider :data="tvShowsToday" :category="'serial'" id="swiper-5" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -48,7 +48,7 @@
             Сериалы на неделю</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsWeek" :category="'serial'" id="swiper-6"/>
+        <slider :data="tvShowsWeek" :category="'serial'" id="swiper-6" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -56,7 +56,7 @@
             Популярные сериалы</router-link
           ><i class="icofont-arrow-right"></i>
         </h2>
-        <slider :data="tvShowsPopular" :category="'serial'" id="swiper-7"/>
+        <slider :data="tvShowsPopular" :category="'serial'" id="swiper-7" />
       </section>
       <section class="home__gallery">
         <h2 class="home__gallery-title">
@@ -96,49 +96,26 @@ export default {
     ...mapActions("serialsToday", ["GET_TV_SHOWS_TODAY"]),
 
     // получение фильмов
-      ...mapActions("moviesUpcoming", ["GET_MOVIES_UPCOMING"]),
-      ...mapActions("moviesTheatres", ["GET_MOVIES_THEATRES"]),
-      ...mapActions("moviesPopular", ["GET_MOVIES_POPULAR"]),
-      ...mapActions("moviesTopRated", ["GET_MOVIES_TOP_RATED"]),
-      ...mapActions("moviesDates", ["GET_MOVIE_DATES"]),
+    ...mapActions("moviesUpcoming", ["GET_MOVIES_UPCOMING"]),
+    ...mapActions("moviesTheatres", ["GET_MOVIES_THEATRES"]),
+    ...mapActions("moviesPopular", ["GET_MOVIES_POPULAR"]),
+    ...mapActions("moviesTopRated", ["GET_MOVIES_TOP_RATED"]),
   },
   computed: {},
   async mounted() {
     // Получение фильмов
-    // Пока что так
     try {
       const MOVIES_THEATRES = await this.GET_MOVIES_THEATRES();
       this.moviesTeathers = MOVIES_THEATRES.results.slice(0, 12);
-      this.moviesTeathers.forEach((item) => {
-        this.GET_MOVIE_DATES(item.id).then((resolve) => {
-          resolve.results.forEach((date) => {
-            if (date.iso_3166_1 == "RU") {
-              item.release_date = date.release_dates[0].release_date.slice(
-                0,
-                4
-              );
-            }
-          });
-        });
-      });
 
       const MOVIES_UPCOMING = await this.GET_MOVIES_UPCOMING();
       this.moviesUpcoming = MOVIES_UPCOMING.results.slice(2, 14);
-
+    } catch (e) {
+      console.error(e);
+      return e;
+    } finally {
       const MOVIES_POPULAR = await this.GET_MOVIES_POPULAR();
       this.moviesPopular = MOVIES_POPULAR.results.slice(0, 12);
-      this.moviesPopular.forEach((item) => {
-        this.GET_MOVIE_DATES(item.id).then((resolve) => {
-          resolve.results.forEach((date) => {
-            if (date.iso_3166_1 == "RU") {
-              item.release_date = date.release_dates[0].release_date.slice(
-                0,
-                4
-              );
-            }
-          });
-        });
-      });
 
       const MOVIES_TOP_RATED = await this.GET_MOVIES_TOP_RATED();
       this.moviesTopRated = MOVIES_TOP_RATED.results.slice(0, 12);
@@ -155,9 +132,6 @@ export default {
 
       const TV_SHOWS_TOP_RATED = await this.GET_TV_SHOWS_TOP_RATED();
       this.tvShowsTopRated = TV_SHOWS_TOP_RATED.results.slice(0, 12);
-    } catch (e) {
-      console.error(e);
-      return e;
     }
   },
 };
@@ -192,19 +166,18 @@ export default {
   }
 }
 
-@media (max-width:550px) {
+@media (max-width: 550px) {
   .home__gallery {
-    &:not(:last-child){
-    margin-bottom: 2rem;
+    &:not(:last-child) {
+      margin-bottom: 2rem;
     }
   }
 }
-@media (max-width:319px) {
-   .home__gallery{
-
-     &-title{
-       font-size: 1.3rem;
-     }
-   }
+@media (max-width: 319px) {
+  .home__gallery {
+    &-title {
+      font-size: 1.3rem;
+    }
+  }
 }
 </style>
