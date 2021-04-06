@@ -6,7 +6,7 @@
           <router-link :to="{ name: 'movies-theatres' }" class="link"
             >В кинотеатрах сейчас</router-link
           >
-          <i class="icofont-arrow-right"></i>
+          <i class="icon-right"></i>
         </h2>
         <slider :data="moviesTeathers" :category="'movie'" id="swiper-1" />
       </section>
@@ -14,7 +14,7 @@
         <h2 class="home__gallery-title">
           <router-link :to="{ name: 'movies-upcoming' }" class="link"
             >Ожидаемые фильмы</router-link
-          ><i class="icofont-arrow-right"></i>
+          > <i class="icon-right"></i>
         </h2>
         <slider :data="moviesUpcoming" :category="'movie'" id="swiper-2" />
       </section>
@@ -22,7 +22,7 @@
         <h2 class="home__gallery-title">
           <router-link :to="{ name: 'movies-popular' }" class="link"
             >Популярные фильмы</router-link
-          ><i class="icofont-arrow-right"></i>
+          > <i class="icon-right"></i>
         </h2>
         <slider :data="moviesPopular" :category="'movie'" id="swiper-3" />
       </section>
@@ -30,7 +30,7 @@
         <h2 class="home__gallery-title">
           <router-link :to="{ name: 'movies-topRated' }" class="link"
             >Лучшие фильмы</router-link
-          ><i class="icofont-arrow-right"></i>
+          > <i class="icon-right"></i>
         </h2>
         <slider :data="moviesTopRated" :category="'movie'" id="swiper-4" />
       </section>
@@ -38,7 +38,7 @@
         <h2 class="home__gallery-title">
           <router-link :to="{ name: 'serials-today' }" class="link">
             Сериалы на сегодня</router-link
-          ><i class="icofont-arrow-right"></i>
+          > <i class="icon-right"></i>
         </h2>
         <slider :data="tvShowsToday" :category="'serial'" id="swiper-5" />
       </section>
@@ -46,7 +46,7 @@
         <h2 class="home__gallery-title">
           <router-link :to="{ name: 'serials-week' }" class="link">
             Сериалы на неделю</router-link
-          ><i class="icofont-arrow-right"></i>
+          > <i class="icon-right"></i>
         </h2>
         <slider :data="tvShowsWeek" :category="'serial'" id="swiper-6" />
       </section>
@@ -54,7 +54,7 @@
         <h2 class="home__gallery-title">
           <router-link :to="{ name: 'serials-popular' }" class="link">
             Популярные сериалы</router-link
-          ><i class="icofont-arrow-right"></i>
+          > <i class="icon-right"></i>
         </h2>
         <slider :data="tvShowsPopular" :category="'serial'" id="swiper-7" />
       </section>
@@ -62,7 +62,7 @@
         <h2 class="home__gallery-title">
           <router-link :to="{ name: 'serials-topRated' }" class="link">
             Лучшие сериалы</router-link
-          ><i class="icofont-arrow-right"></i>
+          > <i class="icon-right"></i>
         </h2>
         <slider :data="tvShowsTopRated" :category="'serial'" id="swiper-8" />
       </section>

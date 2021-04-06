@@ -15,7 +15,7 @@
           "
         >
           <div class="header__search">
-            <i class="icofont-search-2"></i>
+            <i class="icon-search"></i>
             <span>Поиск</span>
           </div>
           <!-- <div class="header__login">

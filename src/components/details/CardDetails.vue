@@ -51,7 +51,7 @@
                 @click="showTrailer = true"
                 :disabled="!trailerKey"
               >
-                <i class="icofont-ui-play"></i> Трейлер
+                <i class="icon-play"></i> Трейлер
               </button>
 
               <div class="links-social">
@@ -60,21 +60,21 @@
                   target="_blank"
                   rel="noopener"
                   v-show="!!socialLinks.facebook_id"
-                  ><i class="icofont-facebook"></i
+                  ><i class="icon-facebook"></i
                 ></a>
                 <a
                   :href="`https://www.instagram.com/${socialLinks.instagram_id}`"
                   target="_blank"
                   rel="noopener"
                   v-show="!!socialLinks.instagram_id"
-                  ><i class="icofont-instagram"></i
+                  ><i class="icon-instagram"></i
                 ></a>
                 <a
                   :href="`https://www.twitter.com/${socialLinks.twitter_id}`"
                   target="_blank"
                   rel="noopener"
                   v-show="!!socialLinks.twitter_id"
-                  ><i class="icofont-twitter"></i
+                  ><i class="icon-twitter"></i
                 ></a>
               </div>
             </div>

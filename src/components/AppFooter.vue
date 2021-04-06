@@ -3,7 +3,7 @@
     <div class="container">
       <div class="footer__inner">
         <p class="footer__copyright">
-          <i class="icofont-copyright"></i> copyright all rights reserved.
+          <i class="icon-copyright"></i> copyright all rights reserved.
         </p>
         <p class="footer__author">
           Telegram: <a href="https://t.me/victor_web" class="link" target="_blank" rel="noopener">vr-web</a>
