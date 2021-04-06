@@ -89,7 +89,7 @@
         </div>
       </div>
     </section>
-    <card-details-short-cast :cardId="cardId" :castSlider="cast" />
+    <card-details-short-cast :cardId="cardId" :castSlider="cast" :category="category"/>
     <card-details-similar :cardId="cardId" :category="category" />
   </main>
   <div

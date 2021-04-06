@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     category() {
-      return this.$attrs.title;
+      return this.$attrs.category;
     },
     query() {
       return this.$attrs.query;

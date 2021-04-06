@@ -7,7 +7,7 @@
         </div>
         <div class="cast__header-description">
           <h2 class="cast__header-title">
-            {{ title }} <span>( ДОДЕЛАТЬ)</span>
+            {{ title }} <span>( {{ date }})</span>
           </h2>
           <a href="#" class="link" @click.prevent="back">Назад на главную</a>
         </div>
@@ -140,6 +140,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CardOfPeople from "../CardOfPeople";
 export default {
   components: {
@@ -147,7 +148,6 @@ export default {
   },
   data() {
     return {
-      cardDetails: this.$store.state.cardDetails,
       imgUrl: this.$store.state.imgUrl,
     };
   },
@@ -157,6 +157,23 @@ export default {
     },
   },
   computed: {
+    ...mapState("serialsDetails", ["serialDetails"]),
+    ...mapState("moviesDetails", ["moviesDetails"]),
+    category() {
+      return this.$route.params.category;
+    },
+    id() {
+      return this.$route.params.id;
+    },
+    cardDetails() {
+      if (this.category == "movie") {
+        return this.moviesDetails;
+      }
+      return this.serialDetails;
+    },
+    date() {
+      return this.cardDetails.release_date.slice(0, 4);
+    },
     credits() {
       return this.cardDetails.credits
         ? this.cardDetails.credits
@@ -243,6 +260,11 @@ export default {
 
     &-title {
       font-size: 2rem;
+      font-weight: 800;
+
+      span {
+        font-size: 1.5rem;
+      }
     }
   }
 
@@ -257,6 +279,46 @@ export default {
       display: flex;
       align-items: flex-start;
       flex-wrap: wrap;
+    }
+  }
+}
+@media (max-width: 500px) {
+  .cast {
+    &__header {
+      &-description {
+        margin-left: 0.5rem;
+        .link {
+          font-size: 1.3rem;
+        }
+      }
+
+      &-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+
+        span {
+          font-size: 1rem;
+        }
+      }
+    }
+    &__people {
+      &-inner {
+        justify-content: space-between;
+      }
+    }
+  }
+}
+@media (max-width: 400px) {
+  .cast {
+    &__header {
+      &-description {
+        .link {
+          font-size: 1rem;
+        }
+      }
+    }
+    &__title {
+      font-size: 1.8rem;
     }
   }
 }

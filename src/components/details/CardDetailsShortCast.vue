@@ -4,11 +4,13 @@
       <h2 class="card__details-title">В главных ролях</h2>
       <div class="card__details-cast">
         <slider :data="castSlider" :category="'people'" />
-        <a
-          href="#"
-          @click.prevent="currectTitleLink(cardId)"
+        <router-link
+          :to="{
+            name: 'card-details-cast',
+            params: { id: cardId, category: category },
+          }"
           class="all-cast link"
-          >Полный актёрский и съёмочный состав</a
+          >Полный актёрский и съёмочный состав</router-link
         >
       </div>
     </div>
@@ -19,21 +21,12 @@
 import cardOfPeople from "../CardOfPeople";
 import slider from "../Slider";
 export default {
-  props: { cardId: String, castSlider: Array },
+  props: { cardId: String, castSlider: Array, category: String },
   components: { cardOfPeople, slider },
   data() {
     return {};
   },
-  methods: {
-    currectTitleLink(id) {
-      this.$router
-        .push({
-          name: "card-details-cast",
-          params: { id: id },
-        })
-        .catch((e) => {});
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -63,9 +56,9 @@ export default {
   }
 }
 
-@media (max-width:400px) {
-  .all-cast{
-    font-size: .9rem;
+@media (max-width: 400px) {
+  .all-cast {
+    font-size: 0.9rem;
   }
 }
 </style>

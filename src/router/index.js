@@ -52,13 +52,13 @@ const routes = [
     props: true,
   },
   {
-    path: "/:title/total",
+    path: "/:category/total",
     component: () => import("../components/search/SearchTotal"),
     name: "search-total",
     props: true,
   },
   {
-    path: "/:id/cast",
+    path: "/:category/:id/cast",
     component: () => import("../components/details/CardDetailsCastAll"),
     name: "card-details-cast",
     props: true,

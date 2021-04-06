@@ -76,16 +76,43 @@ export default {
     margin-bottom: 1rem;
   }
 }
-
+@media (max-width: 1200px) {
+  .cast .card {
+    width: 20%;
+  }
+}
+@media (max-width: 800px) {
+  .card {
+    &__character {
+      padding: 0 0.5rem;
+    }
+  }
+  .cast .card {
+    width: 22%;
+  }
+}
+@media (max-width: 670px) {
+  .cast .card {
+    width: 30%;
+  }
+}
+@media (max-width:500px) {
+  .cast .card{
+    width: 44%;
+    margin-right: 0;
+    img{
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
 @media (max-width: 400px) {
   .swiper-slide .card {
     img {
       width: 100%;
       height: auto;
     }
-    &__character{
-      padding:0 .5rem
-    }
   }
+
 }
 </style>

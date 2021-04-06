@@ -67,7 +67,7 @@
               <router-link
                 :to="{
                   name: 'search-total',
-                  params: { title: 'movie', query: query },
+                  params: { category: 'movie', query: query },
                 }"
                 class="link"
                 v-show="resultMovie.length == 8"
@@ -95,7 +95,7 @@
               <router-link
                 :to="{
                   name: 'search-total',
-                  params: { title: 'serial', query: query },
+                  params: { category: 'serial', query: query },
                 }"
                 class="link"
                 v-show="resultTv.length == 8"
@@ -123,7 +123,7 @@
               <router-link
                 :to="{
                   name: 'search-total',
-                  params: { title: 'person', query: query },
+                  params: { category: 'person', query: query },
                 }"
                 class="link"
                 v-show="resultPerson.length == 8"
