@@ -33,7 +33,7 @@
         <h2 class="cast__title">
           Съёмочный состав <span>{{ crewLength }}</span>
         </h2>
-        <div class="crew__group">
+        <div class="crew__group" v-show="!!directors.length">
           <h4 class="cast__subtitle">Режиссура</h4>
           <div class="cast__people-inner">
             <card-of-people
@@ -43,7 +43,7 @@
             />
           </div>
         </div>
-        <div class="crew__group">
+        <div class="crew__group" v-show="!!scenario.length">
           <h4 class="cast__subtitle">Сценарий</h4>
           <div class="cast__people-inner">
             <card-of-people
@@ -53,7 +53,7 @@
             />
           </div>
         </div>
-        <div class="crew__group">
+        <div class="crew__group" v-show="!!production.length">
           <h4 class="cast__subtitle">Продакшн</h4>
           <div class="cast__people-inner">
             <card-of-people
@@ -63,7 +63,7 @@
             />
           </div>
         </div>
-        <div class="crew__group">
+        <div class="crew__group" v-show="!!decor.length">
           <h4 class="cast__subtitle">Оформление</h4>
           <div class="cast__people-inner">
             <card-of-people
@@ -83,7 +83,7 @@
             />
           </div>
         </div>
-        <div class="crew__group">
+        <div class="crew__group" v-show="!!sound.length">
           <h4 class="cast__subtitle">Звук</h4>
           <div class="cast__people-inner">
             <card-of-people
@@ -104,7 +104,7 @@
           </div>
         </div>
 
-        <div class="crew__group">
+        <div class="crew__group" v-show="!!camera.length">
           <h4 class="cast__subtitle">Камера</h4>
           <div class="cast__people-inner">
             <card-of-people
@@ -114,7 +114,7 @@
             />
           </div>
         </div>
-        <div class="crew__group">
+        <div class="crew__group" v-show="!!installation.length">
           <h4 class="cast__subtitle">Монтаж</h4>
           <div class="cast__people-inner">
             <card-of-people
@@ -172,7 +172,9 @@ export default {
       return this.serialDetails;
     },
     date() {
-      return this.cardDetails.release_date.slice(0, 4);
+      return this.cardDetails.release_date
+        ? this.cardDetails.release_date.slice(0, 4)
+        : this.cardDetails.last_air_date.slice(0, 4);
     },
     credits() {
       return this.cardDetails.credits
