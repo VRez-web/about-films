@@ -89,7 +89,11 @@
         </div>
       </div>
     </section>
-    <card-details-short-cast :cardId="cardId" :castSlider="cast" :category="category"/>
+    <card-details-short-cast
+      :cardId="cardId"
+      :castSlider="cast"
+      :category="category"
+    />
     <card-details-similar :cardId="cardId" :category="category" />
   </main>
   <div
@@ -194,10 +198,10 @@ export default {
       )[0];
     },
 
-  async  getData() {
+    getData() {
       return this.category == "movie"
-        ?  await this.getMovieData()
-        : await this.getSerialData();
+        ? this.getMovieData()
+        : this.getSerialData();
     },
   },
   computed: {
@@ -493,7 +497,7 @@ export default {
       flex-direction: row;
       align-items: normal;
     }
-    &-plot{
+    &-plot {
       font-size: 1rem;
       text-align: center;
     }
