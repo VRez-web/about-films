@@ -194,10 +194,10 @@ export default {
       )[0];
     },
 
-    getData() {
+  async  getData() {
       return this.category == "movie"
-        ? this.getMovieData()
-        : this.getSerialData();
+        ?  await this.getMovieData()
+        : await this.getSerialData();
     },
   },
   computed: {
