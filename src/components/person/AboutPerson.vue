@@ -14,7 +14,7 @@
                 rel="noopener"
                 v-show="!!socialLinks.instagram_id"
               >
-                <i class="icofont-instagram"></i>
+                <i class="icon-instagram"></i>
               </a>
               <a
                 :href="`https://www.facebook.com/${socialLinks.facebook_id}`"
@@ -23,7 +23,7 @@
                 rel="noopener"
                 v-show="!!socialLinks.facebook_id"
               >
-                <i class="icofont-facebook"></i>
+                <i class="icon-facebook"></i>
               </a>
               <a
                 :href="`https://www.twitter.com/${socialLinks.twitter_id}`"
@@ -32,7 +32,7 @@
                 target="_blank"
                 rel="noopener"
               >
-                <i class="icofont-twitter"></i>
+                <i class="icon-twitter"></i>
               </a>
               <a
                 :href="homepage"
@@ -41,7 +41,7 @@
                 rel="noopener"
                 v-show="!!homepage"
               >
-                <i class="icofont-link"></i>
+                <i class="icon-link"></i>
               </a>
             </div>
             <div class="person__about">
@@ -86,7 +86,7 @@
     <div class="container">
       <h2 class="person__title">Известность за</h2>
       <div class="known__for-inner">
-        <slider :data="sortBestRoles" />
+        <slider :data="sortBestRoles" :category="'movie'" id="person-slider"/>
       </div>
     </div>
   </section>
@@ -170,7 +170,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions('aboutPerson',["GET_ABOUT_PERSON"]),
+    ...mapActions("aboutPerson", ["GET_ABOUT_PERSON"]),
 
     async getData() {
       const ABOUT_PERSON = await this.GET_ABOUT_PERSON(this.id);
@@ -221,23 +221,32 @@ export default {
     specialization() {
       if (this.person.known_for_department == "Acting") {
         return "Актёрское искусство";
-      } else if (this.person.known_for_department == "Art") {
+      }
+      if (this.person.known_for_department == "Art") {
         return "Оформление";
-      } else if (this.person.known_for_department == "Crew") {
+      }
+      if (this.person.known_for_department == "Crew") {
         return "Еще";
-      } else if (this.person.known_for_department == "Directing") {
+      }
+      if (this.person.known_for_department == "Directing") {
         return "Режиссура";
-      } else if (this.person.known_for_department == "Production") {
+      }
+      if (this.person.known_for_department == "Production") {
         return "Продакшн";
-      } else if (this.person.known_for_department == "Visual Effects") {
+      }
+      if (this.person.known_for_department == "Visual Effects") {
         return "Визуальные эффекты";
-      } else if (this.person.known_for_department == "Sound") {
+      }
+      if (this.person.known_for_department == "Sound") {
         return "Звук";
-      } else if (this.person.known_for_department == "Lighting") {
+      }
+      if (this.person.known_for_department == "Lighting") {
         return "Свет";
-      } else if (this.person.known_for_department == "Camera") {
+      }
+      if (this.person.known_for_department == "Camera") {
         return "Камера";
-      } else if (this.person.known_for_department == "Editing") {
+      }
+      if (this.person.known_for_department == "Editing") {
         return "Монтаж";
       }
     },
@@ -340,11 +349,11 @@ export default {
     align-items: flex-start;
   }
   &__img {
-    width: 200px;
+    width: 15%;
     border-radius: 1rem;
   }
   &__description {
-    width: 70%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     &-wrapper {
@@ -362,6 +371,7 @@ export default {
       font-size: 1.5rem;
       text-align: center;
       margin-bottom: 1rem;
+      font-weight: 700;
     }
     li {
       font-size: 0.875rem;
@@ -435,7 +445,9 @@ export default {
       }
       p {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
+        flex-wrap: wrap;
+        line-height: 2rem;
       }
       &-job {
         margin-left: 0.5rem;
@@ -447,6 +459,103 @@ export default {
       &-before-characher {
         margin: 0 0.5rem;
         color: rgba($color-white, 0.5);
+      }
+    }
+  }
+}
+@media (max-width: 1150px) {
+  .career {
+    &__inner {
+      flex-wrap: wrap;
+    }
+    &__actor {
+      width: 100%;
+    }
+    &__other {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .person {
+    &__inner {
+      img {
+        width: 20%;
+      }
+    }
+    &__description {
+      flex-wrap: wrap;
+      width: 70%;
+      &-wrapper {
+        width: 100%;
+      }
+    }
+    &__aliases {
+      width: 100%;
+      margin-top: 1rem;
+
+      &-title {
+        text-align: start;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .person {
+    &__inner {
+      img {
+        width: 30%;
+      }
+    }
+
+    &__description {
+      width: 60%;
+    }
+    &__about {
+      p {
+        width: 100%;
+      }
+    }
+  }
+}
+@media (max-width: 500px) {
+  .person {
+    &__inner {
+      flex-direction: column;
+      img {
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+    &__description {
+      width: 100%;
+      margin-top: 1rem;
+     &-wrapper{
+        font-size: 1.2rem;
+     }
+    }
+    &__title{
+      text-align: center;
+      margin: 1rem 0;
+    }
+    &__social{
+      display: flex;
+      justify-content: center;
+    }
+    &__aliases{
+       li{
+         font-size: 1rem;
+       }
+    }
+  }
+}
+@media (max-width:400px) {
+  .person{
+    &__inner{
+      img{
+        width: 75%;
       }
     }
   }
