@@ -5,7 +5,7 @@
       :disabled="currentPage === 1"
       class="page-management"
     >
-      <i class="icofont-arrow-left"></i>
+      <i class="icon-left"></i>
     </button>
     <ul class="section__pagination-list">
       <li
@@ -30,7 +30,7 @@
       :disabled="currentPage === totalPages"
       class="page-management"
     >
-      <i class="icofont-arrow-right"></i>
+      <i class="icon-right"></i>
     </button>
   </div>
 </template>
