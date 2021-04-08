@@ -173,6 +173,23 @@ export default {
     width: 100%;
   }
 }
+@media (max-width: 1200px) {
+  .card {
+    width: 22%;
+    margin-right: 0;
+  }
+}
+@media (max-width: 1000px) {
+  .section__inner .card {
+    width: 23%;
+    min-height: auto;
+
+    img {
+      max-height: auto;
+      min-height: auto;
+    }
+  }
+}
 @media (max-width: 700px) {
   .card {
     min-height: auto;
