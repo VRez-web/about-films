@@ -13,7 +13,7 @@
       <p class="card__details-subtitle">
         <span class="card__details-age">{{ age }} </span>
         <span class="card__details-realese"
-          >{{ dateCheck }} ({{ country }})</span
+          >{{ dateCheck }} (RU)</span
         >
         <span class="card__details-genres"
           ><span v-for="genre in genres" :key="genre.id">{{
@@ -33,14 +33,14 @@ export default {
   props: {
     data: Object,
     dateAnnounce: String,
-    countryAndAge: Object,
+    age: String,
     dateRelease: String,
     genres: Array,
     time: Number,
   },
   data() {
     return {
-      ageNone: "?_?",
+      ageNone: "?",
     };
   },
 
@@ -77,23 +77,9 @@ export default {
     },
 
     // Обработка возраста
-    formattedAge() {
-      return this.countryAndAge.rating
-        ? this.countryAndAge.rating
-        : this.countryAndAge.certification;
-    },
-    age() {
-      return !!this.countryAndAge ? this.formattedAge : this.ageNone;
-    },
-    // Обработка страны
-    formattedCountry() {
-      return this.countryAndAge.iso_3166_1
-        ? this.countryAndAge.iso_3166_1
-        : this.countryAndAge.iso_639_1;
-    },
-    country() {
-      return !!this.countryAndAge.iso_639_1 ? this.formattedCountry : "RU";
-    },
+    // age() {
+    //   return !!this.age ? this.age : this.ageNone
+    // },
     // Обработка даты
     dateCheck() {
       return this.dateRelease ? this.dateRelease : this.data.release_date;
