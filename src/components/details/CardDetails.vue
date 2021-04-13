@@ -78,9 +78,9 @@
                 ></a>
               </div>
             </div>
-            <a href="#" class="card__details-scroll link">Подробнее</a>
+            <a href="#" class="card__details-scroll link" @click.prevent="scrollTo">Подробнее</a>
           </div>
-          <div class="card__details-description">
+          <div class="card__details-description" ref="elToScroll">
             <div class="card__details-description-wrapper">
               <h2 class="card__details-description-title">Сюжет</h2>
               <p class="card__details-plot">{{ plot }}</p>
@@ -202,6 +202,13 @@ export default {
       return this.category == "movie"
         ? this.getMovieData()
         : this.getSerialData();
+    },
+
+    scrollTo() {
+      this.$refs.elToScroll.scrollIntoView({
+        block: "center",
+        behavior: "smooth",
+      });
     },
   },
   computed: {
