@@ -80,6 +80,17 @@ export default {
   .cast .card {
     width: 20%;
   }
+  .search__total .card {
+    width: 22%;
+  }
+}
+@media (max-width: 900px) {
+  .search__total .card {
+    img {
+      height: auto;
+      width: 100%;
+    }
+  }
 }
 @media (max-width: 800px) {
   .card {
@@ -95,12 +106,21 @@ export default {
   .cast .card {
     width: 30%;
   }
+  .search .card {
+    img {
+      height: auto;
+      width: 100%;
+    }
+  }
+  .search__total .card {
+    width: 30%;
+  }
 }
-@media (max-width:500px) {
-  .cast .card{
+@media (max-width: 500px) {
+  .cast .card {
     width: 44%;
     margin-right: 0;
-    img{
+    img {
       max-width: 100%;
       height: auto;
     }
@@ -113,6 +133,8 @@ export default {
       height: auto;
     }
   }
-
+  .search__total .card {
+    width: 45%;
+  }
 }
 </style>
