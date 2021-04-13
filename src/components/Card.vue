@@ -185,16 +185,21 @@ export default {
     min-height: auto;
 
     img {
-      max-height: auto;
+      max-height: none;
       min-height: auto;
     }
   }
+}
+@media (max-width: 800px) {
+   .section__inner .card {
+     width: 31%;
+   }
 }
 @media (max-width: 700px) {
   .card {
     min-height: auto;
     img {
-      max-height: auto;
+      max-height: none;
       min-height: auto;
     }
   }
@@ -206,5 +211,8 @@ export default {
       margin: 0 auto;
     }
   }
+    .section__inner .card {
+      width: 45%;
+    }
 }
 </style>
