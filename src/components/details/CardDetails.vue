@@ -4,7 +4,7 @@
       <card-details-header
         :data="cardDetails"
         :dateAnnounce="dateAnnounce"
-        :countryAndAge="age"
+        :age="age"
         :dateRelease="dateRelease"
         :genres="genres"
         :time="movieTime"
@@ -78,7 +78,12 @@
                 ></a>
               </div>
             </div>
-            <a href="#" class="card__details-scroll link" @click.prevent="scrollTo">Подробнее</a>
+            <a
+              href="#"
+              class="card__details-scroll link"
+              @click.prevent="scrollTo"
+              >Подробнее</a
+            >
           </div>
           <div class="card__details-description" ref="elToScroll">
             <div class="card__details-description-wrapper">
@@ -128,6 +133,7 @@ export default {
       dateAnnounce: "",
       dateRelease: "",
       age: "",
+      country: "",
       plot: "",
       genres: [],
       keyPhrase: "",
@@ -157,22 +163,26 @@ export default {
       this.votes = this.cardDetails.vote_count;
       this.trailersTotal = this.cardDetails.videos.results;
       this.movieTime = this.cardDetails.runtime;
-      // Работа с датой => нахождение нужной даты в массиве,обработка случая если нет нужной даты и тд
-      // если это делать вне получение данных ошибки вылезают
 
       // Проверка есть ли дата, потому что оттуда можно получить данные о возрастных ограничениях фильма
       this.dateRelease = this.cardDetails.release_dates.results.filter(
-        (el) => el.iso_3166_1 == "RU"
-      )[0];
-      if (this.dateRelease) {
-        this.age = this.dateRelease.release_dates[0];
-        this.dateRelease = `${this.dateRelease.release_dates[0].release_date.slice(
+        (el) => el.iso_3166_1 == "RU" || el.iso_3166_1 == "US"
+      );
+
+      if (!!this.dateRelease) {
+        if (!!this.dateRelease[0].release_dates[0].certification) {
+          this.age = this.dateRelease[0].release_dates[0].certification;
+        } else if (this.dateRelease[1].release_dates[0].certification) {
+          this.age = this.dateRelease[1].release_dates[0].certification;
+        }
+
+        this.dateRelease = `${this.dateRelease[0].release_dates[0].release_date.slice(
           8,
           10
-        )}/${this.dateRelease.release_dates[0].release_date.slice(
+        )}/${this.dateRelease[0].release_dates[0].release_date.slice(
           5,
           7
-        )}/${this.dateRelease.release_dates[0].release_date.slice(0, 4)}`;
+        )}/${this.dateRelease[0].release_dates[0].release_date.slice(0, 4)}`;
       } else {
         this.dateRelease = this.cardDetails.release_date;
       }
@@ -194,8 +204,12 @@ export default {
       this.movieTime = this.cardDetails.episode_run_time[0];
       this.dateRelease = this.cardDetails.last_air_date;
       this.age = this.cardDetails.content_ratings.results.filter(
-        (el) => el.iso_3166_1 == "US"
-      )[0];
+        (el) => el.iso_3166_1 == "RU" || el.iso_3166_1 == "US"
+      );
+      if (!!this.age.length) {
+        this.age = this.age[0].rating;
+      }
+      this.age='?'
     },
 
     getData() {
