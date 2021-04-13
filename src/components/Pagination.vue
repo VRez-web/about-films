@@ -16,7 +16,7 @@
       >
         {{ page }}
       </li>
-      <li  v-show="currentPage + pageRange < totalPages">...</li>
+      <li v-show="currentPage + pageRange < totalPages">...</li>
       <li
         @click="pageChange(totalPages)"
         v-show="currentPage + pageRange < totalPages"
@@ -117,17 +117,64 @@ export default {
     flex-wrap: wrap;
     li {
       width: 12%;
-      margin-right: 0.625rem;
       cursor: pointer;
       font-size: 1.25rem;
       border-radius: 0.313rem;
       background-color: $color-darkBlue;
-      padding: 0.5rem;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       &.active {
         background-color: $color-tematic;
       }
+      &:not(:last-child) {
+        margin-right: 0.625rem;
+      }
+    }
+  }
+}
+@media (max-width: 1200px) {
+  .section__pagination {
+    &-list {
+      width: 55%;
+    }
+    button {
+      width: 10%;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .section__pagination {
+    &-list {
+      width: 80%;
+      li {
+        width: 10%;
+      }
+    }
+  }
+}
+@media (max-width: 700px) {
+  .section__pagination {
+    &-list {
+      li {
+        width: 15%;
+        height: 40px;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+@media (max-width: 500px) {
+  .section__pagination {
+    flex-wrap: wrap;
+    button{
+      width: 40%;
+    }
+    &-list {
+      order: -1;
+      width: 100%;
+      margin-bottom: 1rem;
     }
   }
 }
