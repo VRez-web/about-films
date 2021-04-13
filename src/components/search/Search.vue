@@ -408,6 +408,9 @@ body {
     &__close {
       position: absolute;
     }
+    .link{
+      font-size: 1.3rem;
+    }
   }
 }
 </style>
