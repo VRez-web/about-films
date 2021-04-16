@@ -79,8 +79,4 @@ const router = createRouter({
   },
 });
 
-router.beforeEach((to, from, next) => {
-  document.title = "About films";
-  next();
-});
 export default router;
