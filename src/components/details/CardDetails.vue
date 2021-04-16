@@ -169,13 +169,12 @@ export default {
         (el) => el.iso_3166_1 == "RU" || el.iso_3166_1 == "US"
       );
 
-      if (!!this.dateRelease) {
+      if (!!this.dateRelease.length) {
         if (!!this.dateRelease[0].release_dates[0].certification) {
           this.age = this.dateRelease[0].release_dates[0].certification;
         } else if (this.dateRelease[1].release_dates[0].certification) {
           this.age = this.dateRelease[1].release_dates[0].certification;
         }
-
         this.dateRelease = `${this.dateRelease[0].release_dates[0].release_date.slice(
           8,
           10
