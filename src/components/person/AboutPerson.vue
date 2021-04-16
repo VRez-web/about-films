@@ -86,7 +86,7 @@
     <div class="container">
       <h2 class="person__title">Известность за</h2>
       <div class="known__for-inner">
-        <slider :data="sortBestRoles" :category="'movie'" id="person-slider"/>
+        <slider :data="sortBestRoles" :category="'movie'" id="person-slider" />
       </div>
     </div>
   </section>
@@ -532,29 +532,29 @@ export default {
     &__description {
       width: 100%;
       margin-top: 1rem;
-     &-wrapper{
+      &-wrapper {
         font-size: 1.2rem;
-     }
+      }
     }
-    &__title{
+    &__title {
       text-align: center;
       margin: 1rem 0;
     }
-    &__social{
+    &__social {
       display: flex;
       justify-content: center;
     }
-    &__aliases{
-       li{
-         font-size: 1rem;
-       }
+    &__aliases {
+      li {
+        font-size: 1rem;
+      }
     }
   }
 }
-@media (max-width:400px) {
-  .person{
-    &__inner{
-      img{
+@media (max-width: 400px) {
+  .person {
+    &__inner {
+      img {
         width: 75%;
       }
     }
