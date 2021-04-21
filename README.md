@@ -1,7 +1,7 @@
 # aboutFilms
 
 ## Краткое описание
-aboutFilms- сайт для просмотра информации о фильмах/сериалах.Созданный на основе данного [API](https://www.themoviedb.org/documentation/api?language=ru)
+About films- сайт для просмотра информации о фильмах/сериалах.Созданный на основе данного [API](https://www.themoviedb.org/documentation/api?language=ru)
 
 [Демо](https://about-films.netlify.app)
 
