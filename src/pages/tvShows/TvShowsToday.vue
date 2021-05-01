@@ -1,16 +1,13 @@
 <template>
   <section class="tv__shows section">
     <div class="container">
-      <h2 class="section__title">
-        Сериалы на сегодня:
-      </h2>
+      <h2 class="section__title">Сериалы на сегодня:</h2>
       <div class="tv__shows__inner section__inner">
-           <card :data="tvShowsToday.results" :category="'serial'"/>
+        <card :data="serial.results" :category="serial.type" />
       </div>
 
       <pagination
-        :data="tvShowsToday"
-        :totalPages="tvShowsToday.total_pages"
+        :totalPages="pages"
         :currentPage="currentPage"
         @pageChange="pageChange"
       />
@@ -19,34 +16,37 @@
 </template>
 
 <script>
-import pagination from "../../components/Pagination";
-import card from "../../components/Card";
+import pagination from "@/components/Pagination";
+import card from "@/components/Card";
 import { mapActions } from "vuex";
+
 export default {
   components: { card, pagination },
   data() {
     return {
-      tvShowsToday: [],
-      pages: "",
+      serial: {},
+      pages: null,
       currentPage: this.$store.page,
     };
   },
   methods: {
-    ...mapActions('serialsToday',["GET_TV_SHOWS_TODAY"]),
-    pageChange(page) {
+    ...mapActions("serialsToday", ["GET_TV_SHOWS_TODAY"]),
+    async pageChange(page) {
+      const SERIAL = await this.GET_TV_SHOWS_TODAY(page);
+      this.serial = { ...SERIAL, ...SERIAL.data };
       this.currentPage = page;
-      this.GET_TV_SHOWS_TODAY((page = this.currentPage)).then((res) => {
-        this.tvShowsToday = res;
-      });
     },
   },
-  computed: {},
-  mounted() {
-    this.GET_TV_SHOWS_TODAY().then((res) => {
-      this.tvShowsToday = res;
-      this.pages = res.total_pages;
-      this.currentPage = res.page;
-    });
+  async created() {
+    try {
+      const SERIAL = await this.GET_TV_SHOWS_TODAY();
+      this.serial = { ...SERIAL, ...SERIAL.data };
+      this.currentPage = SERIAL.data.page;
+      this.pages = SERIAL.data.total_pages;
+    } catch (e) {
+      // FIXME: сделать модалку для вывода ошибки пользователю
+      console.log(e);
+    }
   },
 };
 </script>
