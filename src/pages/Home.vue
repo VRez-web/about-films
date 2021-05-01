@@ -1,91 +1,77 @@
 <template>
   <main>
     <div class="container">
-      <section class="home__gallery">
-        <h2 class="home__gallery-title">
-          <router-link :to="{ name: 'movies-theatres' }" class="link"
-            >В кинотеатрах сейчас</router-link
-          >
-          <i class="icon-right"></i>
-        </h2>
-        <slider :data="moviesTeathers" :category="'movie'" id="swiper-1" />
-      </section>
-      <section class="home__gallery">
-        <h2 class="home__gallery-title">
-          <router-link :to="{ name: 'movies-upcoming' }" class="link"
-            >Ожидаемые фильмы</router-link
-          > <i class="icon-right"></i>
-        </h2>
-        <slider :data="moviesUpcoming" :category="'movie'" id="swiper-2" />
-      </section>
-      <section class="home__gallery">
-        <h2 class="home__gallery-title">
-          <router-link :to="{ name: 'movies-popular' }" class="link"
-            >Популярные фильмы</router-link
-          > <i class="icon-right"></i>
-        </h2>
-        <slider :data="moviesPopular" :category="'movie'" id="swiper-3" />
-      </section>
-      <section class="home__gallery">
-        <h2 class="home__gallery-title">
-          <router-link :to="{ name: 'movies-topRated' }" class="link"
-            >Лучшие фильмы</router-link
-          > <i class="icon-right"></i>
-        </h2>
-        <slider :data="moviesTopRated" :category="'movie'" id="swiper-4" />
-      </section>
-      <section class="home__gallery">
-        <h2 class="home__gallery-title">
-          <router-link :to="{ name: 'serials-today' }" class="link">
-            Сериалы на сегодня</router-link
-          > <i class="icon-right"></i>
-        </h2>
-        <slider :data="tvShowsToday" :category="'serial'" id="swiper-5" />
-      </section>
-      <section class="home__gallery">
-        <h2 class="home__gallery-title">
-          <router-link :to="{ name: 'serials-week' }" class="link">
-            Сериалы на неделю</router-link
-          > <i class="icon-right"></i>
-        </h2>
-        <slider :data="tvShowsWeek" :category="'serial'" id="swiper-6" />
-      </section>
-      <section class="home__gallery">
-        <h2 class="home__gallery-title">
-          <router-link :to="{ name: 'serials-popular' }" class="link">
-            Популярные сериалы</router-link
-          > <i class="icon-right"></i>
-        </h2>
-        <slider :data="tvShowsPopular" :category="'serial'" id="swiper-7" />
-      </section>
-      <section class="home__gallery">
-        <h2 class="home__gallery-title">
-          <router-link :to="{ name: 'serials-topRated' }" class="link">
-            Лучшие сериалы</router-link
-          > <i class="icon-right"></i>
-        </h2>
-        <slider :data="tvShowsTopRated" :category="'serial'" id="swiper-8" />
-      </section>
+      <home-gallery
+        v-for="category in categories"
+        :key="category.id"
+        :title="category.title"
+        :link="category.link"
+        :dataSlider="category.items"
+        :id="category.id"
+      />
     </div>
   </main>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import slider from "../components/Slider";
+import slider from "@/components/Slider";
+import homeGallery from "@/components/HomeGallery/HomeGallery";
+
 export default {
-  components: { slider },
+  components: { slider, homeGallery },
   data() {
     return {
-      moviesTeathers: [],
-      moviesUpcoming: [],
-      moviesPopular: [],
-      moviesTopRated: [],
-
-      tvShowsToday: [],
-      tvShowsWeek: [],
-      tvShowsPopular: [],
-      tvShowsTopRated: [],
+      categories: {
+        moviesTeathers: {
+          title: "В кинотеатрах сейчас",
+          id: "swiper-1",
+          link: "movies-theatres",
+          items: [],
+        },
+        moviesUpcoming: {
+          title: "Ожидаемые фильмы",
+          id: "swiper-2",
+          link: "movies-upcoming",
+          items: [],
+        },
+        moviesPopular: {
+          title: "Популярные фильмы",
+          id: "swiper-3",
+          link: "movies-popular",
+          items: [],
+        },
+        moviesTopRated: {
+          title: "Лучшие фильмы",
+          id: "swiper-4",
+          link: "movies-topRated",
+          items: [],
+        },
+        tvShowsToday: {
+          title: "Сериалы на сегодня",
+          id: "swiper-5",
+          link: "serials-today",
+          items: [],
+        },
+        tvShowsWeek: {
+          title: "Сериалы на неделю",
+          id: "swiper-6",
+          link: "serials-week",
+          items: [],
+        },
+        tvShowsPopular: {
+          title: " Популярные сериалы",
+          id: "swiper-7",
+          link: "serials-popular",
+          items: [],
+        },
+        tvShowsTopRated: {
+          title: "Лучшие сериалы",
+          id: "swiper-8",
+          link: "serials-topRated",
+          items: [],
+        },
+      },
     };
   },
   methods: {
@@ -103,42 +89,48 @@ export default {
   },
   computed: {},
   async mounted() {
+    let categories = this.categories;
     // Получение фильмов
     try {
       const MOVIES_THEATRES = await this.GET_MOVIES_THEATRES();
-      this.moviesTeathers = MOVIES_THEATRES.results.slice(0, 12);
+
+      categories.moviesTeathers.items = MOVIES_THEATRES.results.slice(0, 12);
 
       const MOVIES_UPCOMING = await this.GET_MOVIES_UPCOMING();
-      this.moviesUpcoming = MOVIES_UPCOMING.results.slice(2, 14);
+
+      categories.moviesUpcoming.items = MOVIES_UPCOMING.results.slice(2, 14);
     } catch (e) {
       console.error(e);
       return e;
     } finally {
       const MOVIES_POPULAR = await this.GET_MOVIES_POPULAR();
-      this.moviesPopular = MOVIES_POPULAR.results.slice(0, 12);
+      categories.moviesPopular.items = MOVIES_POPULAR.results.slice(0, 12);
 
       const MOVIES_TOP_RATED = await this.GET_MOVIES_TOP_RATED();
-      this.moviesTopRated = MOVIES_TOP_RATED.results.slice(0, 12);
+      categories.moviesTopRated.items = MOVIES_TOP_RATED.results.slice(0, 12);
 
       // Получение сериалов
       const TV_SHOWS_TODAY = await this.GET_TV_SHOWS_TODAY();
-      this.tvShowsToday = TV_SHOWS_TODAY.results.slice(0, 12);
+      categories.tvShowsToday.items = TV_SHOWS_TODAY.results.slice(0, 12);
 
       const TV_SHOWS_WEEK = await this.GET_TV_SHOWS_WEEK();
-      this.tvShowsWeek = TV_SHOWS_WEEK.results.slice(0, 12);
+      categories.tvShowsWeek.items = TV_SHOWS_WEEK.results.slice(0, 12);
 
       const TV_SHOWS_POPULAR = await this.GET_TV_SHOWS_POPULAR();
-      this.tvShowsPopular = TV_SHOWS_POPULAR.results.slice(0, 12);
+      categories.tvShowsPopular.items = TV_SHOWS_POPULAR.results.slice(0, 12);
 
       const TV_SHOWS_TOP_RATED = await this.GET_TV_SHOWS_TOP_RATED();
-      this.tvShowsTopRated = TV_SHOWS_TOP_RATED.results.slice(0, 12);
+      categories.tvShowsTopRated.items = TV_SHOWS_TOP_RATED.results.slice(
+        0,
+        12
+      );
     }
   },
 };
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../assets/scss/_vars.scss";
 @import "../assets/scss/_global.scss";
 
