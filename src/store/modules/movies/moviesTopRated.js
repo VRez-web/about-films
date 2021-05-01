@@ -1,8 +1,8 @@
-import axios from "axios";
+import { getMoviesTopRated } from "@/services/movies.js";
 export default {
   namespaced: true,
   state: {
-    moviesTopRated: [],
+    moviesTopRated: {},
   },
   mutations: {
     SET_MOVIES_TOP_RATED: (state, moviesTopRated) => {
@@ -10,13 +10,13 @@ export default {
     },
   },
   actions: {
-    async GET_MOVIES_TOP_RATED({ commit }, page = this.state.page) {
+    async GET_MOVIES_TOP_RATED({ commit }, page) {
       try {
-        const MOVIES = await axios.get(
-          `/movie/top_rated?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
-        );
-        commit("SET_MOVIES_TOP_RATED", MOVIES.data);
-        return MOVIES.data;
+        const MOVIES = await getMoviesTopRated(page);
+
+        commit("SET_MOVIES_TOP_RATED", MOVIES);
+
+        return MOVIES;
       } catch (e) {
         console.log(e);
         return e;

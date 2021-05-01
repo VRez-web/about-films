@@ -1,8 +1,9 @@
-import axios from "axios";
+import { getMoviesPopular } from "@/services/movies.js";
+
 export default {
   namespaced: true,
   state: {
-    moviesPopular: [],
+    moviesPopular: {},
   },
   mutations: {
     SET_MOVIES_POPULAR: (state, moviesPopular) => {
@@ -10,13 +11,13 @@ export default {
     },
   },
   actions: {
-    async GET_MOVIES_POPULAR({ commit }, page = this.state.page) {
+    async GET_MOVIES_POPULAR({ commit }, page) {
       try {
-        const MOVIES = await axios.get(
-          `/movie/popular?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
-        );
-        commit("SET_MOVIES_POPULAR", MOVIES.data);
-        return MOVIES.data;
+        const MOVIES = await getMoviesPopular(page);
+
+        commit("SET_MOVIES_POPULAR", MOVIES);
+
+        return MOVIES;
       } catch (e) {
         console.log(e);
         return e;

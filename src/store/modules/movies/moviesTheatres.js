@@ -1,8 +1,9 @@
-import axios from "../../../plugins/axios";
+import { getMoviesTheatres } from "@/services/movies.js";
+
 export default {
   namespaced: true,
   state: {
-    moviesTheatres: [],
+    moviesTheatres: {},
   },
   mutations: {
     SET_MOVIES_THEATRES: (state, moviesTheatres) => {
@@ -10,13 +11,13 @@ export default {
     },
   },
   actions: {
-    async GET_MOVIES_THEATRES({ commit }, page = this.state.page) {
+    async GET_MOVIES_THEATRES({ commit }, page) {
       try {
-        const MOVIES = await axios.get(
-          `/movie/now_playing?api_key=${this.state.apiKey}&language=ru-RU&page=${page}`
-        );
-        commit("SET_MOVIES_THEATRES", MOVIES.data);
-        return MOVIES.data;
+        const MOVIES = await getMoviesTheatres(page);
+
+        commit("SET_MOVIES_THEATRES", MOVIES);
+
+        return MOVIES;
       } catch (e) {
         console.log(e);
         return e;
