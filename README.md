@@ -1,27 +1,9 @@
 # aboutFilms
 
 ## Краткое описание
-aboutFilms- сайт для просмотра информации о фильмах/сериалах.Созданный на основе данного [API](https://www.themoviedb.org/documentation/api?language=ru)
+About films- сайт для просмотра информации о фильмах/сериалах.Созданный на основе данного [API](https://www.themoviedb.org/documentation/api?language=ru)
 
 [Демо](https://about-films.netlify.app)
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
 
 # Реализованный функционал
 
