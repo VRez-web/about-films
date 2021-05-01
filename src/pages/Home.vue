@@ -8,6 +8,7 @@
         :link="category.link"
         :dataSlider="category.items"
         :id="category.id"
+        :category="category.type"
       />
     </div>
   </main>
@@ -16,7 +17,7 @@
 <script>
 import { mapActions } from "vuex";
 import slider from "@/components/Slider";
-import homeGallery from "@/components/HomeGallery/HomeGallery";
+import homeGallery from "@/components/HomeGallery";
 
 export default {
   components: { slider, homeGallery },
@@ -27,48 +28,56 @@ export default {
           title: "В кинотеатрах сейчас",
           id: "swiper-1",
           link: "movies-theatres",
+          type: null,
           items: [],
         },
         moviesUpcoming: {
           title: "Ожидаемые фильмы",
           id: "swiper-2",
           link: "movies-upcoming",
+          type: null,
           items: [],
         },
         moviesPopular: {
           title: "Популярные фильмы",
           id: "swiper-3",
           link: "movies-popular",
+          type: null,
           items: [],
         },
         moviesTopRated: {
           title: "Лучшие фильмы",
           id: "swiper-4",
           link: "movies-topRated",
+          type: null,
           items: [],
         },
         tvShowsToday: {
           title: "Сериалы на сегодня",
           id: "swiper-5",
           link: "serials-today",
+          type: null,
           items: [],
         },
         tvShowsWeek: {
           title: "Сериалы на неделю",
           id: "swiper-6",
           link: "serials-week",
+          type: null,
           items: [],
         },
         tvShowsPopular: {
           title: " Популярные сериалы",
           id: "swiper-7",
           link: "serials-popular",
+          type: null,
           items: [],
         },
         tvShowsTopRated: {
           title: "Лучшие сериалы",
           id: "swiper-8",
           link: "serials-topRated",
+          type: null,
           items: [],
         },
       },
@@ -90,40 +99,61 @@ export default {
   computed: {},
   async mounted() {
     let categories = this.categories;
+
     // Получение фильмов
+
     try {
       const MOVIES_THEATRES = await this.GET_MOVIES_THEATRES();
-
-      categories.moviesTeathers.items = MOVIES_THEATRES.results.slice(0, 12);
+      categories.moviesTeathers.items = MOVIES_THEATRES.data.results.slice(
+        0,
+        12
+      );
+      categories.moviesTeathers.type = MOVIES_THEATRES.type;
 
       const MOVIES_UPCOMING = await this.GET_MOVIES_UPCOMING();
-
-      categories.moviesUpcoming.items = MOVIES_UPCOMING.results.slice(2, 14);
+      categories.moviesUpcoming.items = MOVIES_UPCOMING.data.results.slice(
+        2,
+        14
+      );
+      categories.moviesUpcoming.type = MOVIES_UPCOMING.type;
     } catch (e) {
       console.error(e);
       return e;
     } finally {
       const MOVIES_POPULAR = await this.GET_MOVIES_POPULAR();
-      categories.moviesPopular.items = MOVIES_POPULAR.results.slice(0, 12);
+      categories.moviesPopular.items = MOVIES_POPULAR.data.results.slice(0, 12);
+      categories.moviesPopular.type = MOVIES_POPULAR.type;
 
       const MOVIES_TOP_RATED = await this.GET_MOVIES_TOP_RATED();
-      categories.moviesTopRated.items = MOVIES_TOP_RATED.results.slice(0, 12);
-
-      // Получение сериалов
-      const TV_SHOWS_TODAY = await this.GET_TV_SHOWS_TODAY();
-      categories.tvShowsToday.items = TV_SHOWS_TODAY.results.slice(0, 12);
-
-      const TV_SHOWS_WEEK = await this.GET_TV_SHOWS_WEEK();
-      categories.tvShowsWeek.items = TV_SHOWS_WEEK.results.slice(0, 12);
-
-      const TV_SHOWS_POPULAR = await this.GET_TV_SHOWS_POPULAR();
-      categories.tvShowsPopular.items = TV_SHOWS_POPULAR.results.slice(0, 12);
-
-      const TV_SHOWS_TOP_RATED = await this.GET_TV_SHOWS_TOP_RATED();
-      categories.tvShowsTopRated.items = TV_SHOWS_TOP_RATED.results.slice(
+      categories.moviesTopRated.items = MOVIES_TOP_RATED.data.results.slice(
         0,
         12
       );
+      categories.moviesTopRated.type = MOVIES_TOP_RATED.type;
+
+      // Получение сериалов
+
+      const TV_SHOWS_TODAY = await this.GET_TV_SHOWS_TODAY();
+      categories.tvShowsToday.items = TV_SHOWS_TODAY.data.results.slice(0, 12);
+      categories.tvShowsToday.type = TV_SHOWS_TODAY.type;
+
+      const TV_SHOWS_WEEK = await this.GET_TV_SHOWS_WEEK();
+      categories.tvShowsWeek.items = TV_SHOWS_WEEK.data.results.slice(0, 12);
+      categories.tvShowsWeek.type = TV_SHOWS_WEEK.type;
+
+      const TV_SHOWS_POPULAR = await this.GET_TV_SHOWS_POPULAR();
+      categories.tvShowsPopular.items = TV_SHOWS_POPULAR.data.results.slice(
+        0,
+        12
+      );
+      categories.tvShowsPopular.type = TV_SHOWS_POPULAR.type;
+
+      const TV_SHOWS_TOP_RATED = await this.GET_TV_SHOWS_TOP_RATED();
+      categories.tvShowsTopRated.items = TV_SHOWS_TOP_RATED.data.results.slice(
+        0,
+        12
+      );
+      categories.tvShowsTopRated.type = TV_SHOWS_TOP_RATED.type;
     }
   },
 };
