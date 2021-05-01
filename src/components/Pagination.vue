@@ -38,7 +38,6 @@
 <script>
 export default {
   props: {
-    data: Object,
     totalPages: Number,
     currentPage: Number,
   },
@@ -168,7 +167,7 @@ export default {
 @media (max-width: 500px) {
   .section__pagination {
     flex-wrap: wrap;
-    button{
+    button {
       width: 40%;
     }
     &-list {
