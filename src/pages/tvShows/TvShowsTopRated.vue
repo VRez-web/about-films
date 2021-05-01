@@ -3,11 +3,10 @@
     <div class="container">
       <h2 class="section__title">Лучшие сериалы:</h2>
       <div class="tv__shows__inner section__inner">
-        <card :data="tvShowsTopRated.results" :category="'serial'"/>
+        <card :data="serial.results" :category="serial.type" />
       </div>
       <pagination
-        :data="tvShowsTopRated"
-        :totalPages="tvShowsTopRated.total_pages"
+        :totalPages="pages"
         :currentPage="currentPage"
         @pageChange="pageChange"
       />
@@ -16,33 +15,37 @@
 </template>
 
 <script>
-import card from "../../components/Card";
-import pagination from "../../components/Pagination";
+import card from "@/components/Card";
+import pagination from "@/components/Pagination";
 import { mapActions } from "vuex";
+
 export default {
   components: { card, pagination },
   data() {
     return {
-      pages: "",
+      pages: null,
       currentPage: this.$store.page,
-      tvShowsTopRated: [],
+      serial: {},
     };
   },
   methods: {
-    ...mapActions('serialsTopRated',["GET_TV_SHOWS_TOP_RATED"]),
-    pageChange(page) {
+    ...mapActions("serialsTopRated", ["GET_TV_SHOWS_TOP_RATED"]),
+    async pageChange(page) {
+      const SERIAL = await this.GET_TV_SHOWS_TOP_RATED(page);
+      this.serial = { ...SERIAL, ...SERIAL.data };
       this.currentPage = page;
-      this.GET_TV_SHOWS_TOP_RATED((page = this.currentPage)).then((res) => {
-        this.tvShowsTopRated = res;
-      });
     },
   },
-  mounted() {
-    this.GET_TV_SHOWS_TOP_RATED().then((res) => {
-      this.tvShowsTopRated = res;
-      this.pages = res.total_pages;
-      this.currentPage = res.page;
-    });
+  async created() {
+    try {
+      const SERIAL = await this.GET_TV_SHOWS_TOP_RATED();
+      this.serial = { ...SERIAL, ...SERIAL.data };
+      this.currentPage = SERIAL.data.page;
+      this.pages = SERIAL.data.total_pages;
+    } catch (e) {
+      // FIXME: сделать модалку для вывода ошибки пользователю
+      console.log(e);
+    }
   },
 };
 </script>
