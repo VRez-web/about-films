@@ -3,12 +3,11 @@
     <div class="container">
       <h2 class="movies__popular-title section__title">Популярное кино</h2>
       <div class="movies__popular-inner section__inner">
-        <card :data="moviesPopular.results" :category="'movie'" />
+        <card :data="movies.results" :category="movies.type" />
       </div>
 
       <pagination
-        :data="moviesPopular"
-        :totalPages="moviesPopular.total_pages"
+        :totalPages="pages"
         :currentPage="currentPage"
         @pageChange="pageChange"
       />
@@ -20,41 +19,35 @@
 import { mapActions } from "vuex";
 import pagination from "../../components/Pagination.vue";
 import card from "../../components/Card";
+
 export default {
   components: { card, pagination },
   data() {
     return {
-      moviesPopular: [],
-      pages: "",
+      movies: {},
+      pages: null,
       currentPage: this.$store.page,
     };
   },
   methods: {
-    ...mapActions('moviesPopular',["GET_MOVIES_POPULAR"]),
-    ...mapActions('moviesDates',["GET_MOVIE_DATES"]),
+    ...mapActions("moviesPopular", ["GET_MOVIES_POPULAR"]),
     async pageChange(page) {
-      const MOVIES_POPULAR = await this.GET_MOVIES_POPULAR(page);
-      this.moviesPopular = MOVIES_POPULAR;
+      const MOVIES = await this.GET_MOVIES_POPULAR(page);
+      this.movies = { ...MOVIES, ...MOVIES.data };
       this.currentPage = page;
     },
   },
 
-  async mounted() {
-    const MOVIES_POPULAR = await this.GET_MOVIES_POPULAR();
-    this.moviesPopular = MOVIES_POPULAR;
-
-    this.moviesPopular.results.forEach((item) => {
-      this.GET_MOVIE_DATES(item.id).then((resolve) => {
-        resolve.results.forEach((date) => {
-          if (date.iso_3166_1 == "RU") {
-            item.release_date = date.release_dates[0].release_date.slice(0, 4);
-          }
-        });
-      });
-    });
-
-    this.pages = MOVIES_POPULAR.total_pages;
-    this.currentPage = MOVIES_POPULAR.page;
+  async created() {
+    try {
+      const MOVIES = await this.GET_MOVIES_POPULAR();
+      this.movies = { ...MOVIES, ...MOVIES.data };
+      this.currentPage = MOVIES.data.page;
+      this.pages = MOVIES.data.total_pages;
+    } catch (e) {
+      // FIXME: сделать модалку для вывода ошибки пользователю
+      console.log(e);
+    }
   },
 };
 </script>
