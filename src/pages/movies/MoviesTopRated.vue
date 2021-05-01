@@ -36,7 +36,7 @@ export default {
       this.currentPage = page;
     },
   },
-  async mounted() {
+  async created() {
     try {
       const MOVIES = await this.GET_MOVIES_TOP_RATED();
       this.movies = { ...MOVIES, ...MOVIES.data };
