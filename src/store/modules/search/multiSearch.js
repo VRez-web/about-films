@@ -1,4 +1,5 @@
-import axios from "axios";
+import { getMultiSearch } from "@/services/search";
+
 export default {
   namespaced: true,
   state: {
@@ -10,13 +11,13 @@ export default {
     },
   },
   actions: {
-    async GET_SEARCH({ commit }, { query, page = this.state.page }) {
+    async GET_SEARCH({ commit }, { query, page }) {
       try {
-        const RESULT = await axios.get(
-          `/search/multi?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
-        );
-        commit("SET_SEARCH", RESULT.data);
-        return RESULT.data;
+        const RESULT = await getMultiSearch(query, page);
+
+        commit("SET_SEARCH", RESULT);
+
+        return RESULT;
       } catch (e) {
         console.log(e);
         return e;

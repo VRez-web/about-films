@@ -1,8 +1,9 @@
-import axios from "axios";
+import { getSearchMovies } from "@/services/search";
+
 export default {
   namespaced: true,
   state: {
-    searchMovies: [],
+    searchMovies: {},
   },
   mutations: {
     SET_SEARCH_MOVIES: (state, searchMovies) => {
@@ -10,13 +11,13 @@ export default {
     },
   },
   actions: {
-    async GET_SEARCH_MOVIES({ commit }, { query, page = this.state.page }) {
+    async GET_SEARCH_MOVIES({ commit }, { query, page }) {
       try {
-        const MOVIES = await axios.get(
-          `/search/movie?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
-        );
-        commit("SET_SEARCH_MOVIES", MOVIES.data);
-        return MOVIES.data;
+        const MOVIES = await getSearchMovies(query, page);
+
+        commit("SET_SEARCH_MOVIES", MOVIES);
+
+        return MOVIES;
       } catch (e) {
         console.log(e);
         return e;

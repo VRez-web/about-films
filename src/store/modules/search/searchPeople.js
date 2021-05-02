@@ -1,8 +1,9 @@
-import axios from "axios";
+import { getSearchPerson } from "@/services/search";
+
 export default {
   namespaced: true,
   state: {
-    searchPerson: [],
+    searchPerson: {},
   },
   mutations: {
     SET_SEARCH_PERSON: (state, searchPerson) => {
@@ -10,13 +11,13 @@ export default {
     },
   },
   actions: {
-    async GET_SEARCH_PERSON({ commit }, { query, page = this.state.page }) {
+    async GET_SEARCH_PERSON({ commit }, { query, page }) {
       try {
-        const PERSON = await axios.get(
-          `/search/person?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
-        );
-        commit("SET_SEARCH_PERSON", PERSON.data);
-        return PERSON.data;
+        const PERSON = await getSearchPerson(query, page);
+
+        commit("SET_SEARCH_PERSON", PERSON);
+
+        return PERSON;
       } catch (e) {
         console.log(e);
         return e;

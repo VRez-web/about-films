@@ -1,8 +1,9 @@
-import axios from "axios";
+import { getSearchSerials } from "@/services/search";
+
 export default {
   namespaced: true,
   state: {
-    searchSerials: [],
+    searchSerials: {},
   },
   mutations: {
     SET_SEARCH_SERIALS: (state, searchSerials) => {
@@ -10,13 +11,13 @@ export default {
     },
   },
   actions: {
-    async GET_SEARCH_SERIALS({ commit }, { query, page = this.state.page }) {
+    async GET_SEARCH_SERIALS({ commit }, { query, page }) {
       try {
-        const TV_SHOWS = await axios.get(
-          `/search/tv?api_key=${this.state.apiKey}&language=ru-RU&query=${query}&page=${page}`
-        );
-        commit("SET_SEARCH_SERIALS", TV_SHOWS.data);
-        return TV_SHOWS.data;
+        const TV_SHOWS = await getSearchSerials(query, page);
+
+        commit("SET_SEARCH_SERIALS", TV_SHOWS);
+
+        return TV_SHOWS;
       } catch (e) {
         console.log(e);
         return e;
