@@ -180,7 +180,7 @@ export default {
         this.result = GET_SEARCH;
         this.totalPages = this.result.total_pages;
         // преобразуем число в строку, чтобы правильно склонять слово "совпадение" в зависимости
-        //  от результата и прибовлять его к нашему результату
+        //  от результата и прибавлять его к нашему результату
         this.result.total_results = this.result.total_results.toString();
 
         this.resultTv = [];
@@ -397,7 +397,7 @@ body {
 }
 @media (max-width: 500px) {
   .search {
-    &__inner{
+    &__inner {
       width: 100%;
     }
     &__result {
@@ -408,7 +408,7 @@ body {
     &__close {
       position: absolute;
     }
-    .link{
+    .link {
       font-size: 1.3rem;
     }
   }
