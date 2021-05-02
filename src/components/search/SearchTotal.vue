@@ -18,7 +18,7 @@
         />
       </div>
       <pagination
-        :data="results"
+        v-if="results.total_pages > 1"
         :totalPages="results.total_pages"
         :currentPage="currentPage"
         @pageChange="pageChange"
@@ -28,15 +28,16 @@
 </template>
 
 <script>
-import pagination from "../Pagination";
-import card from "../Card";
-import cardOfPeople from "../CardOfPeople";
+import pagination from "@/components/Pagination";
+import card from "@/components/Card";
+import cardOfPeople from "@/components/CardOfPeople";
 import { mapActions } from "vuex";
+
 export default {
   components: { card, pagination, cardOfPeople },
   data() {
     return {
-      results: [],
+      results: {},
       currentPage: this.$store.page,
     };
   },
@@ -51,21 +52,21 @@ export default {
           page: page,
         });
         this.results = TOTAL_MOVIES;
-        this.currentPage = TOTAL_MOVIES.page;
+        this.currentPage = page;
       } else if (this.category == "serial") {
         const TOTAL_SERIALS = await this.GET_SEARCH_SERIALS({
           query: this.query,
           page: page,
         });
         this.results = TOTAL_SERIALS;
-        this.currentPage = TOTAL_SERIALS.page;
+        this.currentPage = page;
       } else {
         const TOTAL_PERSON = await this.GET_SEARCH_PERSON({
           query: this.query,
           page: page,
         });
         this.results = TOTAL_PERSON;
-        this.currentPage = TOTAL_PERSON.page;
+        this.currentPage = page;
       }
     },
     async getMovies() {
@@ -95,24 +96,35 @@ export default {
 
     getData() {
       if (this.category == "movie") {
+        this.results = {};
+        this.currentPage = 1;
         return this.getMovies();
-      } else if (this.category == "serial") {
-        return this.getSerials();
-      } else {
-        return this.getPersons();
       }
+      if (this.category == "serial") {
+        this.results = {};
+        this.currentPage = 1;
+        return this.getSerials();
+      }
+      this.results = {};
+      this.currentPage = 1;
+      return this.getPersons();
     },
   },
   computed: {
     category() {
-      return this.$attrs.category;
+      return this.$route.params.category;
     },
     query() {
-      return this.$attrs.query;
+      let query = null;
+      if (!!this.$route.params.query) {
+        query = this.$route.params.query;
+        sessionStorage.setItem("query", query);
+      }
+      return sessionStorage.getItem("query");
     },
   },
   watch: {
-    category: {
+    query: {
       immediate: true,
       handler: function () {
         !!this.category ? this.getData() : "";
@@ -121,7 +133,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../../assets/scss/_vars.scss";
-</style>
