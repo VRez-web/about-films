@@ -78,12 +78,6 @@
                 ></a>
               </div>
             </div>
-            <a
-              href="#"
-              class="card__details-scroll link"
-              @click.prevent="scrollTo"
-              >Подробнее</a
-            >
           </div>
           <div class="card__details-description" ref="elToScroll">
             <div class="card__details-description-wrapper">
@@ -208,20 +202,13 @@ export default {
       if (!!this.age.length) {
         this.age = this.age[0].rating;
       }
-      this.age='?'
+      this.age = "?";
     },
 
     getData() {
       return this.category == "movie"
         ? this.getMovieData()
         : this.getSerialData();
-    },
-
-    scrollTo() {
-      this.$refs.elToScroll.scrollIntoView({
-        block: "center",
-        behavior: "smooth",
-      });
     },
   },
   computed: {
