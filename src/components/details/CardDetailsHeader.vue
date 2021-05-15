@@ -12,9 +12,7 @@
       </h2>
       <p class="card__details-subtitle">
         <span class="card__details-age">{{ age }} </span>
-        <span class="card__details-realese"
-          >{{ dateCheck }} (RU)</span
-        >
+        <span class="card__details-realese">{{ dateCheck }} (RU)</span>
         <span class="card__details-genres"
           ><span v-for="genre in genres" :key="genre.id">{{
             genre.name
@@ -61,15 +59,18 @@ export default {
     //   На какой стадии находиться фильм/сериал
     statusProduction() {
       if (this.data.status == "Released") {
-        return (this.dataStatus = "вышел");
-      } else if (this.data.status == "Post Production") {
-        return (this.dataStatus = "постпроизводство");
-      } else if (this.data.status == "Returning Series") {
-        return (this.dataStatus = "Продолжается");
-      } else if (this.data.status == "Ended") {
-        return (this.dataStatus = "Закончен");
+        return "вышел";
       }
-      return (this.dataStatus = "В производстве");
+      if (this.data.status == "Post Production") {
+        return "постпроизводство";
+      }
+      if (this.data.status == "Returning Series") {
+        return "Продолжается";
+      }
+      if (this.data.status == "Ended") {
+        return "Закончен";
+      }
+      return "В производстве";
     },
 
     dataTitle() {
