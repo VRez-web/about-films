@@ -4,7 +4,7 @@
       <router-link :to="{ name: link }" class="link">{{ title }}</router-link>
       <i class="icon-right"></i>
     </h2>
-    <slider :data="dataSlider" id="id" :category="category" />
+    <slider :data="dataSlider" :id="id" :category="category" />
   </section>
 </template>
 
