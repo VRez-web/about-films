@@ -131,5 +131,9 @@ export default {
       },
     },
   },
+
+  destroyed() {
+    sessionStorage.removeItem("query");
+  },
 };
 </script>
