@@ -1,8 +1,9 @@
-import axios from "axios";
+import { getMoviesSimilar } from "@/services/movies.js";
+
 export default {
   namespaced: true,
   state: {
-    moviesSimilar: [],
+    moviesSimilar: {},
   },
   mutations: {
     SET_MOVIE_SIMILAR: (state, moviesSimilar) => {
@@ -12,10 +13,10 @@ export default {
   actions: {
     async GET_MOVIE_SIMILAR({ commit }, id) {
       try {
-        const MOVIES = await axios.get(
-          `/movie/${id}/similar?api_key=${this.state.apiKey}&language=ru-RU`
-        );
+        const MOVIES = await getMoviesSimilar(id);
+
         commit("SET_MOVIE_SIMILAR", MOVIES.data);
+
         return MOVIES.data;
       } catch (e) {
         console.log(e);

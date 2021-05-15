@@ -29,3 +29,17 @@ export const getMoviesTheatres = async (page = 1) => {
   );
   return { data, type: "movie" };
 };
+
+export const getMoviesDetails = async (id) => {
+  const { data } = await axios.get(
+    `/movie/${id}?api_key=${apiKey}&language=ru-RU&append_to_response=credits,release_dates,videos,external_ids`
+  );
+  return { data, type: "movie" };
+};
+
+export const getMoviesSimilar = async (id) => {
+  const { data } = await axios.get(
+    `/movie/${id}/similar?api_key=${apiKey}&language=ru-RU`
+  );
+  return { data, type: "movie" };
+};
