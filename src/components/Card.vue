@@ -4,8 +4,8 @@
     v-for="item in data"
     :key="item.id"
     :to="{
-      name: 'card-details',
-      params: { id: `${item.id}`, category: `${category}` },
+      name: correctRouteName,
+      params: { id: `${item.id}` },
     }"
   >
     <p class="card__vote" :class="checkVote(item)">
@@ -71,6 +71,12 @@ export default {
     },
     formatDate(item) {
       return item.release_date.split("").slice(0, 4).join("");
+    },
+  },
+  computed: {
+    correctRouteName() {
+      if (this.category == "movie") return "card-details-movie";
+      return "card-details-serial";
     },
   },
 };
@@ -191,9 +197,9 @@ export default {
   }
 }
 @media (max-width: 800px) {
-   .section__inner .card {
-     width: 31%;
-   }
+  .section__inner .card {
+    width: 31%;
+  }
 }
 @media (max-width: 700px) {
   .card {
@@ -211,8 +217,8 @@ export default {
       margin: 0 auto;
     }
   }
-    .section__inner .card {
-      width: 45%;
-    }
+  .section__inner .card {
+    width: 45%;
+  }
 }
 </style>
