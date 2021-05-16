@@ -15,9 +15,13 @@ export const checkVote = (item) => {
 export const checkPoster = (poster) => {
   let imgUrl = "https://image.tmdb.org/t/p/w342";
 
-  if (poster) {
-    return imgUrl + poster;
-  }
+  if (poster) return imgUrl + poster;
 
   return require("@/assets/img/no-poster.jpg");
+};
+
+export const correctTitle = (item) => {
+  if (item.title) return item.title;
+
+  return item.name;
 };

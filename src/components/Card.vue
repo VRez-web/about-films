@@ -8,28 +8,18 @@
       params: { id: `${item.id}` },
     }"
   >
-    <p class="card__vote" :class="checkVote(item)">
+    <p class="card__vote" :class="checkVote(item.vote_average)">
       {{ voteCorrect(item) }}
     </p>
     <div class="card__wrapper">
-      <img
-        :src="
-          item.poster_path
-            ? imgUrl + item.poster_path
-            : require('@/assets/img/no-poster.jpg')
-        "
-        :alt="item.title"
-      />
+      <img :src="checkPoster(item.poster_path)" :alt="item.title" />
       <div class="card__about">
         <p class="card__details">Подробнее <i class="icofont-link"></i></p>
       </div>
     </div>
     <div class="card-name-and-date">
-      <p
-        class="card__name"
-        v-if="item.title ? item.title : (item.title = item.name)"
-      >
-        {{ item.title }}
+      <p class="card__name" v-if="item.title || item.name">
+        {{ correctTitle(item) }}
       </p>
       <p
         v-if="
@@ -45,27 +35,19 @@
 </template>
 
 <script>
-import { correctRouteName } from "@/utils/commonFunctions";
+import {
+  correctRouteName,
+  checkVote,
+  checkPoster,
+  correctTitle,
+} from "@/utils/commonFunctions";
 
 export default {
   props: {
     data: Array,
     category: String,
   },
-  data() {
-    return {
-      imgUrl: this.$store.state.imgUrl,
-    };
-  },
   methods: {
-    checkVote(item) {
-      return {
-        "high-rating": item.vote_average >= 7,
-        "mid-rating": item.vote_average < 7 && item.vote_average >= 4,
-        "low-rating": item.vote_average >= 1 && item.vote_average < 4,
-        "no-rating": item.vote_average == "NR",
-      };
-    },
     voteCorrect(item) {
       return item.vote_average === 0
         ? (item.vote_average = "NR")
@@ -78,6 +60,15 @@ export default {
   computed: {
     correctRouteName() {
       return correctRouteName;
+    },
+    checkVote() {
+      return checkVote;
+    },
+    checkPoster() {
+      return checkPoster;
+    },
+    correctTitle() {
+      return correctTitle;
     },
   },
 };

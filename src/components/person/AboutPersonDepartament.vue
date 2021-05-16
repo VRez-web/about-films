@@ -272,6 +272,8 @@
 </template>
 
 <script>
+import { correctTitle } from "@/utils/commonFunctions";
+
 export default {
   props: {
     sound: Array,
@@ -286,17 +288,15 @@ export default {
     visualEffects: Array,
     lighting: Array,
   },
-  data() {
-    return {};
-  },
 
   methods: {
-    correctTitle(item) {
-      return item.title ? item.title : item.name;
-    },
-
     category(item) {
       return item.episode_count ? "serial" : "movie";
+    },
+  },
+  computed: {
+    correctTitle() {
+      return correctTitle;
     },
   },
 };

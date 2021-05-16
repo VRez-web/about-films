@@ -147,6 +147,8 @@
 import { mapActions } from "vuex";
 import slider from "../Slider";
 import AboutPersonDepartament from "./AboutPersonDepartament";
+import { correctTitle } from "@/utils/commonFunctions";
+
 export default {
   components: {
     slider,
@@ -196,11 +198,6 @@ export default {
     showTxt() {
       this.bigText = !this.bigText;
     },
-    // обработка названия фильма/сериала
-    correctTitle(item) {
-      return item.title ? item.title : item.name;
-    },
-
     category(item) {
       return item.episode_count ? "serial" : "movie";
     },
@@ -208,6 +205,9 @@ export default {
   computed: {
     id() {
       return this.$route.params.id;
+    },
+    correctTitle() {
+      return correctTitle;
     },
     gender() {
       return this.person.gender == 1 ? "Женский" : "Мужской";

@@ -14,11 +14,7 @@
         <div class="card__details-inner">
           <div class="card__details-img-wrapper">
             <img
-              :src="
-                cardDetails.poster_path
-                  ? imgUrl + cardDetails.poster_path
-                  : require('@/assets/img/no-poster.jpg')
-              "
+              :src="checkPoster(cardDetails.poster_path)"
               alt=""
               class="card__details-img"
             />
@@ -27,7 +23,7 @@
             <div class="card__details-rating-wrapper">
               <div class="card__details-rating">
                 <h2>Рейтинг</h2>
-                <p :class="checkRating">
+                <p :class="checkVote(rating)">
                   {{ correctRating }}
                 </p>
               </div>
@@ -119,6 +115,7 @@ import { mapActions } from "vuex";
 import cardDetailsShortCast from "./CardDetailsShortCast";
 import cardDetailsHeader from "./CardDetailsHeader";
 import cardDetailsSimilar from "./CardDetailsSimilar";
+import { checkPoster, checkVote } from "@/utils/commonFunctions";
 
 export default {
   components: { cardDetailsSimilar, cardDetailsHeader, cardDetailsShortCast },
@@ -128,7 +125,6 @@ export default {
   data() {
     return {
       cardDetails: {},
-      imgUrl: this.$store.state.imgUrl,
       dateAnnounce: "",
       dateRelease: "",
       age: "",
@@ -183,16 +179,14 @@ export default {
         ? (this.keyPhrase = `«${this.keyPhrase}»`)
         : "";
     },
-    checkRating() {
-      return {
-        "high-rating": this.rating >= 7,
-        "mid-rating": this.rating < 7 && this.rating >= 4,
-        "low-rating": this.rating > 1 && this.rating < 4,
-        "no-rating": this.rating == "NR",
-      };
-    },
     correctRating() {
       return this.rating == 0 ? (this.rating = "NR") : this.rating;
+    },
+    checkVote() {
+      return checkVote;
+    },
+    checkPoster() {
+      return checkPoster;
     },
   },
   watch: {
