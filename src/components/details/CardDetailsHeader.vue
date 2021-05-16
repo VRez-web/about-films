@@ -3,7 +3,7 @@
     <div class="container">
       <h2 class="card__details-title">
         <p>
-          {{ dataTitle }} <span>({{ dateAnnounce }})</span>
+          {{ title }} <span>({{ dateAnnounce }})</span>
         </p>
 
         <p class="card__details-status">
@@ -11,8 +11,10 @@
         </p>
       </h2>
       <p class="card__details-subtitle">
-        <span class="card__details-age">{{ age }} </span>
-        <span class="card__details-realese">{{ dateCheck }} (RU)</span>
+        <span class="card__details-age">{{ ageCheck }} </span>
+        <span class="card__details-realese"
+          >{{ dateRelease }} ({{ countryCheck }})</span
+        >
         <span class="card__details-genres"
           ><span v-for="genre in genres" :key="genre.id">{{
             genre.name
@@ -29,12 +31,14 @@
 <script>
 export default {
   props: {
-    data: Object,
     dateAnnounce: String,
     age: String,
     dateRelease: String,
     genres: Array,
     time: Number,
+    country: String,
+    status: String,
+    title: String,
   },
   data() {
     return {
@@ -58,32 +62,28 @@ export default {
   computed: {
     //   На какой стадии находиться фильм/сериал
     statusProduction() {
-      if (this.data.status == "Released") {
+      if (this.status == "Released") {
         return "вышел";
       }
-      if (this.data.status == "Post Production") {
+      if (this.status == "Post Production") {
         return "постпроизводство";
       }
-      if (this.data.status == "Returning Series") {
+      if (this.status == "Returning Series") {
         return "Продолжается";
       }
-      if (this.data.status == "Ended") {
+      if (this.status == "Ended") {
         return "Закончен";
+      }
+      if (this.status == "Canceled") {
+        return "Отменен";
       }
       return "В производстве";
     },
-
-    dataTitle() {
-      return this.data.title ? this.data.title : this.data.name;
+    ageCheck() {
+      return !!this.age ? this.age : this.ageNone;
     },
-
-    // Обработка возраста
-    // age() {
-    //   return !!this.age ? this.age : this.ageNone
-    // },
-    // Обработка даты
-    dateCheck() {
-      return this.dateRelease ? this.dateRelease : this.data.release_date;
+    countryCheck() {
+      return !!this.country ? this.country : "RU";
     },
   },
 };
