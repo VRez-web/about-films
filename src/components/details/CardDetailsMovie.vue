@@ -2,12 +2,14 @@
   <main>
     <section class="card__details">
       <card-details-header
-        :data="cardDetails"
+        :status="cardDetails.status"
+        :title="cardDetails.title"
         :dateAnnounce="dateAnnounce"
         :age="age"
         :dateRelease="dateRelease"
         :genres="genres"
         :time="movieTime"
+        :country="country"
       />
       <div class="container">
         <div class="card__details-inner">
@@ -170,8 +172,10 @@ export default {
       if (!!this.dateRelease.length) {
         if (!!this.dateRelease[0].release_dates[0].certification) {
           this.age = this.dateRelease[0].release_dates[0].certification;
+          this.country = this.dateRelease[0].iso_3166_1;
         } else if (this.dateRelease[1].release_dates[0].certification) {
           this.age = this.dateRelease[1].release_dates[0].certification;
+          this.country = this.dateRelease[1].iso_3166_1;
         }
         this.dateRelease = `${this.dateRelease[0].release_dates[0].release_date.slice(
           8,

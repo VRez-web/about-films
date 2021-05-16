@@ -2,12 +2,13 @@
   <main>
     <section class="card__details">
       <card-details-header
-        :data="cardDetails"
         :dateAnnounce="dateAnnounce"
+        :title="cardDetails.name"
+        :status="cardDetails.status"
         :age="age"
         :dateRelease="dateRelease"
         :genres="genres"
-        :time="movieTime"
+        :time="serialTime"
       />
       <div class="container">
         <div class="card__details-inner">
@@ -141,7 +142,7 @@ export default {
       showTrailer: false,
       trailersTotal: [],
       cast: [],
-      movieTime: 0,
+      serialTime: 0,
     };
   },
   methods: {
@@ -159,7 +160,7 @@ export default {
       this.rating = this.cardDetails.vote_average;
       this.votes = this.cardDetails.vote_count;
       this.trailersTotal = this.cardDetails.videos.results;
-      this.movieTime = this.cardDetails.episode_run_time[0];
+      this.serialTime = this.cardDetails.episode_run_time[0];
       this.dateRelease = this.cardDetails.last_air_date;
       this.age = this.cardDetails.content_ratings.results.filter(
         (el) => el.iso_3166_1 == "RU" || el.iso_3166_1 == "US"
@@ -167,7 +168,7 @@ export default {
       if (!!this.age.length) {
         this.age = this.age[0].rating;
       }
-      this.age = "?";
+      this.age = "";
     },
   },
   computed: {
