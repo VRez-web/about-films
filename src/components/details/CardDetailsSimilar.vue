@@ -1,15 +1,16 @@
 <template>
   <section class="card__details-similar" v-if="!!correctData.length">
     <div class="container">
-      <h2 class="card__details-title">Похожие {{correctTitle}}</h2>
-      <slider :data="correctData" :category="category" id="slider-similar"/>
+      <h2 class="card__details-title">Похожие {{ correctTitle }}</h2>
+      <slider :data="correctData" :category="category" id="slider-similar" />
     </div>
   </section>
 </template>
 
 <script>
-import slider from "../Slider";
+import slider from "@/components/Slider";
 import { mapActions } from "vuex";
+
 export default {
   components: { slider },
   props: {
@@ -23,8 +24,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions('moviesSimilar',['GET_MOVIE_SIMILAR']),
-    ...mapActions('serialsSimilar',['GET_SERIAL_SIMILAR']),
+    ...mapActions("moviesSimilar", ["GET_MOVIE_SIMILAR"]),
+    ...mapActions("serialsSimilar", ["GET_SERIAL_SIMILAR"]),
     async getSimilarMovies() {
       const MOVIE_SIMILAR = await this.GET_MOVIE_SIMILAR(this.cardId);
       this.similarMovies = MOVIE_SIMILAR.results.slice(0, 12);
@@ -45,15 +46,15 @@ export default {
         ? this.similarMovies
         : this.similarSerials;
     },
-    correctTitle(){
-      return this.category == "movie" ? 'фильмы':'сериалы'
-    }
+    correctTitle() {
+      return this.category == "movie" ? "фильмы" : "сериалы";
+    },
   },
   watch: {
     cardId: {
       immediate: true,
       handler: function () {
-       !!this.cardId? this.getData():'';
+        !!this.cardId ? this.getData() : "";
       },
     },
   },

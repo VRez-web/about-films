@@ -79,7 +79,7 @@
               </div>
             </div>
           </div>
-          <div class="card__details-description" ref="elToScroll">
+          <div class="card__details-description">
             <div class="card__details-description-wrapper">
               <h2 class="card__details-description-title">Сюжет</h2>
               <p class="card__details-plot">{{ plot }}</p>
@@ -89,11 +89,11 @@
       </div>
     </section>
     <card-details-short-cast
-      :cardId="cardId"
+      :cardId="id"
       :castSlider="cast"
-      :category="category"
+      :category="'movie'"
     />
-    <card-details-similar :cardId="cardId" :category="category" />
+    <card-details-similar :cardId="id" :category="'movie'" />
   </main>
   <div
     class="card__details-trailer"
@@ -118,11 +118,15 @@ import { mapActions } from "vuex";
 import cardDetailsShortCast from "./CardDetailsShortCast";
 import cardDetailsHeader from "./CardDetailsHeader";
 import cardDetailsSimilar from "./CardDetailsSimilar";
+
 export default {
   components: { cardDetailsSimilar, cardDetailsHeader, cardDetailsShortCast },
+  props: {
+    id: [Number, String],
+  },
   data() {
     return {
-      cardDetails: [],
+      cardDetails: {},
       imgUrl: this.$store.state.imgUrl,
       dateAnnounce: "",
       dateRelease: "",
@@ -142,10 +146,10 @@ export default {
   },
   methods: {
     ...mapActions("moviesDetails", ["GET_MOVIES_DETAILS"]),
-    ...mapActions("serialsDetails", ["GET_SERIAL_DETAILS"]),
+
     // Получение общей информации о фильме
     async getMovieData() {
-      const CARD_DETAILS_MOVIE = await this.GET_MOVIES_DETAILS(this.cardId);
+      const CARD_DETAILS_MOVIE = await this.GET_MOVIES_DETAILS(this.id);
       this.cardDetails = CARD_DETAILS_MOVIE;
       this.dateAnnounce = this.cardDetails.release_date.slice(0, 4);
       this.plot = this.cardDetails.overview;
@@ -180,41 +184,11 @@ export default {
         this.dateRelease = this.cardDetails.release_date;
       }
     },
-
-    // Получение общей информации о сериале
-    async getSerialData() {
-      const CARD_DETAILS_SERIAL = await this.GET_SERIAL_DETAILS(this.cardId);
-      this.cardDetails = CARD_DETAILS_SERIAL;
-      this.dateAnnounce = this.cardDetails.first_air_date.slice(0, 4);
-      this.plot = this.cardDetails.overview;
-      this.genres = this.cardDetails.genres.slice(0, 3);
-      this.keyPhrase = this.cardDetails.tagline;
-      this.cast = this.cardDetails.credits.cast.slice(0, 9);
-      this.socialLinks = this.cardDetails.external_ids;
-      this.rating = this.cardDetails.vote_average;
-      this.votes = this.cardDetails.vote_count;
-      this.trailersTotal = this.cardDetails.videos.results;
-      this.movieTime = this.cardDetails.episode_run_time[0];
-      this.dateRelease = this.cardDetails.last_air_date;
-      this.age = this.cardDetails.content_ratings.results.filter(
-        (el) => el.iso_3166_1 == "RU" || el.iso_3166_1 == "US"
-      );
-      if (!!this.age.length) {
-        this.age = this.age[0].rating;
-      }
-      this.age = "?";
-    },
-
-    getData() {
-      return this.category == "movie"
-        ? this.getMovieData()
-        : this.getSerialData();
-    },
   },
   computed: {
-    cardId() {
-      return this.$route.params.id;
-    },
+    // cardId() {
+    //   return this.$route.params.id;
+    // },
     trailerKey() {
       return this.trailersTotal.length
         ? this.cardDetails.videos.results[0].key
@@ -225,9 +199,6 @@ export default {
         this.keyPhrase.slice(-1) != "»"
         ? (this.keyPhrase = `«${this.keyPhrase}»`)
         : "";
-    },
-    category() {
-      return this.$route.params.category;
     },
     checkRating() {
       return {
@@ -242,10 +213,10 @@ export default {
     },
   },
   watch: {
-    cardId: {
+    id: {
       immediate: true,
       handler: function () {
-        !!this.cardId ? this.getData() : "";
+        !!this.id ? this.getMovieData() : "";
       },
     },
   },
