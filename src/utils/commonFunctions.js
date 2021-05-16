@@ -5,10 +5,10 @@ export const correctRouteName = (category) => {
 
 export const checkVote = (item) => {
   return {
-    "high-rating": item.vote_average >= 7,
-    "mid-rating": item.vote_average < 7 && item.vote_average >= 4,
-    "low-rating": item.vote_average >= 1 && item.vote_average < 4,
-    "no-rating": item.vote_average == "NR",
+    "high-rating": item >= 7,
+    "mid-rating": item < 7 && item >= 4,
+    "low-rating": item >= 1 && item < 4,
+    "no-rating": item == "NR",
   };
 };
 
