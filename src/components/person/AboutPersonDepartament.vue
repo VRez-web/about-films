@@ -8,7 +8,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -32,7 +32,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -56,7 +56,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -80,7 +80,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -104,7 +104,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -128,7 +128,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -152,7 +152,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -180,7 +180,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -204,7 +204,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -228,7 +228,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
@@ -252,7 +252,7 @@
           <p>
             <router-link
               :to="{
-                name: 'card-details',
+                name: `card-details-${category(role)}`,
                 params: { id: role.id, category: category(role) },
               }"
               class="link"
