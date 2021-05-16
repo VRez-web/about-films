@@ -4,7 +4,7 @@
     v-for="item in data"
     :key="item.id"
     :to="{
-      name: correctRouteName,
+      name: correctRouteName(category),
       params: { id: `${item.id}` },
     }"
   >
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { correctRouteName } from "@/utils/commonFunctions";
+
 export default {
   props: {
     data: Array,
@@ -75,8 +77,7 @@ export default {
   },
   computed: {
     correctRouteName() {
-      if (this.category == "movie") return "card-details-movie";
-      return "card-details-serial";
+      return correctRouteName;
     },
   },
 };
