@@ -15,7 +15,7 @@
           <div class="card__details-img-wrapper">
             <img
               :src="checkPoster(cardDetails.poster_path)"
-              alt=""
+              :alt="cardDetails.name"
               class="card__details-img"
             />
           </div>
@@ -75,8 +75,29 @@
                 ></a>
               </div>
             </div>
+            <div class="card__details-current-season">
+              <h2 class="card__details-title">Текущий сезон</h2>
+              <div class="card__details-current-season-wrapper">
+                <div class="card__details-current-season-img">
+                  <img
+                    :src="imgUrlSmall + currentSeason.poster_path"
+                    :alt="currentSeason.name"
+                  />
+                </div>
+                <div class="card__details-current-season-content">
+                  <p>{{ currentSeason.name }}</p>
+                  <div>
+                    <span>{{ currentSeasonDate }}</span
+                    >| <span>{{ currentSeason.episode_count }} эпизодов</span>
+                  </div>
+                  <a href="#" class="link" v-if="cardDetails.seasons.length > 1"
+                    >Смотреть все сезоны</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="card__details-description" ref="elToScroll">
+          <div class="card__details-description">
             <div class="card__details-description-wrapper">
               <h2 class="card__details-description-title">Сюжет</h2>
               <p class="card__details-plot">{{ plot }}</p>
@@ -139,6 +160,9 @@ export default {
       trailersTotal: [],
       cast: [],
       serialTime: 0,
+      imgUrlSmall: this.$store.state.imgUrlSmall,
+      currentSeason: null,
+      currentSeasonDate: null,
     };
   },
   methods: {
@@ -163,8 +187,14 @@ export default {
       );
       if (!!this.age.length) {
         this.age = this.age[0].rating;
+      } else {
+        this.age = "";
       }
-      this.age = "";
+
+      this.currentSeason = this.cardDetails.seasons[
+        this.cardDetails.seasons.length - 1
+      ];
+      this.currentSeasonDate = this.currentSeason.air_date.slice(0, 4);
     },
   },
   computed: {
@@ -208,6 +238,39 @@ export default {
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
+  }
+
+  &-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &-current-season {
+    margin-top: 2rem;
+
+    &-wrapper {
+      display: flex;
+    }
+
+    &-img {
+      width: 15%;
+
+      img {
+        border-radius: 0.313rem;
+        width: 100%;
+      }
+    }
+    &-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-left: 1rem;
+      font-size: 1.2rem;
+
+      .link {
+        font-size: 1.2rem;
+      }
+    }
   }
 
   &-img {
