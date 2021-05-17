@@ -29,3 +29,10 @@ export const getSerialToday = async (page = 1) => {
   );
   return { data, type: "serial" };
 };
+
+export const getSerialDetails = async (id) => {
+  const { data } = await axios.get(
+    `/tv/${id}?api_key=${apiKey}&language=ru-RU&append_to_response=content_ratings,credits,videos,external_ids`
+  );
+  return { data, type: "serial" };
+};
