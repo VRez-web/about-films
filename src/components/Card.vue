@@ -12,7 +12,11 @@
       {{ voteCorrect(item) }}
     </p>
     <div class="card__wrapper">
-      <img :src="checkPoster(item.poster_path)" :alt="item.title" />
+      <img
+        :src="checkPoster(item.poster_path)"
+        :alt="item.title"
+        loading="lazy"
+      />
       <div class="card__about">
         <p class="card__details">Подробнее <i class="icofont-link"></i></p>
       </div>
