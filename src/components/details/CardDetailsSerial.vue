@@ -75,7 +75,7 @@
                 ></a>
               </div>
             </div>
-            <div class="card__details-current-season">
+            <!-- <div class="card__details-current-season">
               <h2 class="card__details-title">Текущий сезон</h2>
               <div class="card__details-current-season-wrapper">
                 <div class="card__details-current-season-img">
@@ -95,22 +95,18 @@
                   >
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="card__details-description">
             <div class="card__details-description-wrapper">
               <h2 class="card__details-description-title">Сюжет</h2>
-              <p class="card__details-plot">{{ plot }}</p>
+              <p class="card__details-plot">{{ cardDetails.overview }}</p>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <card-details-short-cast
-      :cardId="id"
-      :castSlider="cast"
-      :category="'serial'"
-    />
+    <card-details-short-cast :cardId="id" :cast="cast" :category="'serial'" />
     <card-details-similar :cardId="id" :category="'serial'" />
   </main>
   <div
@@ -150,7 +146,7 @@ export default {
       dateRelease: "",
       age: "",
       country: "",
-      plot: "",
+      cast: [],
       genres: [],
       keyPhrase: "",
       socialLinks: [],
@@ -158,7 +154,6 @@ export default {
       votes: "",
       showTrailer: false,
       trailersTotal: [],
-      cast: [],
       serialTime: 0,
       imgUrlSmall: this.$store.state.imgUrlSmall,
       currentSeason: null,
@@ -169,13 +164,11 @@ export default {
     ...mapActions("serialsDetails", ["GET_SERIAL_DETAILS"]),
     // Получение общей информации о сериале
     async getSerialData() {
-      const CARD_DETAILS_SERIAL = await this.GET_SERIAL_DETAILS(this.id);
-      this.cardDetails = CARD_DETAILS_SERIAL;
+      this.cardDetails = await this.GET_SERIAL_DETAILS(this.id);
       this.dateAnnounce = this.cardDetails.first_air_date.slice(0, 4);
-      this.plot = this.cardDetails.overview;
       this.genres = this.cardDetails.genres.slice(0, 3);
       this.keyPhrase = this.cardDetails.tagline;
-      this.cast = this.cardDetails.credits.cast.slice(0, 9);
+      this.cast = this.cardDetails.credits.cast;
       this.socialLinks = this.cardDetails.external_ids;
       this.rating = this.cardDetails.vote_average;
       this.votes = this.cardDetails.vote_count;
@@ -191,10 +184,9 @@ export default {
         this.age = "";
       }
 
-      this.currentSeason = this.cardDetails.seasons[
-        this.cardDetails.seasons.length - 1
-      ];
-      this.currentSeasonDate = this.currentSeason.air_date.slice(0, 4);
+      // this.currentSeason =
+      //   this.cardDetails.seasons[this.cardDetails.seasons.length - 1];
+      // this.currentSeasonDate = this.currentSeason.air_date.slice(0, 4);
     },
   },
   computed: {

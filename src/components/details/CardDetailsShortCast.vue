@@ -3,7 +3,7 @@
     <div class="container">
       <h2 class="card__details-title">В главных ролях</h2>
       <div class="card__details-cast">
-        <slider :data="castSlider" :category="'people'" />
+        <slider :data="shortCast" :category="'people'" />
         <router-link
           :to="{
             name: 'card-details-cast',
@@ -21,10 +21,15 @@
 import cardOfPeople from "../CardOfPeople";
 import slider from "../Slider";
 export default {
-  props: { cardId: String, castSlider: Array, category: String },
+  props: { cardId: String, cast: Array, category: String },
   components: { cardOfPeople, slider },
   data() {
     return {};
+  },
+  computed: {
+    shortCast() {
+      return this.cast.slice(0, 9);
+    },
   },
   methods: {},
 };
