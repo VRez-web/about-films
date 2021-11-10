@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import slider from "@/components/Slider";
+import slider from "@/components/sliders/SliderHome";
 import { mapActions } from "vuex";
 
 export default {
