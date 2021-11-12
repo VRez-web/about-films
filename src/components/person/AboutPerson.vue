@@ -145,7 +145,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import slider from "../sliders/SliderHome";
+// import slider from "../sliders/SliderHome";
 import AboutPersonDepartament from "./AboutPersonDepartament";
 import { correctTitle } from "@/utils/commonFunctions";
 

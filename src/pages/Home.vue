@@ -1,22 +1,21 @@
 <template>
   <main v-if="!loading">
     <div class="container">
-      <div class="home__slider">
-        <h2 class="home__slider-title">Ежедневные тренды</h2>
-        <sliderHome id="home" :data="trends"/>
-      </div>
+      <HomeSlider id="home" :data="trends"/>
+      <HomePopular/>
     </div>
   </main>
   <loader v-else/>
 </template>
 
 <script>
-import SliderHome from "@/components/sliders/SliderHome";
+import HomeSlider from "@/components/home/HomeSlider";
 import {trendsDay} from "@/services/trends";
 import Loader from "@/components/app/Loader";
+import HomePopular from "@/components/home/HomePopular";
 
 export default {
-  components: {Loader, SliderHome},
+  components: {HomePopular, Loader, HomeSlider},
   data() {
     return {
       trends: [],
@@ -47,6 +46,53 @@ export default {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+  }
+
+  &__tabs {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    margin-left: 3rem;
+    border-bottom: 1px solid #f9f9f9;
+    padding-bottom: 3px;
+  }
+
+  &__tab {
+    position: relative;
+    border: none;
+    background: transparent;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: $color-white;
+    cursor: pointer;
+    padding: 0;
+
+    &.active {
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: $color-tematic;
+      }
+    }
+  }
+
+  &__section {
+    margin-top: 4rem;
   }
 }
 </style>
