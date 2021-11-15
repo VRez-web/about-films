@@ -175,6 +175,8 @@ export default {
 
   &-slide {
     border-radius: 10px;
+    overflow: hidden;
+    user-select: none;
   }
 
   &-button {

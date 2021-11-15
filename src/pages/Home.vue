@@ -48,6 +48,10 @@ export default {
     }
   }
 
+  &__section {
+    margin-bottom: 4rem;
+  }
+
   &__header {
     display: flex;
     align-items: flex-end;

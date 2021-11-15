@@ -14,29 +14,50 @@
       </div>
     </div>
     <keep-alive>
-      <component :is="currentStep"/>
+      <component :is="currentStep" :model="currentModel"/>
     </keep-alive>
   </div>
 </template>
 
 <script>
-import MoviesTab from '@/components/home/popular/tab/MovieTab'
+import MoviesTab from '@/components/home/popular/tab/MoviesTab'
+import TvShowsTab from "@/components/home/popular/tab/TvShowsTab";
+import {getMoviesTheatres} from "@/services/movies";
+import {getSerialsPopular} from "@/services/serials";
 
 export default {
-  props: {
-    data: Array
-  },
   components: {
-    MoviesTab
+    MoviesTab,
+    TvShowsTab
   },
   data() {
     return {
       currentStep: 'MoviesTab',
       tabs: [
-        {title: 'Кино', name: 'MoviesTab'},
-        {title: 'Сериалы', name: 'SerialsTab'},
-        {title: 'Тв-шоу', name: 'TvTab'},
-      ]
+        {title: 'В кинотеатрах', name: 'MoviesTab'},
+        {title: 'По ТВ', name: 'TvShowsTab'},
+        {title: 'Люди', name: 'PeopleTab'},
+      ],
+      model: {
+        movies: [],
+        tvShows: [],
+        people: []
+      }
+    }
+  },
+  async created() {
+    const popularMovies = await getMoviesTheatres()
+    const popularTvShows = await getSerialsPopular()
+    this.model.movies = popularMovies.data.results.slice(0, 16)
+    this.model.tvShows = popularTvShows.data.results.slice(0, 16)
+  },
+  computed: {
+    currentModel() {
+      if (this.currentStep === 'MoviesTab') {
+        return this.model.movies
+      } else if (this.currentStep === 'TvShowsTab') {
+        return this.model.tvShows
+      }
     }
   }
 }
