@@ -19,7 +19,7 @@
 
 <script>
 import cardOfPeople from "../CardOfPeople";
-import slider from "../Slider";
+// import slider from "../sliders/SliderHome";
 export default {
   props: { cardId: String, cast: Array, category: String },
   components: { cardOfPeople, slider },

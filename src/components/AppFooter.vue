@@ -19,26 +19,30 @@ export default {};
 
 <style lang="scss" scoped>
 @import "../assets/scss/_vars.scss";
+
 .footer {
+  flex: 0 0;
   background-color: $bg-header;
   width: 100%;
   padding: 1rem 0;
   border-top: 0.063rem solid rgba($color-white, 0.2);
-  margin-top: 3rem;
+
   &__inner {
     text-align: center;
   }
+
   &__copyright {
     margin-bottom: 0.5rem;
   }
+
   .link {
     font-size: 1rem;
     display: inline-block;
   }
 }
 
-@media (max-width:400px) {
-  .footer{
+@media (max-width: 400px) {
+  .footer {
     margin-top: 2rem;
   }
 }

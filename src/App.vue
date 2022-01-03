@@ -1,21 +1,34 @@
 <template>
-  <app-header />
-  <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <component :is="Component" />
-    </transition>
-  </router-view>
-  <app-footer />
+  <div class="app">
+    <app-header/>
+    <router-view v-slot="{ Component }" class="app__content">
+      <transition name="fade">
+        <component :is="Component"/>
+      </transition>
+    </router-view>
+    <app-footer/>
+  </div>
 </template>
 
 <script>
 import AppHeader from "./components/AppHeader";
 import AppFooter from './components/AppFooter.vue';
+
 export default {
-  components: { AppHeader, AppFooter},
+  components: {AppHeader, AppFooter},
 };
 </script>
 <style lang="scss">
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__content {
+    flex: 1 0;
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;

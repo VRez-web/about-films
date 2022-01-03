@@ -1,20 +1,19 @@
 <template>
+  <!--    :to="{-->
+  <!--      name: correctRouteName(category),-->
+  <!--      params: { id: `${model.id}` },-->
+  <!--    }"-->
   <router-link
     class="card"
-    v-for="item in data"
-    :key="item.id"
-    :to="{
-      name: correctRouteName(category),
-      params: { id: `${item.id}` },
-    }"
+    to="1"
   >
-    <p class="card__vote" :class="checkVote(item.vote_average)">
-      {{ voteCorrect(item) }}
+    <p class="card__vote" :class="checkVote(model.vote_average)">
+      {{ voteCorrect(model) }}
     </p>
     <div class="card__wrapper">
       <img
-        :src="checkPoster(item.poster_path)"
-        :alt="item.title"
+        :src="checkPoster(model.poster_path)"
+        :alt="model.title"
         loading="lazy"
       />
       <div class="card__about">
@@ -22,17 +21,17 @@
       </div>
     </div>
     <div class="card-name-and-date">
-      <p class="card__name" v-if="item.title || item.name">
-        {{ correctTitle(item) }}
+      <p class="card__name" v-if="model.title || model.name">
+        {{ correctTitle(model) }}
       </p>
       <p
         v-if="
-          item.release_date
-            ? item.release_date
-            : (item.release_date = item.first_air_date)
+          model.release_date
+            ? model.release_date
+            : (model.release_date = model.first_air_date)
         "
       >
-        {{ formatDate(item) }}
+        {{ formatDate(model) }}
       </p>
     </div>
   </router-link>
@@ -48,8 +47,7 @@ import {
 
 export default {
   props: {
-    data: Array,
-    category: String,
+    model: Object,
   },
   methods: {
     voteCorrect(item) {
@@ -82,27 +80,27 @@ export default {
 @import "../assets/scss/_vars.scss";
 .card {
   width: 18%;
-  margin: 0 1.25rem 2.5rem 0;
   transition: all 0.3s linear;
   cursor: pointer;
   font-size: 1rem;
-  min-height: 350px;
   display: block;
-  &:hover {
-    transform: scale(1.05);
 
+  &:hover {
     .card__about {
       opacity: 1;
     }
 
     img {
+      //transform: scale(1.05);
       filter: blur(1px);
     }
   }
+
   a {
     color: inherit;
     display: block;
   }
+
   img {
     width: 100%;
     height: auto;
@@ -112,6 +110,7 @@ export default {
     border-radius: 0.938rem;
     transition: all 0.3s linear;
   }
+
   &__wrapper {
     position: relative;
   }
@@ -130,6 +129,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     p {
       width: 100%;
       text-align: center;
