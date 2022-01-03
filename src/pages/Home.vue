@@ -3,6 +3,7 @@
     <div class="container">
       <HomeSlider id="home" :data="trends"/>
       <HomePopular/>
+      <HomeTrends/>
     </div>
   </main>
   <loader v-else/>
@@ -10,28 +11,36 @@
 
 <script>
 import HomeSlider from "@/components/home/HomeSlider";
-import {trendsDay} from "@/services/trends";
+import {getTrends} from "@/services/trends";
 import Loader from "@/components/app/Loader";
 import HomePopular from "@/components/home/HomePopular";
+import HomeTrends from "@/components/home/HomeTrends";
 
 export default {
-  components: {HomePopular, Loader, HomeSlider},
+  components: {
+    HomeTrends,
+    HomePopular,
+    Loader,
+    HomeSlider
+  },
   data() {
     return {
       trends: [],
       loading: true,
     };
   },
-  methods: {},
-  computed: {},
-  async created() {
-    const trends = await trendsDay()
-    this.trends = !!trends.results.length ? trends.results.slice(0, 10) : null
+  created() {
+    this.getTrends()
     this.loading = false
-  }
+  },
+  methods: {
+    async getTrends() {
+      const trends = await getTrends()
+      this.trends = !!trends.results.length ? trends.results.slice(0, 10) : null
+    }
+  },
 };
 </script>
-
 
 <style lang="scss">
 @import "../assets/scss/_vars.scss";
@@ -63,13 +72,13 @@ export default {
   }
 
   &__tabs {
-    width: 20%;
+    width: fit-content;
     display: flex;
     align-items: center;
     gap: 0 20px;
     margin-left: 3rem;
     border-bottom: 1px solid #f9f9f9;
-    padding-bottom: 3px;
+    padding: 3px 15px 3px 0;
   }
 
   &__tab {
