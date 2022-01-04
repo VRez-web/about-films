@@ -1,220 +1,65 @@
 <template>
-  <!--    :to="{-->
-  <!--      name: correctRouteName(category),-->
-  <!--      params: { id: `${model.id}` },-->
-  <!--    }"-->
   <router-link
-    class="card"
-    to="1"
+      class="card"
+      :to="{
+        name: correctRouteName(mediaType),
+        params: { id: model.id },
+      }"
   >
     <p class="card__vote" :class="checkVote(model.vote_average)">
-      {{ voteCorrect(model) }}
+      {{ voteCorrect }}
     </p>
     <div class="card__wrapper">
       <img
-        :src="checkPoster(model.poster_path)"
-        :alt="model.title"
-        loading="lazy"
+          :src="checkPoster(model.poster_path)"
+          :alt="model.title"
+          loading="lazy"
       />
       <div class="card__about">
         <p class="card__details">Подробнее <i class="icofont-link"></i></p>
       </div>
     </div>
     <div class="card-name-and-date">
-      <p class="card__name" v-if="model.title || model.name">
-        {{ correctTitle(model) }}
-      </p>
-      <p
-        v-if="
-          model.release_date
-            ? model.release_date
-            : (model.release_date = model.first_air_date)
-        "
-      >
-        {{ formatDate(model) }}
-      </p>
+      <p class="card__name"> {{ title }} </p>
+      <p> {{ formatDate }} </p>
     </div>
   </router-link>
 </template>
 
 <script>
-import {
-  correctRouteName,
-  checkVote,
-  checkPoster,
-  correctTitle,
-} from "@/utils/commonFunctions";
+import {checkPoster, checkVote, correctRouteName,} from "@/utils/commonFunctions";
 
 export default {
   props: {
     model: Object,
+    mediaType: String
+  },
+  data() {
+    return {
+      date: this.model.release_date || this.model.first_air_date,
+      title: this.model.title || this.model.name
+    }
   },
   methods: {
-    voteCorrect(item) {
-      return item.vote_average === 0
-        ? (item.vote_average = "NR")
-        : item.vote_average;
-    },
-    formatDate(item) {
-      return item.release_date.split("").slice(0, 4).join("");
-    },
+    correctRouteName,
   },
   computed: {
-    correctRouteName() {
-      return correctRouteName;
-    },
     checkVote() {
       return checkVote;
     },
+
     checkPoster() {
       return checkPoster;
     },
-    correctTitle() {
-      return correctTitle;
+
+    formatDate() {
+      return this.date.split("").slice(0, 4).join("");
+    },
+
+    voteCorrect() {
+      return this.model.vote_average === 0 ? "NR" : this.model.vote_average;
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-@import "../assets/scss/_vars.scss";
-.card {
-  width: 18%;
-  transition: all 0.3s linear;
-  cursor: pointer;
-  font-size: 1rem;
-  display: block;
-
-  &:hover {
-    .card__about {
-      opacity: 1;
-    }
-
-    img {
-      //transform: scale(1.05);
-      filter: blur(1px);
-    }
-  }
-
-  a {
-    color: inherit;
-    display: block;
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-    min-height: 300px;
-    max-height: 300px;
-    display: block;
-    border-radius: 0.938rem;
-    transition: all 0.3s linear;
-  }
-
-  &__wrapper {
-    position: relative;
-  }
-
-  &__about {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    opacity: 0;
-    border-radius: 0.938rem;
-    transition: all 0.3s linear;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    p {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  &__vote {
-    margin: 0 0 -3rem 0;
-    padding: 0.313rem 0;
-    position: relative;
-    z-index: 1;
-    width: 20%;
-    text-align: center;
-    font-weight: 700;
-
-    &.high-rating {
-      background-color: $bg-highRating;
-    }
-    &.mid-rating {
-      background-color: $bg-midRating;
-    }
-    &.low-rating {
-      background-color: $bg-lowRating;
-    }
-    &.no-rating {
-      background-color: $bg-noRating;
-    }
-  }
-
-  &-name-and-date {
-    text-align: center;
-  }
-  &__name {
-    margin: 0.625rem 0;
-  }
-}
-.swiper-slide {
-  .card {
-    width: 100%;
-  }
-}
-.search {
-  .card {
-    width: 100%;
-  }
-}
-@media (max-width: 1200px) {
-  .card {
-    width: 22%;
-    margin-right: 0;
-  }
-}
-@media (max-width: 1000px) {
-  .section__inner .card {
-    width: 23%;
-    min-height: auto;
-
-    img {
-      max-height: none;
-      min-height: auto;
-    }
-  }
-}
-@media (max-width: 800px) {
-  .section__inner .card {
-    width: 31%;
-  }
-}
-@media (max-width: 700px) {
-  .card {
-    min-height: auto;
-    img {
-      max-height: none;
-      min-height: auto;
-    }
-  }
-}
-@media (max-width: 550px) {
-  .swiper-slide {
-    .card {
-      width: 100%;
-      margin: 0 auto;
-    }
-  }
-  .section__inner .card {
-    width: 45%;
-  }
-}
-</style>

@@ -1,18 +1,19 @@
 <template>
-  <main v-if="!loading">
+  <AppLoader v-if="trends === null"/>
+  <main v-else>
     <div class="container">
       <HomeSlider id="home" :data="trends"/>
       <HomePopular/>
       <HomeTrends/>
     </div>
   </main>
-  <loader v-else/>
+
 </template>
 
 <script>
 import HomeSlider from "@/components/home/HomeSlider";
 import {getTrends} from "@/services/trends";
-import Loader from "@/components/app/Loader";
+import AppLoader from "@/components/app/AppLoader";
 import HomePopular from "@/components/home/HomePopular";
 import HomeTrends from "@/components/home/HomeTrends";
 
@@ -20,18 +21,16 @@ export default {
   components: {
     HomeTrends,
     HomePopular,
-    Loader,
+    AppLoader,
     HomeSlider
   },
   data() {
     return {
-      trends: [],
-      loading: true,
+      trends: null,
     };
   },
   created() {
     this.getTrends()
-    this.loading = false
   },
   methods: {
     async getTrends() {

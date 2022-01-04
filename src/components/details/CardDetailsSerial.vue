@@ -130,7 +130,7 @@
 <script>
 import { mapActions } from "vuex";
 import cardDetailsShortCast from "./CardDetailsShortCast";
-import cardDetailsHeader from "./CardDetailsHeader";
+// import cardDetailsHeader from "./CardDetailsHeader";
 import cardDetailsSimilar from "./CardDetailsSimilar";
 import { checkPoster, checkVote } from "@/utils/commonFunctions";
 

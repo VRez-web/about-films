@@ -14,7 +14,7 @@
       >
         <swiper-slide
             v-for="(item, i) in model" :key="i">
-          <Card :model="item"/>
+          <Card :model="item" :media-type="mediaType"/>
         </swiper-slide>
         <swiper-slide>
           <router-link to="to">
@@ -47,7 +47,8 @@ export default {
   components: {Swiper, SwiperSlide, Card},
   props: {
     id: String,
-    model: Array
+    model: Array,
+    mediaType: String
   },
   data() {
     return {

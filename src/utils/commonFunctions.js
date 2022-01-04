@@ -1,6 +1,6 @@
-export const correctRouteName = (category) => {
-    if (category == "movie") return "card-details-movie";
-    return "card-details-serial";
+export const correctRouteName = (mediaType) => {
+    if (mediaType === "movie") return "movie-id";
+    // return "card-details-serial";
 };
 
 export const checkVote = (item) => {
@@ -8,7 +8,7 @@ export const checkVote = (item) => {
         "high-rating": item >= 7,
         "mid-rating": item < 7 && item >= 4,
         "low-rating": item >= 1 && item < 4,
-        "no-rating": item == "NR",
+        "no-rating": item === "NR",
     };
 };
 
