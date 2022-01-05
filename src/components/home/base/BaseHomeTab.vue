@@ -73,43 +73,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.swiper {
-  padding-left: 1.25rem;
-
-  &-slide {
-    border-radius: 0.625rem;
-    padding-top: 2.5rem;
-    user-select: none;
-  }
-
-  &-button {
-    width: 2.5rem;
-    height: 2.5rem;
-    position: absolute;
-    top: 45%;
-    transform: translate(0%, -50%);
-    z-index: 10;
-    cursor: pointer;
-
-    &-prev {
-      transform: translate(0%, -50%) scaleX(-1);
-      left: -50px;
-    }
-
-    &-next {
-      right: -50px;
-    }
-
-    &-disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-  }
-}
-
-.slider {
-  position: relative;
-}
-
+@import "/src/assets/scss/components/slider";
 </style>
