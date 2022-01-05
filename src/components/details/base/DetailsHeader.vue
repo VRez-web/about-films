@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style lang="scss" module>
-@import "../../assets/scss/_vars.scss";
+@import "src/assets/scss/_vars.scss";
 
 .details {
   &__header {

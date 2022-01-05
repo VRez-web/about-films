@@ -3,87 +3,49 @@
   <main v-else>
     <section class="card__details">
       <DetailsHeader :model="movie"/>
-<!--           <div class="container">&ndash;&gt;-->
-<!--             <div class="card__details-inner">&ndash;&gt;-->
-<!--               <div class="card__details-img-wrapper">&ndash;&gt;-->
-<!--                 <img&ndash;&gt;-->
-<!--                     :src="checkPoster(cardDetails.poster_path)"&ndash;&gt;-->
-<!--                     alt=""&ndash;&gt;-->
-<!--                     class="card__details-img"&ndash;&gt;-->
-<!--                 />&ndash;&gt;-->
-<!--               </div>&ndash;&gt;-->
-<!--               <div class="card__details-description-wrapper-second">&ndash;&gt;-->
-<!--                 <div class="card__details-rating-wrapper">&ndash;&gt;-->
-<!--                   <div class="card__details-rating">&ndash;&gt;-->
-<!--                     <h2>Рейтинг</h2>&ndash;&gt;-->
-<!--                     <p :class="checkVote(rating)">&ndash;&gt;-->
-<!--                       {{ correctRating }}&ndash;&gt;-->
-<!--                     </p>&ndash;&gt;-->
-<!--                   </div>&ndash;&gt;-->
-<!--                   <div class="card__details-votes">&ndash;&gt;-->
-<!--                     <h2>Голосов</h2>&ndash;&gt;-->
-<!--                     <p>{{ votes }}</p>&ndash;&gt;-->
-<!--                   </div>&ndash;&gt;-->
-<!--                 </div>&ndash;&gt;-->
-<!--                 <p class="card__details-phrase" v-if="!!cardDetails.tagline">&ndash;&gt;-->
-<!--                   {{ phrase }}&ndash;&gt;-->
-<!--                 </p>&ndash;&gt;-->
-<!--                 <div class="card__details-links">&ndash;&gt;-->
-<!--                   <a&ndash;&gt;-->
-<!--                       :href="cardDetails.homepage"&ndash;&gt;-->
-<!--                       target="_blank"&ndash;&gt;-->
-<!--                       rel="noopener"&ndash;&gt;-->
-<!--                       class="card__details-homepage link-hover"&ndash;&gt;-->
-<!--                   >Официальная страница</a&ndash;&gt;-->
-<!--                   >&ndash;&gt;-->
-<!--                   <button&ndash;&gt;-->
-<!--                       class="card__details-trailer-btn link-hover"&ndash;&gt;-->
-<!--                       @click="showTrailer = true"&ndash;&gt;-->
-<!--                       :disabled="!trailerKey"&ndash;&gt;-->
-<!--                   >&ndash;&gt;-->
-<!--                     <i class="icon-play"></i> Трейлер&ndash;&gt;-->
-<!--                   </button>&ndash;&gt;-->
-
-<!--                   <div class="links-social">&ndash;&gt;-->
-<!--                     <a&ndash;&gt;-->
-<!--                         :href="`https://www.facebook.com/${socialLinks.facebook_id}`"&ndash;&gt;-->
-<!--                         target="_blank"&ndash;&gt;-->
-<!--                         rel="noopener"&ndash;&gt;-->
-<!--                         v-show="!!socialLinks.facebook_id"&ndash;&gt;-->
-<!--                     ><i class="icon-facebook"></i&ndash;&gt;-->
-<!--                     ></a>&ndash;&gt;-->
-<!--                     <a&ndash;&gt;-->
-<!--                         :href="`https://www.instagram.com/${socialLinks.instagram_id}`"&ndash;&gt;-->
-<!--                         target="_blank"&ndash;&gt;-->
-<!--                         rel="noopener"&ndash;&gt;-->
-<!--                         v-show="!!socialLinks.instagram_id"&ndash;&gt;-->
-<!--                     ><i class="icon-instagram"></i&ndash;&gt;-->
-<!--                     ></a>&ndash;&gt;-->
-<!--                     <a&ndash;&gt;-->
-<!--                         :href="`https://www.twitter.com/${socialLinks.twitter_id}`"&ndash;&gt;-->
-<!--                         target="_blank"&ndash;&gt;-->
-<!--                         rel="noopener"&ndash;&gt;-->
-<!--                         v-show="!!socialLinks.twitter_id"&ndash;&gt;-->
-<!--                     ><i class="icon-twitter"></i&ndash;&gt;-->
-<!--                     ></a>&ndash;&gt;-->
-<!--                   </div>&ndash;&gt;-->
-<!--                 </div>&ndash;&gt;-->
-<!--               </div>&ndash;&gt;-->
-<!--               <div class="card__details-description">&ndash;&gt;-->
-<!--                 <div class="card__details-description-wrapper">&ndash;&gt;-->
-<!--                   <h2 class="card__details-description-title">Сюжет</h2>&ndash;&gt;-->
-<!--                   <p class="card__details-plot">{{ plot }}</p>&ndash;&gt;-->
-<!--                 </div>&ndash;&gt;-->
-<!--               </div>&ndash;&gt;-->
-<!--             </div>&ndash;&gt;-->
-<!--           </div>&ndash;&gt;-->
+      <div class="container">
+        <div class="card__details-inner">
+          <div class="card__details-img-wrapper">
+            <img
+                :src="checkPoster(movie.poster_path)"
+                alt=""
+                class="card__details-img"
+            />
+          </div>
+          <div class="card__details-description-wrapper-second">
+            <div class="card__details-rating-wrapper">
+              <div class="card__details-rating">
+                <h2>Рейтинг</h2>
+                <p :class="checkVote(movie.vote_average)">
+                  {{ rating }}
+                </p>
+              </div>
+              <div class="card__details-votes">
+                <h2>Голосов</h2>
+                <p>{{ movie.vote_count }}</p>
+              </div>
+            </div>
+            <p class="card__details-phrase" v-if="!!movie.tagline">
+              «{{ movie.tagline }}»
+            </p>
+            <DetailsLinks :socials="socials"/>
+          </div>
+          <div class="card__details-description">
+            <div class="card__details-description-wrapper">
+              <h2 class="card__details-description-title">Сюжет</h2>
+              <p class="card__details-plot">{{ movie.overview }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-<!--       <card-details-short-cast&ndash;&gt;-->
-<!--           :cardId="id"&ndash;&gt;-->
-<!--           :castSlider="cast"&ndash;&gt;-->
-<!--           :category="'movie'"&ndash;&gt;-->
-<!--       />&ndash;&gt;-->
-<!--       <card-details-similar :cardId="id" :category="'movie'"/>&ndash;&gt;-->
+    <DetailsCast :id="movie.id" :cast="movie.credits.cast"/>
+    <!--           <card-details-short-cast-->
+    <!--               :cardId="id"-->
+    <!--               :castSlider="cast"-->
+    <!--               :category="'movie'"-->
+    <!--           />-->
+    <!--       <card-details-similar :cardId="id" :category="'movie'"/>-->
   </main>
   <!--  <div-->
   <!--      class="card__details-trailer"-->
@@ -104,39 +66,41 @@
 </template>
 
 <script>
-import DetailsHeader from "@/components/details/DetailsHeader";
+import DetailsHeader from "@/components/details/base/DetailsHeader";
 import {checkPoster, checkVote} from "@/utils/commonFunctions";
 import {getMoviesDetails} from "@/services/movies";
 import AppLoader from "@/components/app/AppLoader";
+import DetailsLinks from "@/components/details/base/DetailsLinks";
+import DetailsCast from "@/components/details/DetailsCast";
 
 export default {
   components: {
+    DetailsLinks,
     AppLoader,
-    DetailsHeader
+    DetailsHeader,
+    DetailsCast
   },
   data() {
     return {
       movie: null,
-      dateAnnounce: "",
-      dateRelease: "",
-      age: "",
-      country: "",
-      plot: "",
-      genres: [],
-      keyPhrase: "",
-      socialLinks: [],
-      rating: "",
-      votes: "",
-      showTrailer: false,
-      trailersTotal: [],
-      cast: [],
-      movieTime: 0,
     };
   },
   created() {
     this.getMovieDetails()
   },
+  computed: {
+    rating() {
+      return this.movie.vote_average === 0 ? 'NR' : this.movie.vote_average
+    },
+
+    socials() {
+      return {homepage: this.movie.homepage, trailer: this.movie.videos.results, ...this.movie.external_ids}
+    }
+  },
   methods: {
+    checkPoster,
+    checkVote,
+
     async getMovieDetails() {
       const movieDetails = await getMoviesDetails(this.$route.params.id)
       this.movie = movieDetails.data
@@ -145,7 +109,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../assets/scss/_vars.scss";
+@import "src/assets/scss/_vars.scss";
 
 .card__details {
   margin-top: -30px;
@@ -189,14 +153,6 @@ export default {
     line-height: 1.5rem;
   }
 
-  &-links {
-    margin-top: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
-  }
-
   &-trailer {
     position: fixed;
     top: 0;
@@ -208,48 +164,6 @@ export default {
     align-items: center;
     background-color: rgba($color-black, 0.5);
     z-index: 9999;
-
-    &-btn {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      outline: none;
-      font-size: 1rem;
-      text-align: center;
-
-      i {
-        opacity: 0;
-        margin-left: -0.875rem;
-        transition: all 0.3s linear;
-      }
-
-      &:hover {
-        i {
-          opacity: 1;
-          margin-left: 0;
-        }
-      }
-
-      &:disabled {
-        opacity: 0.4;
-        border: 1px solid #466296;
-
-        &::before,
-        &::after {
-          display: none;
-        }
-
-        &:hover {
-          cursor: auto;
-          background-color: transparent;
-
-          i {
-            opacity: 0;
-            margin-left: -0.875rem;
-          }
-        }
-      }
-    }
 
     &-close {
       position: absolute;

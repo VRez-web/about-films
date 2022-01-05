@@ -106,24 +106,6 @@ a {
   overflow: hidden;
 }
 
-.links-social {
-  a {
-    color: inherit;
-    font-size: 1.5rem;
-    border: 2px solid transparent;
-    border-radius: 50%;
-    transition: all 0.4s linear;
-    margin-right: 0.625rem;
-    &:hover {
-      color: $color-tematic;
-      border-color: $color-tematic;
-    }
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-
 @media (max-width: 1200px) {
   .section__inner {
     justify-content: space-between;
