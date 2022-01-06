@@ -8,9 +8,9 @@
     >Официальная страница</a
     >
     <button
+        v-if="!!socials.trailer.length"
         class="details__links-btn link-hover"
         @click="$emit('show-trailer')"
-        :disabled="!socials.trailer.length"
     >
       <i class="icon-play"></i> Трейлер
     </button>

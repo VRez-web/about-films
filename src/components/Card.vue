@@ -57,7 +57,7 @@ export default {
     },
 
     voteCorrect() {
-      return this.model.vote_average === 0 ? "NR" : Math.floor(this.model.vote_average);
+      return this.model.vote_average === 0 ? "NR" : this.model.vote_average.toFixed(1);
     },
   },
 };

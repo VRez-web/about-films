@@ -131,7 +131,7 @@
 import { mapActions } from "vuex";
 import cardDetailsShortCast from "./DetailsCast";
 // import cardDetailsHeader from "./CardDetailsHeader";
-import cardDetailsSimilar from "./CardDetailsSimilar";
+import cardDetailsSimilar from "./DetailsSimilar";
 import { checkPoster, checkVote } from "@/utils/commonFunctions";
 
 export default {
