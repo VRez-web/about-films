@@ -3,14 +3,7 @@
       :to="{ name: 'about-person', params: { id: model.id } }"
       class="card__people"
   >
-    <img
-        :src="
-        model.profile_path
-          ? imgProfile + model.profile_path
-          : require('@/assets/img/no-avatar-person.jpg')
-      "
-        :alt="model.name"
-    />
+    <img :src="imgSrc" :alt="model.name"/>
     <div class="card__people-description">
       <p class="card__people-title">{{ model.name }}</p>
       <p class="card__people-character" v-if="!!model.character">
@@ -22,6 +15,7 @@
     </div>
   </router-link>
 </template>
+
 <script>
 export default {
   props: {
@@ -32,6 +26,12 @@ export default {
       imgProfile: this.$store.state.imgProfileSize,
     };
   },
+  computed: {
+    imgSrc() {
+      return this.model.profile_path ? this.imgProfile + this.model.profile_path
+          : require('@/assets/img/no-avatar-person.jpg')
+    }
+  }
 };
 </script>
 
