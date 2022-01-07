@@ -14,7 +14,7 @@
       >
         <swiper-slide
             v-for="(item, i) in model" :key="i">
-          <Card :model="item" :media-type="mediaType"/>
+          <Card :model="item" :media-type="mediaType || item.media_type"/>
         </swiper-slide>
         <swiper-slide>
           <router-link to="to">

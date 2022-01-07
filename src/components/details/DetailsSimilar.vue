@@ -80,7 +80,7 @@ export default {
 @import "src/assets/scss/components/slider";
 
 .details__similar {
-  margin-top: 2rem;
+  margin: 2rem 0;
 
   &-title {
     font-size: 1.5rem;

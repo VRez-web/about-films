@@ -1,6 +1,6 @@
 export const correctRouteName = (mediaType) => {
     if (mediaType === "movie") return "movie-id";
-    // return "card-details-serial";
+    return "serial-id";
 };
 
 export const checkVote = (item) => {

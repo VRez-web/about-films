@@ -1,13 +1,13 @@
 <template>
-  <AppLoader v-if="movie === null && similarMovies === null"/>
+  <AppLoader v-if="serial === null && similarSerials === null"/>
   <main v-else>
     <section class="card__details">
-      <DetailsHeader :model="movie"/>
+      <DetailsHeader :model="serial"/>
       <div class="container">
         <div class="card__details-inner">
           <div class="card__details-img-wrapper">
             <img
-                :src="checkPoster(movie.poster_path)"
+                :src="checkPoster(serial.poster_path)"
                 alt=""
                 class="card__details-img"
             />
@@ -16,47 +16,47 @@
             <div class="card__details-rating-wrapper">
               <div class="card__details-rating">
                 <h2>Рейтинг</h2>
-                <p :class="checkVote(movie.vote_average)">
+                <p :class="checkVote(serial.vote_average)">
                   {{ rating }}
                 </p>
               </div>
               <div class="card__details-votes">
                 <h2>Голосов</h2>
-                <p>{{ movie.vote_count }}</p>
+                <p>{{ serial.vote_count }}</p>
               </div>
             </div>
-            <p class="card__details-phrase" v-if="!!movie.tagline">
-              «{{ movie.tagline }}»
+            <p class="card__details-phrase" v-if="!!serial.tagline">
+              «{{ serial.tagline }}»
             </p>
             <DetailsLinks :socials="socials" @show-trailer="isShowTrailers = true"/>
           </div>
           <div class="card__details-description">
             <div class="card__details-description-wrapper">
               <h2 class="card__details-description-title">Сюжет</h2>
-              <p class="card__details-plot">{{ movie.overview }}</p>
+              <p class="card__details-plot">{{ serial.overview }}</p>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <DetailsCast :id="movie.id" :cast="movie.credits.cast"/>
-    <DetailsSimilar :model="similarMovies"/>
+    <DetailsCast v-if="!!serial.credits.cast.length" :id="serial.id" :cast="serial.credits.cast"/>
+    <DetailsSimilar :model="similarSerials"/>
   </main>
   <ModalTrailers
       v-if="isShowTrailers"
-      :model="movie.videos.results"
+      :model="serial.videos.results"
       @close="isShowTrailers = false"/>
 </template>
 
 <script>
-import DetailsHeader from "@/components/details/DetailsHeaderMovie";
+import DetailsHeader from "@/components/details/DetailsHeaderSerial";
 import {checkPoster, checkVote} from "@/utils/commonFunctions";
-import {getMoviesDetails, getMoviesSimilar} from "@/services/movies";
 import AppLoader from "@/components/app/AppLoader";
 import DetailsLinks from "@/components/details/base/DetailsLinks";
 import DetailsCast from "@/components/details/DetailsCast";
 import DetailsSimilar from "@/components/details/DetailsSimilar";
 import ModalTrailers from "@/components/modal/ModalTrailers";
+import {getSerialDetails, getSerialSimilar} from "@/services/serials";
 
 export default {
   components: {
@@ -69,47 +69,47 @@ export default {
   },
   data() {
     return {
-      movie: null,
-      similarMovies: null,
+      serial: null,
+      similarSerials: null,
       isShowTrailers: false
     };
   },
   created() {
-    this.getMovieDetails()
-    this.getMovieSimilar()
+    this.getSerialDetails()
+    this.getSerialSimilar()
   },
   watch: {
     '$route.params.id': {
       immediate: true,
       handler: function () {
         if (this.$route.params.id) {
-          this.getMovieDetails()
-          this.getMovieSimilar()
+          this.getSerialDetails()
+          this.getSerialSimilar()
         }
       },
     }
   },
   computed: {
     rating() {
-      return this.movie.vote_average === 0 ? 'NR' : this.movie.vote_average
+      return this.serial.vote_average === 0 ? 'NR' : this.serial.vote_average
     },
 
     socials() {
-      return {homepage: this.movie.homepage, trailer: this.movie.videos.results, ...this.movie.external_ids}
+      return {homepage: this.serial.homepage, trailer: this.serial.videos.results, ...this.serial.external_ids}
     }
   },
   methods: {
     checkPoster,
     checkVote,
 
-    async getMovieDetails() {
-      const movieDetails = await getMoviesDetails(this.$route.params.id)
-      this.movie = movieDetails.data
+    async getSerialDetails() {
+      const serialDetails = await getSerialDetails(this.$route.params.id)
+      this.serial = serialDetails.data
     },
 
-    async getMovieSimilar() {
-      const similarMovies = await getMoviesSimilar(this.$route.params.id)
-      this.similarMovies = similarMovies.data.results
+    async getSerialSimilar() {
+      const similarSerials = await getSerialSimilar(this.$route.params.id)
+      this.similarSerials = similarSerials.data.results
     }
   }
 };

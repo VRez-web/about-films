@@ -52,10 +52,9 @@ const routes = [
         component: () => import("@/pages/movies/_id/Movie"),
     },
     {
+        name: "serial-id",
         path: "/serial/:id",
-        name: "card-details-serial",
-        component: () => import("@/components/details/CardDetailsSerial"),
-        props: true,
+        component: () => import("@/pages/serials/_id/Serial"),
     },
     {
         path: "/:category/total",
