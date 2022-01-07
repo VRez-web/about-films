@@ -32,7 +32,14 @@ export const getSerialToday = async (page = 1) => {
 
 export const getSerialDetails = async (id) => {
   const { data } = await axios.get(
-    `/tv/${id}?api_key=${apiKey}&language=ru-RU&append_to_response=content_ratings,credits,videos,external_ids`
+    `/tv/${id}?api_key=${apiKey}&language=ru&append_to_response=content_ratings,credits,videos,external_ids`
+  );
+  return { data, type: "serial" };
+};
+
+export const getSerialSimilar = async (id) => {
+  const { data } = await axios.get(
+      `/tv/${id}/similar?api_key=${apiKey}&language=ru-RU`
   );
   return { data, type: "serial" };
 };
