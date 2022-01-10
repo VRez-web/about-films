@@ -41,7 +41,10 @@
                 }}</p>
               <p v-else class="home__slide-date">Дата премьеры: {{ formattedDate(item.first_air_date) }}</p>
             </div>
-            <router-link to="details" class="home__slide-link link">Подробнее</router-link>
+            <router-link
+                :to="{name: correctRouteName(item.media_type),params: { id: item.id }}"
+                class="home__slide-link link">Подробнее
+            </router-link>
           </div>
         </swiper-slide>
       </swiper>
@@ -64,6 +67,7 @@ import SwiperCore, {Navigation} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import "swiper/swiper.scss";
 import {genresMovie, genresTv} from "@/services/genres";
+import {correctRouteName} from '@/utils/commonFunctions';
 
 SwiperCore.use([Navigation]);
 export default {
@@ -94,6 +98,8 @@ export default {
     this.genreListTv = genreListTv.genres
   },
   methods: {
+    correctRouteName,
+
     onSwiper(swiper) {
     },
     onSlideChange() {
@@ -122,7 +128,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/scss/vars";
+@import "src/assets/scss/vars";
+@import "src/assets/scss/components/slider";
 
 .home__slide {
   display: flex;
@@ -139,7 +146,11 @@ export default {
 
   &-about {
     width: 50%;
+    display: -webkit-box;
     font-size: 0.875rem;
+    overflow: hidden;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
   }
 
   &-genres {
@@ -174,63 +185,7 @@ export default {
   padding-left: 1.25rem;
 
   &-slide {
-    border-radius: 10px;
-    overflow: hidden;
-    user-select: none;
-  }
-
-  &-button {
-    width: 2.5rem;
-    height: 2.5rem;
-    position: absolute;
-    top: 45%;
-    transform: translate(0%, -50%);
-    z-index: 10;
-    cursor: pointer;
-
-    &-prev {
-      transform: translate(0%, -50%) scaleX(-1);
-      left: -50px;
-    }
-
-    &-next {
-      right: -50px;
-    }
-
-    &-disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-  }
-}
-
-.slider {
-  position: relative;
-}
-
-@media (max-width: 600px) {
-  .swiper {
-    &-button {
-      width: 3rem;
-      height: 3rem;
-
-      &-prev {
-        left: -10px;
-      }
-
-      &-next {
-        right: -10px;
-      }
-    }
-  }
-}
-
-@media (max-width: 400px) {
-  .swiper {
-    &-button {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
+    padding-top: 0;
   }
 }
 </style>
