@@ -10,16 +10,15 @@
         </p>
       </div>
       <p :class="$style['details__header-subtitle']">
-        <span :class="$style['details__header-age']">{{ age }} </span>
+        <span :class="$style['details__header-age']">{{ checkAge(age) }} </span>
         <span :class="$style['details__header-release']"
         >{{ formattedDateRelease }} ({{ country }})</span>
         <span :class="$style['details__header-genres']"
         ><span v-for="genre in genres" :key="genre.id">
           {{ genre.name }}
         </span></span>
-        <span :class="$style['details__header-time']" v-show="!!model.runtime"
-        >{{ movieTime() }} <i class="icofont-clock-time"></i>
-              </span>
+        <span :class="$style['details__header-time']">
+          {{ episodeTime }}<i class="icofont-clock-time"></i> </span>
       </p>
     </div>
   </div>
@@ -43,19 +42,8 @@ export default {
     this.formattedDate()
   },
   methods: {
-    movieTime() {
-      let result = 0,
-          time = this.model.runtime
-      for (let i = 0; 60 <= time; i++) {
-        result += 1
-        time -= 60
-      }
-
-      return `${result} ч ${time} м`
-    },
-
     getDateRelease() {
-      const dateRelease = this.model.content_ratings.results.filter(el => el.iso_3166_1 === this.country)
+      const dateRelease = this.model.content_ratings.results.filter(el => el.iso_3166_1 === this.country || 'US')
       this.age = dateRelease[0].rating
       this.dateRelease = this.model.first_air_date
     },
@@ -66,7 +54,11 @@ export default {
           year = this.dateRelease.slice(0, 4)
 
       this.formattedDateRelease = `${days}/${month}/${year}`
-    }
+    },
+
+    checkAge(age) {
+      return !!age ? age : "?"
+    },
   },
   computed: {
     statusProduction() {
@@ -98,6 +90,10 @@ export default {
 
     genres() {
       return this.model.genres.slice(0, 3)
+    },
+
+    episodeTime() {
+      return `${this.model.episode_run_time[0]} м`
     }
   },
 };

@@ -40,7 +40,7 @@
       </div>
     </section>
     <DetailsCast :id="movie.id" :cast="movie.credits.cast"/>
-    <DetailsSimilar :model="similarMovies"/>
+    <DetailsSimilar :model="similarMovies" :category="'movie'"/>
   </main>
   <ModalTrailers
       v-if="isShowTrailers"

@@ -10,7 +10,7 @@
         </p>
       </div>
       <p :class="$style['details__header-subtitle']">
-        <span :class="$style['details__header-age']">{{ age }} </span>
+        <span :class="$style['details__header-age']">{{ checkAge(age) }} </span>
         <span :class="$style['details__header-release']"
         >{{ formattedDateRelease }} ({{ country }})</span>
         <span :class="$style['details__header-genres']"
@@ -55,7 +55,7 @@ export default {
     },
 
     getDateRelease() {
-      const dateRelease = this.model.release_dates.results.filter(el => el.iso_3166_1 === this.country)
+      const dateRelease = this.model.release_dates.results.filter(el => el.iso_3166_1 === this.country || 'US')
       this.age = dateRelease[0].release_dates[0].certification
       this.dateRelease = dateRelease[0].release_dates[0]
     },
@@ -66,7 +66,11 @@ export default {
           year = this.dateRelease.release_date.slice(0, 4)
 
       this.formattedDateRelease = `${days}/${month}/${year}`
-    }
+    },
+
+    checkAge(age){
+      return !!age ? age : "?"
+    },
   },
   computed: {
     statusProduction() {
