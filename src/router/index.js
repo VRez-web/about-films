@@ -63,10 +63,9 @@ const routes = [
         props: true,
     },
     {
-        path: "/:category/:id/cast",
-        component: () => import("@/components/details/CardDetailsCastAll"),
-        name: "card-details-cast",
-        props: true,
+        path: "/:name/:id/cast",
+        component: () => import("@/pages/cast/_id/Cast"),
+        name: "cast-id",
     },
     {
         path: "/person/:id",

@@ -12,7 +12,7 @@
       <p :class="$style['details__header-subtitle']">
         <span :class="$style['details__header-age']">{{ checkAge(age) }} </span>
         <span :class="$style['details__header-release']"
-        >{{ formattedDateRelease }} ({{ country }})</span>
+        >{{ formattedDate }} ({{ country }})</span>
         <span :class="$style['details__header-genres']"
         ><span v-for="genre in genres" :key="genre.id">
           {{ genre.name }}
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import {formattingDate} from "@/utils/formatting";
+
 export default {
   props: {
     model: Object
@@ -33,27 +35,17 @@ export default {
     return {
       ageNone: "?",
       age: null,
-      dateRelease: null,
-      formattedDateRelease: null
+      dateRelease: null
     };
   },
   created() {
     this.getDateRelease()
-    this.formattedDate()
   },
   methods: {
     getDateRelease() {
       const dateRelease = this.model.content_ratings.results.filter(el => el.iso_3166_1 === this.country || 'US')
       this.age = dateRelease[0].rating
       this.dateRelease = this.model.first_air_date
-    },
-
-    formattedDate() {
-      const days = this.dateRelease.slice(8, 10),
-          month = this.dateRelease.slice(5, 7),
-          year = this.dateRelease.slice(0, 4)
-
-      this.formattedDateRelease = `${days}/${month}/${year}`
     },
 
     checkAge(age) {
@@ -90,6 +82,10 @@ export default {
 
     genres() {
       return this.model.genres.slice(0, 3)
+    },
+
+    formattedDate() {
+      return formattingDate(this.dateRelease)
     },
 
     episodeTime() {

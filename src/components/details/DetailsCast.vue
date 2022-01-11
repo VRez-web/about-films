@@ -32,8 +32,9 @@
         </div>
         <router-link
             :to="{
-            name: 'card-details-cast',
-            params: { id: id, category: category },
+            name: 'cast-id',
+            params: { id, name:nameProduct },
+            query:{type}
           }"
             :class="$style['details__about-link']"
             class="link"
@@ -55,7 +56,8 @@ export default {
   props: {
     id: [String, Number],
     cast: Array,
-    category: String
+    nameProduct: String,
+    type: String
   },
   components: {
     CardOfPeople,
