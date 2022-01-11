@@ -39,7 +39,12 @@
         </div>
       </div>
     </section>
-    <DetailsCast :id="movie.id" :cast="movie.credits.cast"/>
+    <DetailsCast
+        :id="movie.id"
+        :cast="movie.credits.cast"
+        :name-product="movie.title"
+        :type="'movie'"
+    />
     <DetailsSimilar :model="similarMovies" :category="'movie'"/>
   </main>
   <ModalTrailers

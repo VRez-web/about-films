@@ -2,6 +2,7 @@
   <router-link
       :to="{ name: 'about-person', params: { id: model.id } }"
       class="card__people"
+      :class="{'card__people-small':small}"
   >
     <img :src="imgSrc" :alt="model.name"/>
     <div class="card__people-description">
@@ -20,6 +21,7 @@
 export default {
   props: {
     model: Object,
+    small: Boolean
   },
   data() {
     return {
@@ -43,15 +45,25 @@ export default {
   text-align: center;
   display: block;
 
-  &-title {
-    margin-bottom: 0.5rem;
-  }
-
   img {
     border-radius: 0.625rem;
     margin-bottom: 1rem;
     max-width: 185px;
     height: 278px;
+  }
+
+  &-small {
+    font-size: .9rem;
+    font-weight: 500;
+
+    img {
+      max-width: 120px;
+      height: auto;
+    }
+  }
+
+  &-title {
+    margin-bottom: 0.5rem;
   }
 
   &-character {
