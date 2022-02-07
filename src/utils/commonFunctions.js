@@ -3,6 +3,11 @@ export const correctRouteName = (mediaType) => {
     return "serial-id";
 };
 
+export const checkMediaType = (creation) => {
+    if (creation.title) return 'movie'
+    return 'serial'
+}
+
 export const checkVote = (item) => {
     return {
         "high-rating": item >= 7,
@@ -18,6 +23,14 @@ export const checkPoster = (poster) => {
     if (poster) return imgUrl + poster;
 
     return require("@/assets/img/no-poster.jpg");
+};
+
+export const checkProfileImg = (poster, size = '185') => {
+    let imgUrl = `https://image.tmdb.org/t/p/w${size}`;
+
+    if (poster) return imgUrl + poster;
+
+    return require('@/assets/img/no-avatar-person.jpg');
 };
 
 export const correctTitle = (item) => {
