@@ -1,10 +1,10 @@
 <template>
   <router-link
-      :to="{ name: 'about-person', params: { id: model.id } }"
+      :to="{ name: 'person-id', params: { id: model.id } }"
       class="card__people"
       :class="{'card__people-small':small}"
   >
-    <img :src="imgSrc" :alt="model.name"/>
+    <img :src="checkProfileImg(model.profile_path)" :alt="model.name"/>
     <div class="card__people-description">
       <p class="card__people-title">{{ model.name }}</p>
       <p class="card__people-character" v-if="!!model.character">
@@ -18,21 +18,15 @@
 </template>
 
 <script>
+import {checkProfileImg} from "@/utils/commonFunctions";
+
 export default {
   props: {
     model: Object,
     small: Boolean
   },
-  data() {
-    return {
-      imgProfile: this.$store.state.imgProfileSize,
-    };
-  },
-  computed: {
-    imgSrc() {
-      return this.model.profile_path ? this.imgProfile + this.model.profile_path
-          : require('@/assets/img/no-avatar-person.jpg')
-    }
+  methods: {
+    checkProfileImg
   }
 };
 </script>
