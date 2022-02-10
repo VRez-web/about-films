@@ -38,3 +38,7 @@ export const correctTitle = (item) => {
 
     return item.name;
 };
+
+export const getYear = (date) => {
+    return date.slice(0, 4)
+}

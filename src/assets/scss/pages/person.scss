@@ -99,3 +99,75 @@
     }
   }
 }
+
+
+.career {
+  margin-top: 2rem;
+
+  &__filter {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 5rem;
+
+    &-wrapper {
+      width: 9.375rem;
+    }
+
+    &-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: $color-tematic;
+      border: none;
+      cursor: pointer;
+      padding: .4rem 1rem;
+      border-radius: .2rem;
+      color: $color-white;
+      font-weight: 700;
+
+      i {
+        transform: rotate(90deg);
+        transition: all .1s linear;
+
+        &.active {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+
+    &-list {
+      position: absolute;
+      width: inherit;
+      opacity: 0;
+      pointer-events: none;
+      text-align: center;
+      margin-top: .5rem;
+      background: $color-tematic;
+      border-radius: .2rem;
+      transition: all .3s linear;
+
+      &.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+
+    &-item {
+      padding: .4rem 1rem;
+      cursor: pointer;
+    }
+  }
+
+  &__list {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+}
