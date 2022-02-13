@@ -1,6 +1,6 @@
 <template>
   <div class="person__fame-list">
-    <Card v-for="item in model" :model="item" :media-type="checkMediaType(item)" class="person__fame-item"/>
+    <Card v-for="item in works" :model="item" :media-type="checkMediaType(item)" class="person__fame-item"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
     Card
   },
   props: {
-    model: Array
+    works: Array
   },
   methods: {
     checkMediaType

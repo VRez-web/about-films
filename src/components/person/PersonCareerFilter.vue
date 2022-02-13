@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {translateDepartment} from "@/services/translater";
+import {translateDepartment} from "@/utils/translater";
 
 export default {
   props: {

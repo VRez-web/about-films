@@ -47,7 +47,7 @@
             {{ tab.title }}
           </button>
         </div>
-        <component :is="currentStep" :model="allRoles" :crew="allCrewRoles"/>
+        <component :is="currentStep" :works="popularWorks" :roles="allRoles"/>
       </div>
     </div>
   </section>
@@ -101,13 +101,14 @@ export default {
       return {...this.person.external_ids, homepage: this.person.homepage}
     },
 
-    allRoles() {
+    popularWorks() {
       const roles = [...this.person.movie_credits.cast, ...this.person.tv_credits.cast]
       return roles.sort((a, b) => b.vote_count - a.vote_count).slice(0, 15)
     },
 
-    allCrewRoles() {
-      return [...this.person.movie_credits.crew, ...this.person.tv_credits.crew]
+    allRoles() {
+      return [...this.person.movie_credits.crew, ...this.person.tv_credits.crew,
+        ...this.person.movie_credits.cast, ...this.person.tv_credits.cast, ]
     }
   },
   methods: {

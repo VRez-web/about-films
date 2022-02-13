@@ -2,7 +2,7 @@
   padding-bottom: 2rem;
 
   &__inner {
-    display: flex;
+    display:     flex;
     align-items: flex-start;
   }
 
@@ -12,25 +12,25 @@
   }
 
   &__about {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    display:       flex;
+    align-items:   center;
+    gap:           1rem;
     margin-bottom: 1rem;
   }
 
   &__description {
     margin-left: 5rem;
-    max-width: 70%;
+    max-width:   70%;
   }
 
   &__title {
-    font-size: 3rem;
+    font-size:     3rem;
     margin-bottom: 1rem;
   }
 
   &__aliases {
     &-title {
-      font-size: 1.2rem;
+      font-size:     1.2rem;
       margin-bottom: 1rem;
     }
 
@@ -47,42 +47,42 @@
     margin-top: 3rem;
 
     &-header {
-      display: flex;
-      align-items: center;
-      gap: 0 40px;
-      border-bottom: 2px solid #1f1f1f;
+      display:        flex;
+      align-items:    center;
+      gap:            0 40px;
+      border-bottom:  2px solid #1f1f1f;
       padding-bottom: .2rem;
     }
 
     &-tab {
-      position: relative;
-      border: none;
-      background: transparent;
-      font-size: 1.5rem;
+      position:    relative;
+      border:      none;
+      background:  transparent;
+      font-size:   1.5rem;
       font-weight: 500;
-      color: $color-white;
-      cursor: pointer;
-      padding: 0;
+      color:       $color-white;
+      cursor:      pointer;
+      padding:     0;
 
       &.active {
         &::after {
-          content: '';
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-          width: 100%;
-          height: 2px;
+          content:    '';
+          position:   absolute;
+          bottom:     -4px;
+          left:       0;
+          width:      100%;
+          height:     2px;
           background: $color-tematic;
         }
       }
     }
 
     &-list {
-      display: flex;
+      display:     flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 2rem 3.5rem;
-      margin-top: 2rem;
+      flex-wrap:   wrap;
+      gap:         2rem 3.5rem;
+      margin-top:  2rem;
     }
 
     &-item {
@@ -94,7 +94,7 @@
     margin-top: 2rem;
 
     &-title {
-      font-size: 2em;
+      font-size:     2em;
       margin-bottom: 1rem;
     }
   }
@@ -105,29 +105,29 @@
   margin-top: 2rem;
 
   &__filter {
-    display: flex;
+    display:         flex;
     justify-content: flex-end;
-    padding-right: 5rem;
+    padding-right:   5rem;
 
     &-wrapper {
       width: 9.375rem;
     }
 
     &-btn {
-      display: flex;
-      align-items: center;
+      display:         flex;
+      align-items:     center;
       justify-content: space-between;
-      width: 100%;
-      background: $color-tematic;
-      border: none;
-      cursor: pointer;
-      padding: .4rem 1rem;
-      border-radius: .2rem;
-      color: $color-white;
-      font-weight: 700;
+      width:           100%;
+      background:      $color-tematic;
+      border:          none;
+      cursor:          pointer;
+      padding:         .4rem 1rem;
+      border-radius:   .2rem;
+      color:           $color-white;
+      font-weight:     700;
 
       i {
-        transform: rotate(90deg);
+        transform:  rotate(90deg);
         transition: all .1s linear;
 
         &.active {
@@ -137,37 +137,84 @@
     }
 
     &-list {
-      position: absolute;
-      width: inherit;
-      opacity: 0;
+      position:       absolute;
+      width:          inherit;
+      opacity:        0;
       pointer-events: none;
-      text-align: center;
-      margin-top: .5rem;
-      background: $color-tematic;
-      border-radius: .2rem;
-      transition: all .3s linear;
+      text-align:     center;
+      margin-top:     .5rem;
+      background:     $color-tematic;
+      border-radius:  .2rem;
+      transition:     all .3s linear;
+      z-index:        2;
 
       &.active {
-        opacity: 1;
+        opacity:        1;
         pointer-events: auto;
       }
     }
 
     &-item {
       padding: .4rem 1rem;
-      cursor: pointer;
+      cursor:  pointer;
     }
   }
 
   &__list {
-    display: flex;
-    gap: 1.25rem;
+    display:   flex;
+    gap:       1.25rem;
     flex-wrap: wrap;
   }
 
   &__item {
-    display: flex;
-    align-items: center;
-    width: 100%;
+    position:       relative;
+    display:        flex;
+    align-items:    center;
+    width:          100%;
+    padding-bottom: .625rem;
+    border-bottom:  0.063rem solid #242323;
+
+    &-link {
+      font-size: 1rem;
+
+      &:hover {
+        ~ .career__preview {
+          opacity: 1;
+        }
+      }
+    }
+
+    &-date {
+      margin-right: 1.25rem;
+    }
+
+    &-job {
+      margin-left: .5rem;
+    }
+  }
+
+  &__preview {
+    position:       absolute;
+    top:            -10rem;
+    left:           5rem;
+    max-width:      30rem;
+    display:        flex;
+    gap:            0.625rem;
+    background:     #1f1f1f;
+    padding:        .5rem 1rem;
+    opacity:        0;
+    pointer-events: none;
+
+    img {
+      width: 5.625rem;
+    }
+
+    &-overview {
+      display:            -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow:           hidden;
+      font-size:          .8rem;
+    }
   }
 }

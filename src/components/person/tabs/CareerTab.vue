@@ -1,44 +1,50 @@
 <template>
   <div class="career">
-    <PersonCareerFilter :model="crew" @change-data="setCreations"/>
+    <PersonCareerFilter :model="roles" @change-data="setCreations" />
     <div class="career__list">
-      <div v-for="item in creations" class="career__item">
-        <p class="career__item-date">{{ item.release_date }}</p>
-        <div class="career__item-about">
-          <router-link to="" class="career__item-link">{{ correctTitle(item) }}</router-link>
-        </div>
-        <p class="career__item-job">({{ item.job }})</p>
-      </div>
+      <PersonCareerItem v-for="item in creations" :model="item" />
     </div>
   </div>
 </template>
 
 <script>
-import PersonCareerFilter from "@/components/person/PersonCareerFilter";
-import AppLoader from "@/components/app/AppLoader";
-import {getYear} from "@/utils/commonFunctions";
-import {correctTitle} from "@/utils/commonFunctions";
+import PersonCareerFilter from '@/components/person/PersonCareerFilter';
+import AppLoader from '@/components/app/AppLoader';
+import PersonCareerItem from '../PersonCareerItem';
+import { getYear, correctDate } from '@/utils/commonFunctions';
 
 export default {
-  components: {AppLoader, PersonCareerFilter},
+  components: {
+    PersonCareerItem,
+    AppLoader,
+    PersonCareerFilter,
+  },
   props: {
-    crew: Array
+    roles: Array,
   },
   data() {
     return {
-      creations: this.crew
-    }
+      creations: this.roles,
+    };
   },
-  computed: {
+  created() {
+    this.creations = this.roles
+      // .map(el => el.department ? el.department = 'Actor' : el.department)
+      .sort((a, b) => this.formattedDate(b) - this.formattedDate(a));
   },
   methods: {
     getYear,
-    correctTitle,
+    correctDate,
 
     setCreations(creations) {
-      if (creations === null) return this.creations = this.crew
-      this.creations = creations
+      if (creations === null) return this.creations = this.roles;
+      this.creations = creations;
     },
-  }
-}
+
+    formattedDate(item) {
+      const correctDate = this.correctDate(item);
+      return this.getYear(correctDate);
+    },
+  },
+};
 </script>
