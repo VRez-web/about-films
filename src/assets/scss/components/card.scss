@@ -63,22 +63,6 @@
     width: 20%;
     text-align: center;
     font-weight: 700;
-
-    &.high-rating {
-      background-color: $bg-highRating;
-    }
-
-    &.mid-rating {
-      background-color: $bg-midRating;
-    }
-
-    &.low-rating {
-      background-color: $bg-lowRating;
-    }
-
-    &.no-rating {
-      background-color: $bg-noRating;
-    }
   }
 
   &-name-and-date {

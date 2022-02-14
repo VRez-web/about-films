@@ -87,7 +87,7 @@ export default {
     '$route.params.id': {
       immediate: true,
       handler: function () {
-        if (this.$route.params.id) {
+        if (this.$route.name === 'movie-id' && this.$route.params.id) {
           this.getMovieDetails()
           this.getMovieSimilar()
         }
