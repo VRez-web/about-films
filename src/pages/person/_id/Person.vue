@@ -32,7 +32,7 @@
           </div>
           <div class="person__biography">
             <h3 class="person__biography-title">Биография</h3>
-            <pre class="person__biography-descr">{{ biography }}</pre>
+            <p class="person__biography-descr">{{ biography }}</p>
           </div>
         </div>
       </div>

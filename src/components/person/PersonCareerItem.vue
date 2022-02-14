@@ -5,12 +5,7 @@
       {{ correctTitle(model) }}
     </router-link>
     <p class="career__item-job">({{ translateJob(model.job) }})</p>
-    <div class="career__preview">
-      <img :src="checkPoster(model.poster_path, '154')" alt="">
-      <div class="career__preview-inner">
-        <p class="career__preview-overview">{{ model.overview }}</p>
-      </div>
-    </div>
+    <CardPreview :model="model" />
   </div>
 </template>
 
@@ -24,8 +19,10 @@ import {
   correctRouteName,
 } from '@/utils/commonFunctions';
 import { translateJob } from '@/utils/translater';
+import CardPreview from '../CardPreview';
 
 export default {
+  components: { CardPreview },
   props: {
     model: Object,
   },

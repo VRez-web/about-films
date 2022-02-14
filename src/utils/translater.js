@@ -8,6 +8,8 @@ export const translateDepartment = (department) => {
       return 'Сценарий';
     case 'Creator':
       return 'Создатель';
+    case 'Actor':
+      return 'Актер';
     default:
       return department;
   }
@@ -27,6 +29,8 @@ export const translateJob = (job) => {
       return 'Сопродюсер';
     case 'Director':
       return 'Режиссёр-постановщик';
+    case 'Actor':
+      return 'Актер';
     default:
       return job;
   }

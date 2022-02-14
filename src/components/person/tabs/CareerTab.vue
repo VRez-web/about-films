@@ -29,7 +29,8 @@ export default {
   },
   created() {
     this.creations = this.roles
-      // .map(el => el.department ? el.department = 'Actor' : el.department)
+      .map(el => !el.department ? Object.assign(el, { department: 'Actor' }) : el)
+      .map(item => item.department === 'Actor' ? Object.assign(item, { job: 'Actor' }) : item)
       .sort((a, b) => this.formattedDate(b) - this.formattedDate(a));
   },
   methods: {
@@ -40,7 +41,7 @@ export default {
       if (creations === null) return this.creations = this.roles;
       this.creations = creations;
     },
-
+    //TODO: вынести такие функции по всему проекту
     formattedDate(item) {
       const correctDate = this.correctDate(item);
       return this.getYear(correctDate);

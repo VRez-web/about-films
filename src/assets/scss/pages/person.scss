@@ -97,6 +97,10 @@
       font-size:     2em;
       margin-bottom: 1rem;
     }
+
+    &-descr{
+      white-space: pre-wrap;
+    }
   }
 }
 
@@ -175,7 +179,9 @@
     border-bottom:  0.063rem solid #242323;
 
     &-link {
-      font-size: 1rem;
+      &.link {
+        font-size: 1rem;
+      }
 
       &:hover {
         ~ .career__preview {
@@ -215,6 +221,20 @@
       -webkit-box-orient: vertical;
       overflow:           hidden;
       font-size:          .8rem;
+    }
+
+    &-stats {
+      display: flex;
+      gap:     0.625rem;
+      margin-top: .5rem;
+    }
+
+    &-title{
+      margin-bottom: 0.25rem;
+    }
+
+    &-stat{
+      text-align: center;
     }
   }
 }
