@@ -8,32 +8,69 @@
         <h2 class="search__title">Поиск</h2>
         <form @submit.prevent>
           <fieldset>
-            <input type="text" v-model="query" id="search" @input="debounceSearch"/>
+            <input type="text" v-model="query" id="search" @input="search" @change="getData"/>
             <label for="search" :class="labelClasses"
             >Фильмы, сериалы, персоны</label
             >
           </fieldset>
         </form>
+        <div class="search__wrapper">
+          <button
+              v-for="tab in tabs"
+              class="search__tab"
+              :class="{'active':tab.name === currentStep}"
+              @click="currentStep = tab.name"
+          >
+            {{ tab.title }}
+          </button>
+        </div>
+        <component
+            :is="currentStep"
+            :movies="result.movies.list"
+            :serials="result.serials.list"
+            :persons="result.persons.list"
+        />
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import Card from "../Card";
-import CardOfPeople from "../CardOfPeople.vue";
-import {multiSearch} from "@/services/search";
+import SearchMovieTab from "@/components/search/tab/SearchMovieTab"
+import SearchSerialTab from "@/components/search/tab/SearchSerialTab";
+import SearchPersonTab from "@/components/search/tab/SearchPersonTab";
+import {multiSearch, searchMovies, searchPerson, searchSerials} from "@/services/search";
 
 export default {
   components: {
-    Card,
-    CardOfPeople
+    SearchMovieTab,
+    SearchSerialTab,
+    SearchPersonTab
   },
   data() {
     return {
       query: "",
-      result: [],
-      timeout: null,
+      dropdown: [],
+      currentStep: 'searchMovieTab',
+      tabs: [
+        {name: 'searchMovieTab', title: 'Фильмы'},
+        {name: 'SearchSerialTab', title: 'Сериалы'},
+        {name: 'SearchPersonTab', title: 'Люди'},
+      ],
+      result: {
+        movies: {
+          list: [],
+          total: 0
+        },
+        serials: {
+          list: [],
+          total: 0
+        },
+        persons: {
+          list: [],
+          total: 0
+        }
+      }
     };
   },
   created() {
@@ -48,26 +85,36 @@ export default {
       this.$emit("close");
     },
 
-    debounceSearch() {
-      this.timeout = setTimeout(() => this.search(), 1000)
+    async search() {
+      if (this.query.length === 0) return
+      const result = await multiSearch(this.query)
+      this.dropdown = result
     },
 
-    async search() {
-      const result = await multiSearch(this.query)
-      this.result = result
-    }
+    getData() {
+      this.searchMovies()
+      this.searchSerials()
+      this.searchPersons()
+    },
+
+    async searchMovies() {
+      const movies = await searchMovies(this.query)
+      this.result.movies = {list: movies.results.slice(0, 10), total: movies.total_results}
+    },
+
+    async searchSerials() {
+      const serials = await searchSerials(this.query)
+      this.result.serials = {list: serials.results.slice(0, 10), total: serials.total_results}
+    },
+
+    async searchPersons() {
+      const persons = await searchPerson(this.query)
+      this.result.persons = {list: persons.results.slice(0, 10), total: persons.total_results}
+    },
   },
   computed: {
     labelClasses() {
       return !!this.query ? "placeholder-show" : "placeholder";
-    },
-  },
-  watch: {
-    query: {
-      immediate: true,
-      handler: function () {
-        // this.getData();
-      },
     },
   },
 };
@@ -97,6 +144,36 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
+  }
+
+  &__tab {
+    position: relative;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: $color-white;
+    cursor: pointer;
+    padding: 0;
+
+    &.active {
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: $color-tematic;
+      }
+    }
+  }
+
+  &__list {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem 2rem;
   }
 
   &__inner {
