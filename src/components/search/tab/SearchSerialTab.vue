@@ -7,6 +7,9 @@
         class="search__list-item"
     />
   </div>
+  <div v-if="serials.length === 10" class="search__more link" @click="$emit('close')">
+    <router-link :to="{name:'search-total', query:{str:$route.query, type:'serial'}}">Посмотреть всё</router-link>
+  </div>
 </template>
 
 <script>
@@ -18,6 +21,6 @@ export default {
   },
   props: {
     serials: Array
-  }
+  },
 }
 </script>
