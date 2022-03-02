@@ -1,6 +1,7 @@
 export const correctRouteName = (mediaType) => {
-    if (mediaType === "movie") return "movie-id";
-    return "serial-id";
+    if (mediaType === "movie") return "movie-id"
+    else if (mediaType === 'tv') return "serial-id"
+    return 'person-id'
 };
 
 export const checkMediaType = (creation) => {
@@ -17,7 +18,7 @@ export const checkVote = (item) => {
     };
 };
 
-export const checkPoster = (poster, size='342') => {
+export const checkPoster = (poster, size = '342') => {
     let imgUrl = `https://image.tmdb.org/t/p/w${size}`;
 
     if (poster) return imgUrl + poster;
@@ -39,13 +40,13 @@ export const correctTitle = (item) => {
     return item.name;
 };
 
-export const correctDate = (item) =>{
+export const correctDate = (item) => {
     if (item.first_air_date) return item.first_air_date
 
     return item.release_date
 }
 
-export const getYear = (date ) => {
-    const currentYear = new Date().getFullYear() +1
+export const getYear = (date) => {
+    const currentYear = new Date().getFullYear() + 1
     return date ? date.slice(0, 4) : currentYear
 }
