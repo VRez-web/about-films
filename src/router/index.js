@@ -67,7 +67,7 @@ const routes = [
         component: () => import("@/pages/person/_id/Person"),
     },
     {
-        path: '/search/total/:query',
+        path: '/search/total',
         name: 'search-total',
         component: () => import('@/pages/search/total/SearchTotal')
     }
