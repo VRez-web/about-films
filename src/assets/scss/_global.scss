@@ -38,9 +38,10 @@ a {
   }
 
   &__inner {
-    padding: 1rem 0;
     display: flex;
     flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem 0;
   }
 }
 .link {

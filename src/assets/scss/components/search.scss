@@ -22,8 +22,53 @@
     margin-top: 2rem;
 
     &-header {
+      display: flex;
+      gap: .9rem;
       border-bottom: 2px solid #1f1f1f;
       padding-bottom: 0.2rem;
+    }
+  }
+
+  &__form {
+    position: relative;
+  }
+
+  &__field {
+    &-list {
+      width: 100%;
+      position: absolute;
+      border-radius: 0.313rem;
+      margin-top: .1rem;
+      color: $color-tematic;
+      background: $color-white;
+      z-index: 2;
+      transition: all .3s linear;
+      visibility: hidden;
+
+      &.active {
+        visibility: visible;
+      }
+    }
+
+    &-item {
+      a {
+        display: block;
+        padding: .5rem;
+      }
+
+      span {
+        &:not(:first-child) {
+          padding-left: .4rem;
+        }
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $color-tematic;
+      }
+    }
+
+    &-empty {
+      padding: 1rem;
     }
   }
 
@@ -120,7 +165,7 @@
     top: 20px;
     cursor: pointer;
 
-    &.link{
+    &.link {
       font-size: 1.3rem;
     }
   }
@@ -177,6 +222,14 @@
   &__empty {
     font-size: 1.5rem;
     margin-top: 2rem;
+  }
+
+  &__more {
+    margin: 2rem 0 2rem auto;
+
+    a {
+      font-size: 1.3rem;
+    }
   }
 }
 
