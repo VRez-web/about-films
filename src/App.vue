@@ -4,7 +4,9 @@
     <router-view v-slot="{ Component }" class="app__content">
       <suspense>
         <transition name="fade">
-          <component :is="Component"/>
+          <div>
+            <component :is="Component"/>
+          </div>
         </transition>
       </suspense>
     </router-view>
