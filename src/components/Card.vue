@@ -21,7 +21,7 @@
     </div>
     <div class="card-name-and-date">
       <p class="card__name"> {{ title }} </p>
-      <p> {{ formatDate }} </p>
+      <p v-if="date"> {{ formatDate }} </p>
     </div>
   </router-link>
 </template>
@@ -42,16 +42,10 @@ export default {
   },
   methods: {
     correctRouteName,
+    checkVote,
+    checkPoster
   },
   computed: {
-    checkVote() {
-      return checkVote;
-    },
-
-    checkPoster() {
-      return checkPoster;
-    },
-
     formatDate() {
       return this.date.split("").slice(0, 4).join("");
     },

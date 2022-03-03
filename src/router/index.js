@@ -57,21 +57,20 @@ const routes = [
         component: () => import("@/pages/serials/_id/Serial"),
     },
     {
-        path: "/:category/total",
-        component: () => import("@/components/search/SearchTotal"),
-        name: "search-total",
-        props: true,
-    },
-    {
         path: "/:name/:id/cast",
-        component: () => import("@/pages/cast/_id/Cast"),
         name: "cast-id",
+        component: () => import("@/pages/cast/_id/Cast"),
     },
     {
         path: "/person/:id",
-        component: () => import("@/pages/person/_id/Person"),
         name: "person-id",
+        component: () => import("@/pages/person/_id/Person"),
     },
+    {
+        path: '/search/total',
+        name: 'search-total',
+        component: () => import('@/pages/search/total/SearchTotal')
+    }
 ];
 
 const router = createRouter({

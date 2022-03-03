@@ -2,9 +2,11 @@
   <div class="app">
     <app-header/>
     <router-view v-slot="{ Component }" class="app__content">
-      <transition name="fade">
-        <component :is="Component"/>
-      </transition>
+      <suspense>
+        <transition name="fade">
+          <component :is="Component"/>
+        </transition>
+      </suspense>
     </router-view>
     <app-footer/>
   </div>

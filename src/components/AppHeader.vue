@@ -8,28 +8,23 @@
           </router-link>
         </h1>
         <div
-          class="header__group"
-          @click="
-            searchShow = !searchShow;
-            removeOverflow();
-          "
+            class="header__group"
+            @click="openSearch"
         >
           <div class="header__search">
             <i class="icon-search"></i>
             <span>Поиск</span>
           </div>
-          <!-- <div class="header__login">
-            <i class="icofont-user"></i>
-          </div> -->
         </div>
       </div>
     </div>
   </header>
-  <search v-if="searchShow" :data="searchShow" @close="close()" />
+  <search v-if="searchShow" :data="searchShow" @close="closeSearch"/>
 </template>
 
 <script>
 import search from "./search/Search";
+
 export default {
   components: {
     search,
@@ -40,12 +35,13 @@ export default {
     };
   },
   methods: {
-    close(searchShow) {
-      this.searchShow = searchShow;
+    closeSearch() {
+      this.searchShow = false;
     },
-    removeOverflow() {
-      document.body.classList.add("search-open");
-    },
+
+    openSearch(){
+      this.searchShow = true
+    }
   },
 };
 </script>
@@ -57,6 +53,7 @@ export default {
   background-color: $bg-header;
   width: 100%;
   margin-bottom: 1.875rem;
+
   &__inner {
     display: flex;
     align-items: center;
@@ -68,6 +65,7 @@ export default {
     font-size: 2rem;
     font-weight: 900;
     transition: all 0.4s linear;
+
     span {
       color: $color-tematic;
       transition: all 0.4s linear;
@@ -75,6 +73,7 @@ export default {
 
     &:hover {
       color: $color-tematic;
+
       span {
         color: $color-white;
       }
@@ -102,6 +101,7 @@ export default {
 
     span {
       position: relative;
+
       &::after {
         content: "";
         width: 0%;
@@ -120,6 +120,7 @@ export default {
       i {
         transform: scale(1.3);
       }
+
       span {
         &::after {
           width: 100%;
@@ -127,6 +128,7 @@ export default {
       }
     }
   }
+
   &__login {
     margin: 0 0 0 0.625rem;
     cursor: pointer;
