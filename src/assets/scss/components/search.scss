@@ -51,10 +51,8 @@
     }
 
     &-item {
-      a {
-        display: block;
-        padding: .5rem;
-      }
+      padding: .5rem;
+      cursor: pointer;
 
       span {
         &:not(:first-child) {
@@ -71,7 +69,7 @@
       padding: 1rem;
     }
 
-    &-media{
+    &-media {
       font-size: .8rem;
       color: #cacaca;
     }
