@@ -64,6 +64,7 @@ import DetailsSimilar from "@/components/details/DetailsSimilar";
 import ModalTrailers from "@/components/modal/ModalTrailers";
 
 export default {
+  inheritAttrs:false,
   components: {
     ModalTrailers,
     DetailsLinks,

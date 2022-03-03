@@ -59,6 +59,7 @@ import ModalTrailers from "@/components/modal/ModalTrailers";
 import {getSerialDetails, getSerialSimilar} from "@/services/serials";
 
 export default {
+  inheritAttrs:false,
   components: {
     ModalTrailers,
     DetailsLinks,

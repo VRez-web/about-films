@@ -64,6 +64,7 @@ import {checkProfileImg} from "@/utils/commonFunctions";
 import {formattingDate} from '@/utils/formatting'
 
 export default {
+  inheritAttrs:false,
   components: {
     PersonLinks,
     AppLoader,
