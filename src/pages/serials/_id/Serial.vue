@@ -80,7 +80,6 @@ export default {
   },
   watch: {
     '$route.params.id': {
-      immediate: true,
       handler: function () {
         if (this.$route.params.id) {
           this.getSerialDetails()
