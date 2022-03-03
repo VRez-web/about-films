@@ -45,7 +45,7 @@
         :cast="serial.credits.cast"
         :name-product="serial.name"
         :type="'serial'"/>
-    <DetailsSimilar :model="similarSerials"/>
+    <DetailsSimilar :model="similarSerials" :category="'serial'"/>
   </main>
   <ModalTrailers
       v-if="isShowTrailers"
