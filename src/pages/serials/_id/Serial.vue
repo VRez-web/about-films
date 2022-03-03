@@ -39,7 +39,12 @@
         </div>
       </div>
     </section>
-    <DetailsCast v-if="!!serial.credits.cast.length" :id="serial.id" :cast="serial.credits.cast"/>
+    <DetailsCast
+        v-if="!!serial.credits.cast.length"
+        :id="serial.id"
+        :cast="serial.credits.cast"
+        :name-product="serial.name"
+        :type="'serial'"/>
     <DetailsSimilar :model="similarSerials"/>
   </main>
   <ModalTrailers
