@@ -1,6 +1,6 @@
 export const correctRouteName = (mediaType) => {
     if (mediaType === "movie") return "movie-id"
-    else if (mediaType === 'tv') return "serial-id"
+    else if (mediaType === 'tv' || mediaType === 'serial') return "serial-id"
     return 'person-id'
 };
 
