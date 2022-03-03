@@ -14,7 +14,7 @@ export const checkVote = (item) => {
         "high-rating": item >= 7,
         "mid-rating": item < 7 && item >= 4,
         "low-rating": item >= 1 && item < 4,
-        "no-rating": item === "NR",
+        "no-rating": item === 0,
     };
 };
 
