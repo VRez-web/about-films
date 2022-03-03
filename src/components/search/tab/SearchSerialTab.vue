@@ -5,6 +5,7 @@
         :model="serial"
         :media-type="'serial'"
         class="search__list-item"
+        @click="$emit('close')"
     />
   </div>
   <div v-if="serials.length === 10" class="search__more link" @click="$emit('close')">

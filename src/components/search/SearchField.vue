@@ -14,12 +14,10 @@
       <label for="search" :class="labelClasses">Фильмы, сериалы, люди</label>
     </fieldset>
     <div class="search__field-list" :class="{'active':focus && query}">
-      <div v-for="item in searchResult" class="search__field-item">
-        <router-link :to="{name: correctRouteName(item.media_type),params: { id: item.id }}">
-          <span>{{ correctTitle(item) }}</span>
-          <span>({{ correctDate(item) }})</span>
-          <span>{{ checkType(item.media_type) }}</span>
-        </router-link>
+      <div v-for="item in searchResult" class="search__field-item" @click="pushToDetails(item)">
+        <span>{{ correctTitle(item) }}</span>
+        <span v-show="correctDate(item)">({{ correctDate(item) }})</span>
+        <span class="search__field-media">{{ checkType(item.media_type) }}</span>
       </div>
       <p v-if="searchResult.length === 0" class="search__field-empty">Ничего не найдено</p>
     </div>
@@ -64,6 +62,11 @@ export default {
       else if (mediaType === 'tv') return 'Сериалы'
       return 'Люди'
     },
+
+    pushToDetails(item) {
+      this.$emit('close')
+      this.$router.push({name: correctRouteName(item.media_type), params: {id: item.id}})
+    }
   }
 }
 </script>

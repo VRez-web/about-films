@@ -5,6 +5,7 @@
         :model="movie"
         :media-type="'movie'"
         class="search__list-item"
+        @click="$emit('close')"
     />
   </div>
   <div v-if="movies.length === 10" class="search__more link" @click="$emit('close')">

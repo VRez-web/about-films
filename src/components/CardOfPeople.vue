@@ -65,4 +65,8 @@ export default {
     line-height: 20px;
   }
 }
+
+.section__inner .card__people{
+  width: 12%;
+}
 </style>

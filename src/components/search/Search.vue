@@ -41,7 +41,7 @@ import SearchMovieTab from "@/components/search/tab/SearchMovieTab"
 import SearchSerialTab from "@/components/search/tab/SearchSerialTab";
 import SearchPersonTab from "@/components/search/tab/SearchPersonTab";
 import {multiSearch, searchMovies, searchPerson, searchSerials} from "@/services/search";
-import SearchField from "@/pages/search/SearchField";
+import SearchField from "@/components/search/SearchField";
 
 export default {
   components: {
@@ -78,7 +78,6 @@ export default {
     },
 
     async search(query) {
-      console.log(query)
       const result = await multiSearch(query)
       this.dropdown = result.results.slice(0, 5)
     },
