@@ -65,15 +65,15 @@ export default {
           subMenu: [
             {title: 'Популярные', link: 'serials-popular'},
             {title: 'Лучшие', link: 'serials-topRated'},
-            {title: 'По Тв', link: ''},
-            {title: 'На сегодня', link: ''},
+            {title: 'На неделю', link: 'serials-week'},
+            {title: 'На сегодня', link: 'serials-today'},
           ]
         },
         {
           title: 'Люди',
           isShow: false,
           subMenu: [
-            {title: 'Популярные'}
+            {title: 'Популярные', link:'persons-popular'}
           ]
         }
       ]
