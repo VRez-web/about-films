@@ -8,43 +8,43 @@ const routes = [
     },
     {
         name: "movies-theatres",
-        path: "/movies/movies-theatres",
+        path: "/movies/theatres",
         component: () => import("@/pages/movies/MoviesTheatres"),
     },
     {
         name: "movies-popular",
-        path: "/movies/movies-popular",
+        path: "/movies/popular",
         component: () => import("@/pages/movies/MoviesPopular"),
     },
     {
         name: "movies-topRated",
-        path: "/movies/movies-topRated",
+        path: "/movies/topRated",
         component: () => import("@/pages/movies/MoviesTopRated"),
     },
     {
         name: "movies-upcoming",
-        path: "/movies/movies-upcoming",
+        path: "/movies/upcoming",
         component: () => import("@/pages/movies/MoviesUpcoming"),
     },
     {
         name: "serials-today",
-        path: "/serials/serials-today",
-        component: () => import("@/pages/tvShows/TvShowsToday"),
+        path: "/serials/today",
+        component: () => import("@/pages/serials/SerialsToday"),
     },
     {
         name: "serials-week",
-        path: "/serials/serials-week",
-        component: () => import("@/pages/tvShows/TvShowsWeek"),
+        path: "/serials/week",
+        component: () => import("@/pages/serials/SerialsWeek"),
     },
     {
         name: "serials-popular",
-        path: "/serials/serials-popular",
-        component: () => import("@/pages/tvShows/TvShowsPopular"),
+        path: "/serials/popular",
+        component: () => import("@/pages/serials/SerialsPopular"),
     },
     {
         name: "serials-topRated",
-        path: "/serials/serials-topRated",
-        component: () => import("@/pages/tvShows/TvShowsTopRated"),
+        path: "/serials/top-rated",
+        component: () => import("@/pages/serials/SerialsTopRated"),
     },
     {
         name: "movie-id",
@@ -65,6 +65,11 @@ const routes = [
         path: "/person/:id",
         name: "person-id",
         component: () => import("@/pages/person/_id/Person"),
+    },
+    {
+        path: "/persons/popular",
+        name: "persons-popular",
+        component: () => import("@/pages/person/PersonsPopular"),
     },
     {
         path: '/search/total',
