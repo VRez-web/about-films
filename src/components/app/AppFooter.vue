@@ -18,7 +18,7 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/scss/_vars.scss";
+@import "../../assets/scss/vars";
 
 .footer {
   flex: 0 0;

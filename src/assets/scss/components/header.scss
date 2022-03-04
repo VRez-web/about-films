@@ -1,54 +1,3 @@
-<template>
-  <header class="header">
-    <div class="container">
-      <div class="header__inner">
-        <h1>
-          <router-link :to="{ name: 'home' }" class="header__logo">
-            About<span>films</span>
-          </router-link>
-        </h1>
-        <div
-            class="header__group"
-            @click="openSearch"
-        >
-          <div class="header__search">
-            <i class="icon-search"></i>
-            <span>Поиск</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <search v-if="searchShow" :data="searchShow" @close="closeSearch"/>
-</template>
-
-<script>
-import search from "./search/Search";
-
-export default {
-  components: {
-    search,
-  },
-  data() {
-    return {
-      searchShow: false,
-    };
-  },
-  methods: {
-    closeSearch() {
-      this.searchShow = false;
-    },
-
-    openSearch(){
-      this.searchShow = true
-    }
-  },
-};
-</script>
-
-<style lang="scss" scoped>
-@import "../assets/scss/_vars.scss";
-
 .header {
   background-color: $bg-header;
   width: 100%;
@@ -59,6 +8,64 @@ export default {
     align-items: center;
     justify-content: space-between;
     height: 4.375rem;
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-left: 5rem;
+
+    &-item {
+      position: relative;
+    }
+
+    &-title {
+      font-weight: 500;
+      cursor: pointer;
+    }
+  }
+
+  &__submenu {
+    width: 10rem;
+    position: absolute;
+    bottom: -10.5rem;
+    left: -1rem;
+    z-index: 11;
+    padding-top: .5rem;
+    background: #1f1f1f;
+    visibility: hidden;
+
+    &.active{
+      visibility: visible;
+    }
+
+    &.serials{
+      bottom: -8.5rem;
+    }
+
+    &.people{
+      bottom: -2.5rem;
+    }
+
+    &-item {
+      padding: .5rem 1rem;
+      transition: all .1s linear;
+      cursor: pointer;
+
+      p {
+        font-weight: 500;
+      }
+
+      &:hover {
+        color: $color_tematic;
+      }
+    }
   }
 
   &__logo {
@@ -152,4 +159,3 @@ export default {
     }
   }
 }
-</style>
