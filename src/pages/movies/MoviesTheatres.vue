@@ -1,59 +1,32 @@
 <template>
-  <section class="movies__theatres section">
-    <div class="container">
-      <h2 class="movies__theatres-title section__title">
-        Сейчас в кинотеатрах:
-      </h2>
-      <div class="movies__theatres-inner section__inner">
-        <card :data="movies.results" :category="movies.type" />
-      </div>
-
-      <pagination
-        :totalPages="pages"
-        :currentPage="currentPage"
-        @pageChange="pageChange"
-      />
-    </div>
-  </section>
+  <AppLoader v-if="movies === null" />
+  <div v-else class="container">
+    <PageWrapper :model="movies" :type="'movie'" @page-change="getMoviesTheatres" />
+  </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import pagination from "../../components/Pagination.vue";
-import card from "../../components/Card";
+import pagination from '@/components/Pagination.vue';
+import AppLoader from '@/components/app/AppLoader.vue';
+import PageWrapper from '@/components/PageWrapper';
+import { getMoviesTheatres } from '@/services/movies';
 
 export default {
-  components: { card, pagination },
+  components: { pagination, AppLoader, PageWrapper },
   data() {
     return {
-      movies: {},
-      pages: null,
-      currentPage: this.$store.page,
+      movies: null,
     };
   },
-  methods: {
-    ...mapActions("moviesTheatres", ["GET_MOVIES_THEATRES"]),
-    async pageChange(page) {
-      const MOVIES = await this.GET_MOVIES_THEATRES(page);
-      this.movies = { ...MOVIES, ...MOVIES.data };
-      this.currentPage = page;
-    },
+  created() {
+    this.getMoviesTheatres()
   },
-
-  async created() {
-    try {
-      const MOVIES = await this.GET_MOVIES_THEATRES();
-      this.movies = { ...MOVIES, ...MOVIES.data };
-      this.currentPage = MOVIES.data.page;
-      this.pages = MOVIES.data.total_pages;
-    } catch (e) {
-      // FIXME: сделать модалку для вывода ошибки пользователю
-      console.log(e);
-    }
+  methods: {
+    async getMoviesTheatres(page = 1) {
+      this.movies = null
+      const movies = await getMoviesTheatres(page);
+      this.movies = movies.data
+    },
   },
 };
 </script>
-
-
-<style lang="scss" scoped>
-</style>

@@ -34,7 +34,7 @@
   &__submenu {
     width: 10rem;
     position: absolute;
-    bottom: -10.5rem;
+    bottom: -8.5rem;
     left: -1rem;
     z-index: 11;
     padding-top: .5rem;
@@ -43,10 +43,6 @@
 
     &.active{
       visibility: visible;
-    }
-
-    &.serials{
-      bottom: -8.5rem;
     }
 
     &.people{

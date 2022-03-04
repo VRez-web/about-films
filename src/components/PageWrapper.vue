@@ -5,7 +5,7 @@
         :is="componentName"
         v-for="item in model.results"
         :model="item"
-        :media-type="checkMediaType(model)"/>
+        :media-type="checkMediaType(item)"/>
   </div>
   <Pagination
       :current-page="model.page"

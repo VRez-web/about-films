@@ -49,15 +49,12 @@ export default {
   methods: {
     prevPage() {
       this.$emit("pageChange", this.currentPage - 1);
-      document.getElementById("app").scrollIntoView({ behavior: "smooth" });
     },
     pageChange(page) {
       this.$emit("pageChange", page);
-      document.getElementById("app").scrollIntoView({ behavior: "smooth" });
     },
     nextPage() {
       this.$emit("pageChange", this.currentPage + 1);
-      document.getElementById("app").scrollIntoView({ behavior: "smooth" });
     },
   },
   computed: {
