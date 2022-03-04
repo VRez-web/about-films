@@ -1,4 +1,5 @@
 <template>
+  <h2 class="section__title">{{title}}</h2>
   <div class="section__inner">
     <component
         :is="componentName"
@@ -27,7 +28,8 @@ export default {
   },
   props: {
     model: Object,
-    type: String
+    type: String,
+    title: String
   },
   computed: {
     componentName() {
