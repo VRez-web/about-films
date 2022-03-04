@@ -1,56 +1,32 @@
 <template>
-  <section class="movies__popular section">
-    <div class="container">
-      <h2 class="movies__popular-title section__title">Популярное кино</h2>
-      <div class="movies__popular-inner section__inner">
-        <card :data="movies.results" :category="movies.type" />
-      </div>
-
-      <pagination
-        :totalPages="pages"
-        :currentPage="currentPage"
-        @pageChange="pageChange"
-      />
-    </div>
-  </section>
+  <AppLoader v-if="movies === null"/>
+  <div v-else class="container">
+    <PageWrapper :model="movies" :type="'movie'" @page-change="getPopularMovies" />
+  </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import pagination from "../../components/Pagination.vue";
-import card from "../../components/Card";
+import pagination from '@/components/Pagination.vue';
+import PageWrapper from '@/components/PageWrapper';
+import AppLoader from '@/components/app/AppLoader';
+import { getMoviesPopular } from '@/services/movies';
 
 export default {
-  components: { card, pagination },
+  components: { AppLoader, PageWrapper, pagination },
   data() {
     return {
-      movies: {},
-      pages: null,
-      currentPage: this.$store.page,
+      movies: null,
     };
   },
-  methods: {
-    ...mapActions("moviesPopular", ["GET_MOVIES_POPULAR"]),
-    async pageChange(page) {
-      const MOVIES = await this.GET_MOVIES_POPULAR(page);
-      this.movies = { ...MOVIES, ...MOVIES.data };
-      this.currentPage = page;
-    },
+  created() {
+    this.getPopularMovies();
   },
-
-  async created() {
-    try {
-      const MOVIES = await this.GET_MOVIES_POPULAR();
-      this.movies = { ...MOVIES, ...MOVIES.data };
-      this.currentPage = MOVIES.data.page;
-      this.pages = MOVIES.data.total_pages;
-    } catch (e) {
-      // FIXME: сделать модалку для вывода ошибки пользователю
-      console.log(e);
-    }
+  methods: {
+    async getPopularMovies(page = 1) {
+      this.movies = null
+      const movies = await getMoviesPopular(page);
+      this.movies = movies.data;
+    },
   },
 };
 </script>
-
-<style>
-</style>

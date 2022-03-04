@@ -1,7 +1,7 @@
 <template>
-  <AppLoader v-if="movies === null" />
+  <AppLoader v-if="serials === null" />
   <div v-else class="container">
-    <PageWrapper :model="movies" :type="'movie'" @page-change="getMoviesTopRated" />
+    <PageWrapper :model="serials" :type="'serial'" @page-change="getSerialsPopular" />
   </div>
 </template>
 
@@ -9,23 +9,23 @@
 import pagination from '@/components/Pagination.vue';
 import AppLoader from '@/components/app/AppLoader.vue';
 import PageWrapper from '@/components/PageWrapper';
-import { getMoviesTopRated } from '@/services/movies';
+import { getSerialsPopular } from '@/services/serials';
 
 export default {
   components: { pagination, AppLoader, PageWrapper },
   data() {
     return {
-      movies: null,
+      serials: null,
     };
   },
   created() {
-    this.getMoviesTopRated();
+    this.getSerialsPopular()
   },
   methods: {
-    async getMoviesTopRated(page = 1) {
-      this.movies = null;
-      const movies = await getMoviesTopRated(page);
-      this.movies = movies.data;
+    async getSerialsPopular(page = 1) {
+      this.serials = null
+      const serials = await getSerialsPopular(page);
+      this.serials = serials.data;
     },
   },
 };
