@@ -1,7 +1,7 @@
 <template>
   <section class="search__total">
     <div class="container">
-      <PageWrapper :model="result" @page-change="getData" :type="type"/>
+      <PageWrapper :model="result" @page-change="getData" :type="type" :title="'Результаты поиска'"/>
     </div>
   </section>
 </template>
