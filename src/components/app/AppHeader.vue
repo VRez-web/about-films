@@ -17,7 +17,7 @@
             >
               <p class="header__nav-title">{{ item.title }}</p>
               <AppHeaderSubMenu
-                  :class="{'active':item.isShow, 'serials':item.title === 'Сериалы', 'people': item.title === 'Люди'}"
+                  :class="{'active':item.isShow, 'people': item.title === 'Люди'}"
                   :list="item.subMenu"
                   @close="item.isShow = false"/>
             </div>
@@ -56,8 +56,7 @@ export default {
             {title: 'Популярные', link: 'movies-popular'},
             {title: 'Лучшие', link: 'movies-topRated'},
             {title: 'Ожидаемые', link: 'movies-upcoming'},
-            {title: 'В кинотеатрах', link: 'movies-theatres'},
-            {title: 'Смотрят сейчас', link: '123'},
+            {title: 'Смотрят сейчас', link: 'movies-theatres'},
           ]
         },
         {
