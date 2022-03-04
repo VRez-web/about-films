@@ -8,3 +8,10 @@ export const getDataPerson = async (id) => {
     );
     return data
 };
+
+export const getPersonsPopular = async (page = 1) => {
+    const {data} = await axios.get(
+      `/person/popular?api_key=${apiKey}&language=ru-RU&page=${page}`
+    );
+    return data
+};
