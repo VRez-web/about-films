@@ -1,5 +1,5 @@
 <template>
-  <BaseHomeTab :model="model" id="popular-movies" :media-type="'movie'"/>
+  <BaseHomeTab :model="model" id="popular-movies"/>
 </template>
 
 <script>

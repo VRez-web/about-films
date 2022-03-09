@@ -1,12 +1,11 @@
 <template>
   <div class="person__fame-list">
-    <Card v-for="item in works" :model="item" :media-type="checkMediaType(item)" class="person__fame-item"/>
+    <Card v-for="item in works" :model="item" class="person__fame-item"/>
   </div>
 </template>
 
 <script>
 import Card from "@/components/Card";
-import {checkMediaType} from "@/utils/commonFunctions";
 
 export default {
   components: {
@@ -15,8 +14,5 @@ export default {
   props: {
     works: Array
   },
-  methods: {
-    checkMediaType
-  }
 }
 </script>

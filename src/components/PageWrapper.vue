@@ -5,7 +5,7 @@
         :is="componentName"
         v-for="item in model.results"
         :model="item"
-        :media-type="checkMediaType(item)"/>
+        />
   </div>
   <Pagination
       :current-page="model.page"
@@ -18,7 +18,6 @@
 import Pagination from "@/components/Pagination";
 import Card from "@/components/Card";
 import CardOfPeople from "@/components/CardOfPeople";
-import {checkMediaType} from '@/utils/commonFunctions';
 
 export default {
   components: {
@@ -37,8 +36,6 @@ export default {
     }
   },
   methods: {
-    checkMediaType,
-
     pageChange(page) {
       this.$emit('page-change', page)
     }
