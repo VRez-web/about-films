@@ -8,6 +8,7 @@
               About<span>films</span>
             </router-link>
           </h1>
+          <AppHeaderMobileMenu />
           <nav class="header__nav">
             <div
                 v-for="item in menu"
@@ -39,11 +40,13 @@
 <script>
 import search from "../search/Search";
 import AppHeaderSubMenu from "@/components/app/AppHeaderSubMenu";
+import AppHeaderMobileMenu from "@/components/app/AppHeaderMobileMenu";
 
 export default {
   components: {
     AppHeaderSubMenu,
     search,
+    AppHeaderMobileMenu,
   },
   data() {
     return {
