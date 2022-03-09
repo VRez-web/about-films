@@ -1,10 +1,7 @@
 <template>
   <router-link
       class="card"
-      :to="{
-        name: correctRouteName(mediaType),
-        params: { id: model.id },
-      }"
+      :to="{name: route(model),params: { id: model.id }}"
   >
     <p class="card__vote" :class="checkVote(model.vote_average)">
       {{ voteCorrect }}
@@ -27,12 +24,11 @@
 </template>
 
 <script>
-import {checkPoster, checkVote, correctRouteName,} from "@/utils/commonFunctions";
+import {checkPoster, checkVote, route,} from "@/utils/commonFunctions";
 
 export default {
   props: {
-    model: Object,
-    mediaType: String
+    model: Object
   },
   data() {
     return {
@@ -41,9 +37,9 @@ export default {
     }
   },
   methods: {
-    correctRouteName,
     checkVote,
-    checkPoster
+    checkPoster,
+    route
   },
   computed: {
     formatDate() {
