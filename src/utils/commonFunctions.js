@@ -50,3 +50,8 @@ export const getYear = (date) => {
     const currentYear = new Date().getFullYear() + 1
     return date ? date.slice(0, 4) : currentYear
 }
+
+export const route = (item) => {
+    const mediaType = checkMediaType(item);
+    return correctRouteName(mediaType);
+}

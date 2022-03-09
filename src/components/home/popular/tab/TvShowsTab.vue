@@ -1,5 +1,5 @@
 <template>
-  <BaseHomeTab :model="model" :media-type="'serial'" id="popular-tvShows"/>
+  <BaseHomeTab :model="model" id="popular-tvShows"/>
 </template>
 
 <script>

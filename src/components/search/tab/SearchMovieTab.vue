@@ -3,7 +3,6 @@
     <Card
         v-for="movie in movies"
         :model="movie"
-        :media-type="'movie'"
         class="search__list-item"
         @click="$emit('close')"
     />

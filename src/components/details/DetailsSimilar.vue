@@ -15,7 +15,7 @@
             id="similar"
         >
           <swiper-slide v-for="item in model">
-            <Card :model="item" :media-type="category"/>
+            <Card :model="item"/>
           </swiper-slide>
         </swiper>
         <div

@@ -3,7 +3,6 @@
     <Card
         v-for="serial in serials"
         :model="serial"
-        :media-type="'serial'"
         class="search__list-item"
         @click="$emit('close')"
     />

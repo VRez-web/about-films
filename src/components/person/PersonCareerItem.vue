@@ -16,7 +16,7 @@ import {
   correctDate,
   checkPoster,
   checkMediaType,
-  correctRouteName,
+  route,
 } from '@/utils/commonFunctions';
 import { translateJob } from '@/utils/translater';
 import CardPreview from '../CardPreview';
@@ -33,15 +33,11 @@ export default {
     translateJob,
     checkPoster,
     checkMediaType,
+    route,
 
     formattedDate(item) {
       const correctDate = this.correctDate(item);
       return this.getYear(correctDate);
-    },
-
-    route(item) {
-      const mediaType = checkMediaType(item);
-      return correctRouteName(mediaType);
     },
   },
 };
