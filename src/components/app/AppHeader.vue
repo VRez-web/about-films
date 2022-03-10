@@ -8,7 +8,7 @@
               About<span>films</span>
             </router-link>
           </h1>
-          <AppHeaderMobileMenu />
+          <AppHeaderMobileHamburger :is-show="isShowMobileMenu" @toggle-menu="toggleMobileMenu"/>
           <nav class="header__nav">
             <div
                 v-for="item in menu"
@@ -35,18 +35,21 @@
     </div>
   </header>
   <search v-if="searchShow" :data="searchShow" @close="closeSearch"/>
+  <AppHeaderMobileMenu :class="{'active':isShowMobileMenu}" :menu="menu" @close="isShowMobileMenu = false"/>
 </template>
 
 <script>
 import search from "../search/Search";
 import AppHeaderSubMenu from "@/components/app/AppHeaderSubMenu";
+import AppHeaderMobileHamburger from "@/components/app/AppHeaderMobileHamburger";
 import AppHeaderMobileMenu from "@/components/app/AppHeaderMobileMenu";
 
 export default {
   components: {
+    AppHeaderMobileMenu,
     AppHeaderSubMenu,
     search,
-    AppHeaderMobileMenu,
+    AppHeaderMobileHamburger,
   },
   data() {
     return {
@@ -76,10 +79,11 @@ export default {
           title: 'Люди',
           isShow: false,
           subMenu: [
-            {title: 'Популярные', link:'persons-popular'}
+            {title: 'Популярные', link: 'persons-popular'}
           ]
         }
-      ]
+      ],
+      isShowMobileMenu: false,
     };
   },
   methods: {
@@ -89,6 +93,10 @@ export default {
 
     openSearch() {
       this.searchShow = true
+    },
+
+    toggleMobileMenu(isOpen) {
+      this.isShowMobileMenu = isOpen
     }
   },
 };
