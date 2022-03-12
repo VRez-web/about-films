@@ -64,6 +64,12 @@ export default {
     display: flex;
     align-items: flex-end;
     margin-bottom: 1rem;
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .5rem;
+    }
   }
 
   &__title {
@@ -78,6 +84,10 @@ export default {
     margin-left: 3rem;
     border-bottom: 1px solid #f9f9f9;
     padding: 3px 15px 3px 0;
+
+    @media (max-width: 500px) {
+      margin-left: 0;
+    }
   }
 
   &__tab {
