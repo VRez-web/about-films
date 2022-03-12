@@ -56,9 +56,21 @@ export default {
         background: `url(${require("@/assets/img/right-arrow.svg")})center/cover no-repeat`,
       },
       sliderBreakpoints: {
-        1500: {
+        1600: {
           slidesPerView: 8,
         },
+        1200: {
+          slidesPerView: 6,
+        },
+        800: {
+          slidesPerView: 4,
+        },
+        500: {
+          slidesPerView: 3,
+        },
+        320: {
+          slidesPerView: 1,
+        }
       },
     };
   },
